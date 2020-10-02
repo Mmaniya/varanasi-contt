@@ -37,4 +37,8 @@ define("TBL_TERMS_AND_CONDTIONS","tbl_terms_and_condtions");
 define("TBL_TO_DO","tbl_to_do");
 define("TBL_WL_MEMBERS","tbl_wl_members");
 define("TBL_WL_MEMBERSHIP","tbl_wl_membership");
+
+
+// define function code 
+define("FUN_EMP","function_emp")
 ?>

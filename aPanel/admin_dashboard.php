@@ -75,5 +75,7 @@
         </div>
         <!-- task, page, download counter  end -->
     </div>
+    <div id="ajaxResponce"></div>
+
 <?php } include 'admin_template.php'; ?>
  

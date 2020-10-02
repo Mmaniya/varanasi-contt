@@ -49,11 +49,11 @@ define("SITE_HTTPS", BASE_URL);
 
 // ADMIN
 define("ADMIN_URL", BASE_URL.'aPanel');
-define("ADMIN_ASSETS", BASE_URL.'aPanel/assets');
-define("ADMIN_CSS", BASE_URL.'aPanel/assets/css');
-define("ADMIN_JS", BASE_URL.'aPanel/assets/js');
-define("ADMIN_IMAGES", BASE_URL.'aPanel/assets/images');
-define("ADMIN_ICON", BASE_URL.'aPanel/assets/icon');
+define("ADMIN_ASSETS", BASE_URL.'assets');
+define("ADMIN_CSS", BASE_URL.'assets/css');
+define("ADMIN_JS", BASE_URL.'assets/js');
+define("ADMIN_IMAGES", BASE_URL.'assets/images');
+define("ADMIN_ICON", BASE_URL.'assets/icon');
 
  
 define('PAGE_LIMIT',10);

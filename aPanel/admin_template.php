@@ -24,19 +24,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
     <meta name="description" content="#">
     <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="#">
-    <!-- Favicon icon -->
-    <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/favicon.ico" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/bootstrap.min.css">
-    <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/feather/css/feather.css">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/style.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/jquery.mCustomScrollbar.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/custom.style.css">
-
+    <?php include 'admin_style.php'; ?>
 </head>
 
 <body>
@@ -88,7 +76,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                             <i class="feather icon-menu"></i>
                         </a>
                         <a href="index-1.htm">
-                            <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="150" alt="Theme-Logo">
+                            <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190" alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>
@@ -169,7 +157,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <!-- <img src="<?php echo ADMIN_IMAGES ?>/avatar-4.jpg" class="img-radius" alt="User-Profile-Image"> -->
-                                        <span>John Doe</span>
+                                        <span><?php echo $_SESSION['username'] ?></span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
@@ -327,17 +315,17 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class="">
-                                            <a href="index-1.htm">
+                                            <a href="javascript:void(0);" onclick="admin_submenu_employee('<?php echo FUN_EMP ?>')">
                                                 <span class="pcoded-mtext">Employee Details</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="dashboard-crm.htm">
+                                            <a href="javascript:void(0);">
                                                 <span class="pcoded-mtext">Employee Package</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="dashboard-analytics.htm">
+                                            <a href="javascript:void(0);">
                                                 <span class="pcoded-mtext">Employee Attendance</span>
                                             </a>
                                         </li>
@@ -1603,25 +1591,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
             </div>
         </div>
     </div>
- 
-    <!-- Required Jquery -->
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-ui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
-    <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-slimscroll/jquery.slimscroll.js"></script>
-    <!-- modernizr js -->
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/modernizr/modernizr.js"></script>
-
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/pcoded.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/vartical-layout.min.js"></script>
-    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/dashboard/custom-dashboard.js"></script> -->
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/script.min.js"></script> 
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/common-pages.js"></script> 
-     <!-- Custom js -->
-     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script.js"></script>
+    <?php include 'admin_script.php'; ?>
      <div class="preloader" style="display:none;">
         <div id="loader"></div>
     </div>
