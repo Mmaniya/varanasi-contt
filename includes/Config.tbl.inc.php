@@ -40,5 +40,8 @@ define("TBL_WL_MEMBERSHIP","tbl_wl_membership");
 
 
 // define function code 
-define("FUN_EMP","function_emp")
+define("FUN_EMP","add_emp");
+define("FUN_ROLE","add_role");
+
+
 ?>

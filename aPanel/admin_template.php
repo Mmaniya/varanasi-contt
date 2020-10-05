@@ -320,7 +320,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="javascript:void(0);">
+                                            <a href="javascript:void(0);" onclick="admin_submenu_employee('<?php echo FUN_EMP ?>')">
                                                 <span class="pcoded-mtext">Employee Package</span>
                                             </a>
                                         </li>

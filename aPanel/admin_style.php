@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/bootstrap.min.css">
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/feather/css/feather.css">
+     <!--forms-wizard css-->
+     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/jquery.steps.css">
+  
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/style.css">
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/jquery.mCustomScrollbar.css">
