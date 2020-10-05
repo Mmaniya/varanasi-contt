@@ -42,6 +42,7 @@ define("TBL_WL_MEMBERSHIP","tbl_wl_membership");
 // define function code 
 define("FUN_EMP","add_emp");
 define("FUN_ROLE","add_role");
-
+define('SERVICE_CATEGORIES',"service_categories");
+define('SERVICES',"service")
 
 ?>

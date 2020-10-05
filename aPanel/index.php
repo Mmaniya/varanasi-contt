@@ -136,7 +136,7 @@ if($_SESSION['useremail'] != '' && $_SESSION['username']) {
                     var records = JSON.parse(data);
                     if(records.result == 'Success'){
                         $('.preloader').hide();
-                        window.location.href = 'admin_dashboard.php';                
+                        window.location.href = 'homepage.php';                
                     }
                 }          
                });  
