@@ -316,23 +316,18 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     <ul class="pcoded-submenu">
                                         <li class="">
                                             <a href="javascript:void(0);" onclick="admin_submenu_service('<?php echo SERVICE_CATEGORIES ?>')">
-                                                <span class="pcoded-mtext">Categories</span>
+                                                <span class="pcoded-mtext">Add Categories</span>
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="javascript:void(0);" onclick="admin_submenu_service('<?php echo SERVICES ?>')">
-                                                <span class="pcoded-mtext">Service</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="javascript:void(0);">
-                                                <span class="pcoded-mtext">Employee Attendance</span>
+                                                <span class="pcoded-mtext">Add Service</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>                         
                             </ul>
-                            <ul class="pcoded-item pcoded-left-item">
+                            <!-- <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="feather icon-users"></i></span>
@@ -356,93 +351,28 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         </li>
                                     </ul>
                                 </li>                         
-                            </ul>
-                            <!-- <div class="pcoded-navigatio-lavel">UI Element</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu">
+                            </ul> -->
+                            <!-- <div class="pcoded-navigatio-lavel">Settings</div> -->
+                            <!-- <ul class="pcoded-item pcoded-left-item"> -->
+                                <!-- <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="feather icon-box"></i></span>
-                                        <span class="pcoded-mtext">Basic Components</span>
+                                        <span class="pcoded-mtext">Our Settings</span>
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="alert.htm">
-                                                <span class="pcoded-mtext">Alert</span>
+                                            <a href="javascript:void(0);">
+                                                <span class="pcoded-mtext">Category Settings</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="breadcrumb.htm">
-                                                <span class="pcoded-mtext">Breadcrumbs</span>
+                                            <a href="javascript:void(0);">
+                                                <span class="pcoded-mtext">Service Settings</span>
                                             </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="button.htm">
-                                                <span class="pcoded-mtext">Button</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="box-shadow.htm">
-                                                <span class="pcoded-mtext">Box-Shadow</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="accordion.htm">
-                                                <span class="pcoded-mtext">Accordion</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="generic-class.htm">
-                                                <span class="pcoded-mtext">Generic Class</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="tabs.htm">
-                                                <span class="pcoded-mtext">Tabs</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="color.htm">
-                                                <span class="pcoded-mtext">Color</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="label-badge.htm">
-                                                <span class="pcoded-mtext">Label Badge</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="progress-bar.htm">
-                                                <span class="pcoded-mtext">Progress Bar</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="preloader.htm">
-                                                <span class="pcoded-mtext">Pre-Loader</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="list.htm">
-                                                <span class="pcoded-mtext">List</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="tooltip.htm">
-                                                <span class="pcoded-mtext">Tooltip And Popover</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="typography.htm">
-                                                <span class="pcoded-mtext">Typography</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="other.htm">
-                                                <span class="pcoded-mtext">Other</span>
-                                            </a>
-                                        </li>
+                                        </li>                                 
                                     </ul>
-                                </li>
-                                <li class="pcoded-hasmenu">
+                                </li> -->
+                                <!-- <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="feather icon-gitlab"></i></span>
                                         <span class="pcoded-mtext">Advance Components</span>
@@ -615,9 +545,9 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                             </a>
                                         </li>
                                     </ul>
-                                </li>
+                                </li> -->
                             </ul>
-                            <div class="pcoded-navigatio-lavel">Forms</div>
+                            <!-- <div class="pcoded-navigatio-lavel">Forms</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
@@ -1618,6 +1548,8 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
         </div>
     </div>
     <?php include 'admin_script.php'; ?>
+
+   
      <div class="preloader" style="display:none;">
         <div id="loader"></div>
     </div>

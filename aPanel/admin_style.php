@@ -23,3 +23,4 @@
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/style.css">
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/custom.style.css">
+    <script src="<?php echo ADMIN_JS ?>/sortable-custom.js"  type="text/javascript"></script>

@@ -13,26 +13,129 @@ $action = $_POST['act'];
             SessionWrite('username',$resultData[1]->fullname);   
             SessionWrite('last_activity',time());   
             SessionWrite('access_level','SA');   
-            SessionWrite('expire_time',3 * 60);
+            SessionWrite('expire_time',10 * 60);
             $response = array("result" => "Success","data" =>'Login successfully');                     
             echo json_encode($response);
 
         exit();	
     }
 
-    if($_POST['act'] == SERVICE_CATEGORIES){  
-        if(empty($_REQUEST['id'])){
-            $param['category_name'] = $_REQUEST['category_name'];
-            $param['category_abbr'] = $_REQUEST['category_abbr'];
-            $param['category_description'] = $_REQUEST['category_description'];
-            $param['added_by']= $_REQUEST['access_level']; 		
+    if($_POST['act'] == SERVICE_CATEGORIES){ 
+
+        ob_clean();
+        $param['category_name'] = $_POST['category_name'];
+        $param['category_abbr'] = $_POST['category_abbr'];
+        $param['category_description'] = $_POST['category_description'];
+
+        if(empty($_POST['id'])){            
+            $param['added_by']= $_POST['access_level']; 	            	
             $result = Table::insertData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'showSql'=>'N')); 
             $explode = explode('::',$result);
             if(trim($explode[0])=='Success') {
-                $response = array("result" => trim($explode[0]),"data" =>'Added Successfully',"insert_id"=>trim($explode[2])); 
+                $response = array("result" => trim($explode[0]),"data" =>'Added Successfully'); 
             echo  json_encode($response);
             }
+        }else{
+
+            $param['updated_by']= $_POST['access_level'];
+            $where= array('id'=>$_POST['id']);        
+            $result = Table::updateData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
+            $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
+            echo  json_encode($response);
         }
+        exit();
     }
+
+    if($_POST['act']=='service_category_status_change'){
+        $param['status']= $_POST['status'];
+        $param['updated_by']= $_POST['access_level'];
+        $where= array('id'=>$_POST['id']);        
+        $result = Table::updateData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
+        $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
+        echo  json_encode($response);  
+    }
+
+    if($_POST['act'] == SERVICES){ 
+        ob_clean();
+
+        $param['service_name'] = $_POST['service_name'];
+        $param['service_description'] = $_POST['service_description'];
+        $param['category_id'] = $_POST['category_id'];
+        $param['service_payment_type'] = $_POST['service_payment_type'];
+        $param['if_recurring_period'] = $_POST['if_recurring_period'];
+        $param['recurring_type'] = $_POST['recurring_type'];
+        $param['service_price'] = $_POST['service_price'];
+        $param['service_delivery_time'] = $_POST['service_delivery_time'];
+        $param['service_delivery_type'] = $_POST['service_delivery_type'];
+        $param['service_questionnaire_complete_days'] = $_POST['service_questionnaire_complete_days'];
+
+        if($_FILES['service_img']['name']!='') {
+            $newFileName='';
+            $filename  = basename($_FILES['service_img']['name']);
+            $file_tmp=$_FILES['service_img']["tmp_name"];
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            $baseName = basename($filename,$ext);
+            $newFileName  = rand().'.'.$ext; 
+            $param['service_img'] = $newFileName;              
+            move_uploaded_file($file_tmp=$_FILES['service_img']["tmp_name"],"uploads/".$newFileName) or die('image upload fail');            
+          }
+
+        if(empty($_POST['id'])){            
+            $param['added_by']= $_POST['access_level']; 	            	
+            $result = Table::insertData(array('tableName'=>TBL_SERVICE,'fields'=>$param,'showSql'=>'N')); 
+            $explode = explode('::',$result);
+            if(trim($explode[0])=='Success') {
+                $response = array("result" => trim($explode[0]),"data" =>'Added Successfully'); 
+            echo  json_encode($response);
+            }
+        }else{
+            $param['updated_by']= $_POST['access_level'];
+            $where= array('id'=>$_POST['id']);        
+            $result = Table::updateData(array('tableName'=>TBL_SERVICE,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
+            $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
+            echo  json_encode($response);
+        }
+
+        exit();
+    }
+
+    if($_POST['act']=='service_status_change'){
+        $param['status']= $_POST['status'];
+        $param['updated_by']= $_POST['access_level'];
+        $where= array('id'=>$_POST['id']);        
+        $result = Table::updateData(array('tableName'=>TBL_SERVICE,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
+        $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
+        echo  json_encode($response);  
+    }
+
+    if($_POST['act'] == 'category_position'){
+        ob_clean();
+       if(count($_POST['category_id'])>0) {
+            foreach($_POST['category_id'] as $key=>$val) { 
+                $param['position'] =$key+1;                 
+                $where= array('id'=>$val);        
+                $result = Table::updateData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N'));                 
+
+            }
+            $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
+            echo  json_encode($response);
+       }
+       exit();
+    }
+
+       if($_POST['act'] == 'service_position'){
+            ob_clean();
+            if(count($_POST['service_id'])>0) {
+                foreach($_POST['service_id'] as $key=>$val) { 
+                    $param['position'] =$key+1;                 
+                    $where= array('id'=>$val);        
+                    $result = Table::updateData(array('tableName'=>TBL_SERVICE,'fields'=>$param,'where'=>$where,'showSql'=>'N'));                 
+                }
+                $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
+                echo  json_encode($response);
+            }
+            exit();
+        }
+    
 
 ?>

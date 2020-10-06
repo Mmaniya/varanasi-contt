@@ -9,6 +9,7 @@ require_once("includes/Session.php");
 
 require_once("classes/DatabaseConnection.php");
 require_once("classes/dB.php");
+require_once("classes/service_function.php");
 
 //classes
 require_once("classes/Table.php");

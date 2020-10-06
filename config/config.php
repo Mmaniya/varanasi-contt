@@ -55,7 +55,8 @@ define("ADMIN_JS", BASE_URL.'assets/js');
 define("ADMIN_IMAGES", BASE_URL.'assets/images');
 define("ADMIN_ICON", BASE_URL.'assets/icon');
 
- 
+define("SERVICE_IMGES", BASE_URL.'aPanel/uploads/');
+
 define('PAGE_LIMIT',10);
 
 

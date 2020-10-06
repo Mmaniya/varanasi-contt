@@ -24,7 +24,7 @@
         </div>
     </div>
     
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-c-yellow update-card">
                 <div class="card-block">
@@ -97,100 +97,87 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="row">
         <div class="card col-7" id="service_category_table">
-            <div class="card-header bg-c-lite-green">
-                <h5>Service Category List</h5>            
-                <!-- <a href="javascript:void(0);" onclick="open_service_category()" class="btn btn-success right-float"><i class="icofont icofont-ui-add"> Add New</i></a> -->
+            <div class="card-header">
+                <h5>Service Category List</h5> 
+                <a href="javascript:void(0);" onclick="add_edit_category()" class="right-float"> Add New</a>&nbsp;&nbsp;
+                <a href="javascript:void(0);" onclick="category_position()" class="right-float">Click To Arrange Position &nbsp;&nbsp;</a>
             </div>
-            <div class="card-block">
+            <!-- <div class="card-block">
                 <div class="table-responsive dt-responsive">
                     <table id="dt-service-category" class="table table-striped table-bordered nowrap">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Category Name</th>                  
+                                <th>Category</th>                  
                                 <th>Action</th>
                                 <th>Status</th>
                             </tr>
                         </thead>               
                     </table>
                 </div>
+            </div> -->
+            <div class="card-block">
+                <div class="card-block table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-styling">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th>#</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $rsCategory = Service::get_service_category();
+                               
+                                if(count($rsCategory)>0){
+                                    foreach ($rsCategory as $key=>$value){
+                                 ?>
+                                <tr>
+                                    <th><?php echo $key+1?></th>
+                                    <td><?php echo $value->category_name ?></td>                      
+                                    <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
+                                            <a href="javascript:void(0);" class="btn btn-primary btn-mini waves-effect waves-light" onclick="add_edit_category(<?php echo $value->id;?>)" >Edit</a>
+                                            <?php if($value->status == 'A'){ ?>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-mini waves-effect waves-light" onclick="statusCategory(<?php echo $value->id;?>,'I')">Change Inactive</a>
+                                            <?php } else { ?>
+                                            <a href="javascript:void(0);" class="btn btn-success btn-mini waves-effect waves-light" onclick="statusCategory(<?php echo $value->id;?>,'A')">Change Active</a>
+                                            <?php } ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?php if($value->status == 'A'){ ?>
+                                            <div class="label-main"><label class="label label-success">Active</label></div>
+                                        <?php }else { ?>
+                                                <div class="label-main"><label class="label label-danger">Inactive</label></div>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                                    <?php } } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="card col-5" id="service_category_form" >
-            <div class="card-header bg-c-lite-green">
-                <h5>Service Category Form</h5>
-                <!-- <a href="javascript:void(0);" onclick="close_service_category()" class="btn btn-success right-float"><i class="icofont icofont-document-search">View Table</i></a> -->
-            </div>
-            <div class="card-block">
-                <form action="javascript:void(0);" id="service_category">
-                    <input type="hidden" value="<?php echo SERVICE_CATEGORIES ?>" name="act">
-                    <input type="hidden" value="" name="id">
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-12">
-                            <label class="col-form-label">Category Name</label>
-                            <div class="input-group input-group-inverse">
-                                <span class="input-group-addon"><i class="icofont icofont-idea"></i></span>
-                                <input type="text" class="form-control" placeholder="Enter Category Name" name="category_name">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-sm-12 col-lg-12">
-                            <label class="col-form-label">Category Abbr</label>
-                            <div class="input-group input-group-inverse">
-                                <span class="input-group-addon"><i class="icofont icofont-queen"></i></span>
-                                <input type="text" class="form-control" placeholder="Enter Category Abbr" name="category_abbr">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-12">
-                            <label class="col-form-label">Category Description</label>
-                            <div class="input-group input-group-inverse">
-                                <span class="input-group-addon"><i class="icofont icofont-presentation"></i></span>
-                                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description" name="category_description"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row m-b-20">
-                        <div class="ml-md-auto">
-                            <input type="reset" class="btn btn-danger btn-skew">
-                            <input type="submit" class="btn btn-primary btn-skew"  id="pnotify-callbacks" value="Submit">   
-                        </div>                               
-                    </div>            
-                </form>
-            </div>
-        </div>  
+        <div class="card col-5" id="service_category_form" style="display:none">
+        </div>
     </div>
 
-    <script>
-            $("form#service_category").submit(function () {
-                var formData = $('form#service_category').serialize();
-                ajax({
-                    a:"admin_ajax",
-                    b:formData,
-                    c:function(){},
-                    d:function(data){
-                        var records = JSON.parse(data)
-                            if(records.result == 'Success'){
-                                toastr.success('<h5>'+records.data+'</h5>');                  
-                        }
-                    }          
-                });  
-            });
-    </script>
-<?php } ?>
+    <?php  }  
 
-<?php if($_POST['act'] == SERVICES){  ?>  
+
+
+  if($_POST['act'] == SERVICES){  ?>  
 
     <div class="card borderless-card">
         <div class="card-block caption-breadcrumb">
             <div class="breadcrumb-header">
-                <h5>Service</h5>
+                <h5>Our Services</h5>
             </div>
             <div class="page-header-breadcrumb">
                 <ul class="breadcrumb-title">
@@ -208,7 +195,7 @@
         </div>
     </div>
     
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-c-yellow update-card">
                 <div class="card-block">
@@ -281,93 +268,78 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card" id="service_category_form" style="display:none">
-        <div class="card-header bg-c-lite-green">
-            <h5> Add Service Category</h5>
-            <a href="javascript:void(0);" onclick="close_service_category()" class="btn btn-success right-float"><i class="icofont icofont-document-search">View Table</i></a>
-        </div>
-        <div class="card-block">
-            <form action="javascript:void(0);" id="service_category">
-                <input type="text" value="<?php echo SERVICE ?>" name="act">
-                <input type="hidden" value="" name="id">
-                <div class="row">
-                    <label class="col-sm-4 col-lg-2 col-form-label">Category Name</label>
-                    <div class="col-sm-8 col-lg-10">
-                        <div class="input-group input-group-inverse">
-                            <span class="input-group-addon"><i class="icofont icofont-idea"></i></span>
-                            <input type="text" class="form-control" placeholder="Enter Category Name" name="category_name">
-                        </div>
+    </div> -->
+    <div class="row">
+        <div class="card col-7">
+            <div class="card-header">
+                <h5>Service List</h5>            
+                <a href="javascript:void(0);" onclick="add_edit_service()" class="right-float">Add New</a>
+                <a href="javascript:void(0);" onclick="service_position()" class="right-float">Click To Arrange Position &nbsp;&nbsp;</a>
+            </div>
+            <!-- <div class="card-block">
+                <div class="table-responsive dt-responsive">
+                    <table id="dt-service" class="table table-striped table-bordered nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Service</th>                  
+                                <th>Price</th>
+                                <th>Action</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>               
+                    </table>
+                </div>
+            </div> -->
+            <div class="card-block">
+                <div class="card-block table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-styling">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th>#</th>
+                                    <th>Service</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $rsServices = Service::get_service();
+                               
+                                if(count($rsServices)>0){
+                                    foreach ($rsServices as $key=>$value){
+                                 ?>
+                                <tr>
+                                    <th><?php echo $key+1?></th>
+                                    <td><?php echo $value->service_name ?></td>  
+                                    <td><?php echo $value->service_price ?></td>                                          
+                                    <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
+                                            <a href="javascript:void(0);" class="btn btn-primary btn-mini waves-effect waves-light" onclick="add_edit_service(<?php echo $value->id;?>)" >Edit</a>
+                                            <?php if($value->status == 'A'){ ?>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-mini waves-effect waves-light" onclick="statusService(<?php echo $value->id;?>,'I')">Change Inactive</a>
+                                            <?php } else { ?>
+                                            <a href="javascript:void(0);" class="btn btn-success btn-mini waves-effect waves-light" onclick="statusService(<?php echo $value->id;?>,'A')">Change Active</a>
+                                            <?php } ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?php if($value->status == 'A'){ ?>
+                                            <div class="label-main"><label class="label label-success">Active</label></div>
+                                        <?php }else { ?>
+                                                <div class="label-main"><label class="label label-danger">Inactive</label></div>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                                    <?php } } ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="row">
-                    <label class="col-sm-4 col-lg-2 col-form-label">Category Abbr</label>
-                    <div class="col-sm-8 col-lg-10">
-                        <div class="input-group input-group-inverse">
-                            <span class="input-group-addon"><i class="icofont icofont-queen"></i></span>
-                            <input type="text" class="form-control" placeholder="Enter Category Abbr" name="category_abbr">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-4 col-lg-2 col-form-label">Category Description</label>
-                    <div class="col-sm-8 col-lg-10">
-                        <div class="input-group input-group-inverse">
-                            <span class="input-group-addon"><i class="icofont icofont-presentation"></i></span>
-                            <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description" name="category_description"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row m-b-20">
-                    <div class="ml-md-auto">
-                        <input type="reset" class="btn btn-danger btn-skew">
-                        <input type="submit" class="btn btn-primary btn-skew"  id="pnotify-callbacks" value="Submit">   
-                    </div>                               
-                </div>            
-            </form>
-        </div>
-    </div>
-   
-    <!-- Generated content for a column table start -->
-    <div class="card" id="service_table">
-        <div class="card-header bg-c-lite-green">
-            <h5>Service Category List</h5>            
-            <a href="javascript:void(0);" onclick="open_service_category()" class="btn btn-success right-float"><i class="icofont icofont-ui-add"> Add New</i></a>
-        </div>
-        <div class="card-block">
-            <div class="table-responsive dt-responsive">
-                <table id="dt-service-category" class="table table-striped table-bordered nowrap">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Category Name</th>
-                            <th>Category Appr</th>
-                            <th>Discription</th>
-                            <th>Action</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>               
-                </table>
             </div>
         </div>
+        <div class="card col-5" id="service_form" style="display:none">
+        </div>
     </div>
-    <!-- Generated content for a column table end -->
-    <script>
-            $("form#service").submit(function () {
-                var formData = $('form#service').serialize();
-                ajax({
-                    a:"admin_ajax",
-                    b:formData,
-                    c:function(){},
-                    d:function(data){
-                        var records = JSON.parse(data)
-                            if(records.result == 'Success'){
-                                toastr.success('<h5>'+records.data+'</h5>');                  
-                        }
-                    }          
-                });  
-            });
-    </script>
-
 
 <?php } ?>

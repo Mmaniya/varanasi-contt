@@ -1,3 +1,10 @@
+
+.bg-c-lite-green h5 { color:#fff !important; }
+
+.input-group-inverse .form-control {
+    border-color: #404e6761;
+}
+
 .preloader {
     position: fixed;
     top: 0;
