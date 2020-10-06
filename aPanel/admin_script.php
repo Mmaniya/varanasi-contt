@@ -11,6 +11,8 @@
     <!-- jquery sortable js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/Sortable/Sortable.js"></script>
 
+    <script src="<?php echo ADMIN_JS ?>/tinymce/js/tinymce.min.js"></script>
+
    <!-- data-table js -->
    <script src="<?php echo ADMIN_JS ?>/datatables.net/js/jquery.dataTables.min.js"></script>
    <script src="<?php echo ADMIN_JS ?>/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -43,8 +45,8 @@
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/vartical-layout.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/script.min.js"></script> 
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/common-pages.js"></script> 
-    
-    <script src="<?php echo ADMIN_JS ?>/sortable-custom.js"  type="text/javascript"></script>
+
+    <!-- <script src="<?php echo ADMIN_JS ?>/sortable-custom.js"  type="text/javascript"></script> -->
      <!-- Custom js -->
      <script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script.js"></script>
 

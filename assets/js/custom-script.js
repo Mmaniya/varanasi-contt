@@ -104,7 +104,7 @@ function admin_submenu_service($submenu) {
 
 
 
-// Service Page
+// Service  Category Page
 
 function add_edit_category(id) {
     param = { 'act': 'add_edit_service_category_form', 'id': id };
@@ -119,6 +119,108 @@ function add_edit_category(id) {
     });
 }
 
+function delete_category(id) {
+    param = { 'act': 'category_remove', 'id': id };
+    Swal.fire({
+        title: '',
+        text: "Are you sure want to delete this record?",
+        icon: 'danger',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!'
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "admin_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        toastr.success('<h5>' + records.data + '</h5>');
+                        $('.row_id_' + id).remove();
+                    }
+                }
+            });
+        }
+    });
+}
+
+function statusCategory(id) {
+
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
+    param = { 'act': 'service_category_status_change', 'status': status, 'id': id };
+    Swal.fire({
+        title: '',
+        text: "Are you sure want to change status?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!'
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "admin_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        toastr.success('<h5>' + records.data + '</h5>');
+                    }
+                }
+            });
+        }
+    });
+}
+
+function category_position() {
+    param = { 'act': 'category_draggable' };
+    $('.preloader').show();
+    ajax({
+        a: "table/form/service_form",
+        b: param,
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#service_category_form').show();
+            $('#service_category_form').html(data);
+        }
+    });
+    // Swal.fire({
+    //     title: 'Are you sure?',
+    //     text: "Change the Postion.",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes!'
+    // }).then((result) => {
+    //     if (result.value) {
+    //         $('.preloader').show();
+    //         ajax({
+    //             a: "table/form/service_form",
+    //             b: param,
+    //             c: function () { },
+    //             d: function (data) {
+    //                 $('.preloader').hide();
+    //                 $('#service_category_form').show();
+    //                 $('#service_category_form').html(data);
+    //             }
+    //         });
+    //     }
+    // });
+}
+
+
+// Service Page
 
 function add_edit_service(id) {
     param = { 'act': 'add_edit_service_form', 'id': id };
@@ -133,23 +235,12 @@ function add_edit_service(id) {
     });
 }
 
-function service_payment_type(value) {
-    if (value == 'recurring') {
-        $('#recurring_type').show();
-        $('#recurring_period').show();
-    } else {
-        $('#recurring_type').hide();
-        $('#recurring_period').hide();
-    }
-}
-
-
-function statusCategory(id, status) {
-    param = { 'act': 'service_category_status_change', 'status': status, 'id': id };
+function delete_service(id) {
+    param = { 'act': 'service_remove', 'id': id };
     Swal.fire({
-        title: 'Are you sure?',
-        text: "Change the status.",
-        icon: 'warning',
+        title: '',
+        text: "Are you sure want to delete this record?",
+        icon: 'danger',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -163,17 +254,25 @@ function statusCategory(id, status) {
                 c: function () { },
                 d: function (data) {
                     $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        toastr.success('<h5>' + records.data + '</h5>');
+                        $('.row_id_' + id).remove();
+                    }
                 }
             });
         }
     });
 }
 
-function statusService(id, status) {
+function statusService(id) {
+
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
     param = { 'act': 'service_status_change', 'status': status, 'id': id };
     Swal.fire({
-        title: 'Are you sure?',
-        text: "Change the status.",
+        title: '',
+        text: "Are you sure want to change status?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -188,34 +287,10 @@ function statusService(id, status) {
                 c: function () { },
                 d: function (data) {
                     $('.preloader').hide();
-                }
-            });
-        }
-    });
-}
-
-// Position change
-function category_position() {
-    param = { 'act': 'category_draggable' };
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "Change the Postion.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
-    }).then((result) => {
-        if (result.value) {
-            $('.preloader').show();
-            ajax({
-                a: "table/form/service_form",
-                b: param,
-                c: function () { },
-                d: function (data) {
-                    $('.preloader').hide();
-                    $('#service_category_form').show();
-                    $('#service_category_form').html(data);
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        toastr.success('<h5>' + records.data + '</h5>');
+                    }
                 }
             });
         }
@@ -224,27 +299,46 @@ function category_position() {
 
 function service_position() {
     param = { 'act': 'service_draggable' };
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "Change the Postion.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
-    }).then((result) => {
-        if (result.value) {
-            $('.preloader').show();
-            ajax({
-                a: "table/form/service_form",
-                b: param,
-                c: function () { },
-                d: function (data) {
-                    $('.preloader').hide();
-                    $('#service_form').show();
-                    $('#service_form').html(data);
-                }
-            });
+    $('.preloader').show();
+    ajax({
+        a: "table/form/service_form",
+        b: param,
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#service_form').show();
+            $('#service_form').html(data);
         }
     });
+    // Swal.fire({
+    //     title: 'Are you sure?',
+    //     text: "Change the Postion.",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes!'
+    // }).then((result) => {
+    //     if (result.value) {
+    //         $('.preloader').show();
+    //         ajax({
+    //             a: "table/form/service_form",
+    //             b: param,
+    //             c: function () { },
+    //             d: function (data) {
+    //                 $('.preloader').hide();
+    //                 $('#service_form').show();
+    //                 $('#service_form').html(data);
+    //             }
+    //         });
+    //     }
+    // });
+}
+
+function service_payment(value) {
+    if (value == 'recurring') {
+        $('#recurring_period').show();
+    } else {
+        $('#recurring_period').hide();
+    }
 }

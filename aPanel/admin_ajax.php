@@ -36,7 +36,6 @@ $action = $_POST['act'];
             echo  json_encode($response);
             }
         }else{
-
             $param['updated_by']= $_POST['access_level'];
             $where= array('id'=>$_POST['id']);        
             $result = Table::updateData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
@@ -53,6 +52,32 @@ $action = $_POST['act'];
         $result = Table::updateData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
         $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
         echo  json_encode($response);  
+    }
+
+    if($_POST['act'] == 'category_position'){
+        ob_clean();
+            if(count($_POST['category_id'])>0) {
+                foreach($_POST['category_id'] as $key=>$val) { 
+                    $param['position'] =$key+1;                 
+                    $where= array('id'=>$val);        
+                    $result = Table::updateData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N'));                 
+
+                }
+                $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
+                echo  json_encode($response);
+            }
+       exit();
+    }
+
+    if($_POST['act'] == 'category_remove'){
+        ob_clean();
+
+            $where= array('id'=>$_POST['id']);        
+            $result = Table::deleteData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
+            $response = array("result" => 'Success',"data" =>'Successfully Removed'); 
+            echo  json_encode($response);  
+
+        exit();
     }
 
     if($_POST['act'] == SERVICES){ 
@@ -108,34 +133,29 @@ $action = $_POST['act'];
         echo  json_encode($response);  
     }
 
-    if($_POST['act'] == 'category_position'){
+    if($_POST['act'] == 'service_position'){
         ob_clean();
-       if(count($_POST['category_id'])>0) {
-            foreach($_POST['category_id'] as $key=>$val) { 
+        if(count($_POST['service_id'])>0) {
+            foreach($_POST['service_id'] as $key=>$val) { 
                 $param['position'] =$key+1;                 
                 $where= array('id'=>$val);        
-                $result = Table::updateData(array('tableName'=>TBL_SERVICE_CATEGORIES,'fields'=>$param,'where'=>$where,'showSql'=>'N'));                 
-
+                $result = Table::updateData(array('tableName'=>TBL_SERVICE,'fields'=>$param,'where'=>$where,'showSql'=>'N'));                 
             }
             $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
             echo  json_encode($response);
-       }
-       exit();
+        }
+        exit();
     }
 
-       if($_POST['act'] == 'service_position'){
-            ob_clean();
-            if(count($_POST['service_id'])>0) {
-                foreach($_POST['service_id'] as $key=>$val) { 
-                    $param['position'] =$key+1;                 
-                    $where= array('id'=>$val);        
-                    $result = Table::updateData(array('tableName'=>TBL_SERVICE,'fields'=>$param,'where'=>$where,'showSql'=>'N'));                 
-                }
-                $response = array("result" => 'Success',"data" =>'Updated Successfully'); 
-                echo  json_encode($response);
-            }
-            exit();
-        }
-    
+    if($_POST['act'] == 'service_remove'){
+        ob_clean();
 
+            $where= array('id'=>$_POST['id']);        
+            $result = Table::deleteData(array('tableName'=>TBL_SERVICE,'fields'=>$param,'where'=>$where,'showSql'=>'N')); 
+            $response = array("result" => 'Success',"data" =>'Successfully Removed'); 
+            echo  json_encode($response);  
+
+        exit();
+    }
+    
 ?>
