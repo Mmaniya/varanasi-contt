@@ -161,7 +161,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <li>
+                                        <!-- <li>
                                             <a href="#!">
                                                 <i class="feather icon-settings"></i> Settings
                                             </a>
@@ -180,7 +180,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                             <a href="auth-lock-screen.htm">
                                                 <i class="feather icon-lock"></i> Lock Screen
                                             </a>
-                                        </li>
+                                        </li> -->
                                         <li>
                                             <a href="logout.php">
                                                 <i class="feather icon-log-out"></i> Logout
@@ -310,7 +310,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-micon"><i class="feather icon-box"></i></span>
                                         <span class="pcoded-mtext">Service</span>
                                     </a>
                                     <ul class="pcoded-submenu">

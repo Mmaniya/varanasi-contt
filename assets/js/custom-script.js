@@ -120,6 +120,7 @@ function add_edit_category(id) {
 }
 
 function delete_category(id) {
+    $('#service_category_form').hide();
     param = { 'act': 'category_remove', 'id': id };
     Swal.fire({
         title: '',
@@ -150,7 +151,7 @@ function delete_category(id) {
 }
 
 function statusCategory(id) {
-
+    $('#service_category_form').hide();
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
     param = { 'act': 'service_category_status_change', 'status': status, 'id': id };
@@ -163,6 +164,7 @@ function statusCategory(id) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes!'
     }).then((result) => {
+
         if (result.value) {
             $('.preloader').show();
             ajax({
@@ -177,8 +179,13 @@ function statusCategory(id) {
                     }
                 }
             });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
         }
     });
+
 }
 
 function category_position() {
@@ -236,6 +243,7 @@ function add_edit_service(id) {
 }
 
 function delete_service(id) {
+    $('#service_form').hide();
     param = { 'act': 'service_remove', 'id': id };
     Swal.fire({
         title: '',
@@ -266,7 +274,7 @@ function delete_service(id) {
 }
 
 function statusService(id) {
-
+    $('#service_form').hide();
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
     param = { 'act': 'service_status_change', 'status': status, 'id': id };
@@ -293,6 +301,10 @@ function statusService(id) {
                     }
                 }
             });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
         }
     });
 }
@@ -340,5 +352,71 @@ function service_payment(value) {
         $('#recurring_period').show();
     } else {
         $('#recurring_period').hide();
+    }
+}
+
+function search_services(value) {
+
+    if (value == 'service_name') {
+        $('#search_box').show();
+        $('#serach_type').hide(); $('#service_status').hide();
+    } else if (value == 'category') {
+        $('#serach_type').show();
+        $('#search_box').hide();
+        $('#service_status').hide();
+    } else if (value == 'status') {
+        $('#serach_type').hide();
+        $('#search_box').hide();
+        $('#service_status').show();
+    }
+
+    else if (value == 'show_all') { admin_submenu_service('service'); } else {
+        admin_submenu_service('service');
+    }
+}
+
+
+function filter_service() {
+    err = 0;
+    var filter_type = $('#filter_type').val();
+
+    if ($('#filter_type').val() == '') { err = 1; $('#filter_type').addClass('error_class'); } else {
+        $('#filter_type').removeClass('error_class');
+    }
+
+    if (filter_type == 'service_name') {
+        if ($('#filter_text').val() == '') { err = 1; $('#filter_text').addClass('error_class'); } else {
+            $('#filter_text').removeClass('error_class');
+        }
+    }
+
+    if (filter_type == 'category') {
+        if ($('#filter_category').val() == '') { err = 1; $('#filter_category').addClass('error_class'); } else {
+            $('#filter_category').removeClass('error_class');
+        }
+    }
+
+    if (filter_type == 'status') {
+        if ($('#filter_status').val() == '') { err = 1; $('#filter_status').addClass('error_class'); } else {
+            $('#filter_status').removeClass('error_class');
+        }
+    }
+
+    filter_text = $('#filter_text').val();
+    filter_category = $('#filter_category').val();
+    filter_status = $('#filter_status').val();
+
+    if (err == 0) {
+        param = { 'act': 'filter_service_category', 'filter_type': filter_type, 'filter_category': filter_category, 'filter_status': filter_status, 'filter_text': filter_text };
+        $('.preloader').show();
+        ajax({
+            a: "table/services_table",
+            b: param,
+            c: function () { },
+            d: function (data) {
+                $('.preloader').hide();
+                $('.service_body').html(data);
+            }
+        });
     }
 }

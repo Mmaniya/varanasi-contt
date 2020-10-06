@@ -85,7 +85,7 @@
                 <h5 class="card-header-text">Repositioning Category List</h5>
 
             </div>
-            <div class="card-block p-b-0">
+            <div class="card-block">
                 <div class="row">
                 <form action="javascript:void(0);" id="category_position" style="width:100%">
                     <input type="hidden" name="act" value="category_position">
@@ -317,7 +317,7 @@
             <h5 class="card-header-text"> Repositioning Service List</h5>
 
         </div>
-        <div class="card-block p-b-0">
+        <div class="card-block">
             <div class="row">
             <form action="javascript:void(0);" id="service_position" style="width:100%">
                 <input type="hidden" name="act" value="service_position">
@@ -337,7 +337,7 @@
                         <?php  $sno++; } }  } ?> 
 
                     </div>   
-                    <input type="submit" class="btn btn-primary">  
+                        <input type="submit" class="btn btn-primary">  
                     </div>                     
                 </form>
             </div>
@@ -368,4 +368,7 @@
         });
 
     </script>
-<?php } ?>
+<?php } 
+
+ 
+?>
