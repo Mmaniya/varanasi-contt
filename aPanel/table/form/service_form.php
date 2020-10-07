@@ -59,6 +59,8 @@
             </div>
             <script>
             $("form#service_category").submit(function () {
+                $("#service_category_table").load(location.href + " #service_category_table>*", "");
+
                 var formData = $('form#service_category').serialize();
                 ajax({
                     a:"admin_ajax",
@@ -69,7 +71,8 @@
                         if(records.result == 'Success'){
                             toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
-                            admin_submenu_service('<?php echo SERVICE_CATEGORIES ?>');
+                            $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                            // admin_submenu_service('<?php //echo SERVICE_CATEGORIES ?>');
                         }
                     }          
                 });  
@@ -127,7 +130,8 @@
                         if(records.result == 'Success'){
                             toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
-                            admin_submenu_service('<?php echo SERVICE_CATEGORIES ?>');
+                            // admin_submenu_service('<?php // echo SERVICE_CATEGORIES ?>');
+                            $("#service_category_table").load(location.href + " #service_category_table>*", "");
                         }
                     }          
                 });  
@@ -300,7 +304,8 @@
                         if(records.result == 'Success'){
                             toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_form').hide();
-                            admin_submenu_service('<?php echo SERVICES ?>');
+                            // admin_submenu_service('<?php// echo SERVICES ?>');
+                            $("#service_table").load(location.href + " #service_table>*", "");
                         }
                     }          
                 });  
@@ -361,7 +366,8 @@
                     if(records.result == 'Success'){
                         toastr.success('<h5>'+records.data+'</h5>');
                         $('#service_form').hide();
-                        admin_submenu_service('<?php echo SERVICES ?>');
+                        // admin_submenu_service('<?php //echo SERVICES ?>');
+                        $("#service_table").load(location.href + " #service_table>*", "");
                     }
                 }          
             });  

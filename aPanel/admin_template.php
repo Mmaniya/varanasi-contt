@@ -75,7 +75,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                         <a class="mobile-menu" id="mobile-collapse" href="#">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a href="index-1.htm">
+                        <a href="dashboard.php">
                             <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190" alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">
@@ -306,21 +306,38 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                 <div class="pcoded-wrapper">
                     <nav class="pcoded-navbar">
                         <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigatio-lavel">Services</div>
+                            <div class="pcoded-navigatio-lavel">Navigation</div>
                             <ul class="pcoded-item pcoded-left-item">
+                            <li class="">
+                                    <a href="dashboard.php">
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                        <span class="pcoded-mtext">Dashboard</span>
+                                    
+                                    </a>
+                                </li>
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="feather icon-box"></i></span>
                                         <span class="pcoded-mtext">Service</span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <li class="">
+                                        <!-- <li class="">
                                             <a href="javascript:void(0);" onclick="admin_submenu_service('<?php echo SERVICE_CATEGORIES ?>')">
                                                 <span class="pcoded-mtext">Add Categories</span>
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="javascript:void(0);" onclick="admin_submenu_service('<?php echo SERVICES ?>')">
+                                                <span class="pcoded-mtext">Add Service</span>
+                                            </a>
+                                        </li> -->
+                                        <li class="">
+                                            <a href="service_category.php">
+                                                <span class="pcoded-mtext">Add Categories</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="services.php">
                                                 <span class="pcoded-mtext">Add Service</span>
                                             </a>
                                         </li>

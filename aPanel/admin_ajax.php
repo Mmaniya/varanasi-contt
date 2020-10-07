@@ -157,5 +157,54 @@ $action = $_POST['act'];
 
         exit();
     }
+
+
+    if($_POST['act']=='filter_service_category') {
+        ob_clean();
+        
+        if($_POST['filter_type']=='service_name')  {
+            $filter_text = $_POST['filter_text'];
+            $condition = array('service_name'=>$filter_text.'-STRING');
+        }
+    
+        if($_POST['filter_type']=='category')  {
+              $filter_category = $_POST['filter_category'];
+            $condition = array('category_id'=>$filter_category.'-INT');  }
+    
+        if($_POST['filter_type']=='status')  {
+            $filter_status = $_POST['filter_status'];
+            $condition = array('status'=>$filter_status.'-CHAR');
+          }
+    
+        $param = array('tableName'=>TBL_SERVICE,'fields'=>array('*'),'condition'=> $condition,'showSql'=>'N',);
+        $rsServices = Table::getData($param);
+        $statusArr = array('A'=>'checked','I'=>'');
+           
+            if(count($rsServices)>0){
+                foreach ($rsServices as $key=>$value){
+            ?>
+            <tr class="row_id_<?php echo $value->id;?>">
+                <th><?php echo $key+1?></th>
+                <td><?php echo $value->service_name ?></td>  
+                <td><?php echo money($value->service_price,'$') ?></td>                                          
+                <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_edit_service(<?php echo $value->id;?>)" >Edit</a>
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_service(<?php echo $value->id;?>)" >Delete</a>
+                    </div>
+                </td>
+                <td>
+                <label class="switch">                                     
+                    <input type="checkbox" class="status_update_<?php echo $value->id;?>" onchange="statusService(<?php echo $value->id;?>)" <?php echo $statusArr[$value->status];?> >
+                    <span class="slider round"></span>
+                </label>                              
+                </td>
+            </tr>
+    
+        <?php 
+                }
+            } 
+        exit();
+    }
+    
     
 ?>
