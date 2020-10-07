@@ -332,17 +332,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                             <a href="<?php echo SERVICE_PAGE ?>/services.php">
                                                 <span class="pcoded-mtext">Add Service</span>
                                             </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="<?php// echo SERVICE_PAGE ?>service_features.php">
-                                                <span class="pcoded-mtext">Service Features</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="<?php echo SERVICE_PAGE ?>/service_faq.php">
-                                                <span class="pcoded-mtext">Service Faq</span>
-                                            </a>
-                                        </li>
+                                        </li>                                 
                                     </ul>
                                 </li>
                             </ul>

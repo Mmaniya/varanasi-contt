@@ -27,8 +27,8 @@
             <div class="card">
                 <div class="card-header bg-c-lite-green">
                     <h5>Service List</h5>
-                    <a href="javascript:void(0);" onclick="add_edit_service()" class="right-float">Add New</a>
-                    <a href="javascript:void(0);" onclick="service_position()" class="right-float">Change Position &nbsp;&nbsp; </a>
+                    <a href="javascript:void(0);" onclick="add_edit_service()" class="right-float label label-success">Add New</a>
+                    <a href="javascript:void(0);" onclick="service_position()" class="right-float label label-warning">Change Position &nbsp;&nbsp; </a>
                 </div>
                 <div class="card-block">
                     <div class="card-block table-border-style">
@@ -49,13 +49,10 @@
                                     <select id="filter_category" class="form-control" required name="filter_category" onchange="filter_service()">
                                     <option value="">Select Category</option>
                                     <?php $rsCategory = Service::get_service_category();
-    if (count($rsCategory) > 0) {
-        foreach ($rsCategory as $key => $value) {?>
-
+                                            if (count($rsCategory) > 0) {
+                                                foreach ($rsCategory as $key => $value) {?>
                                             <option value="<?php echo $value->id ?>" <?php if ($category_id == $value->id) {echo 'selected';}?> ><?php echo $value->category_name ?></option>
-                                      <?php }
-    }
-    ?>
+                                      <?php } } ?>
                                     </select>
                                     <button class="btn btn-primary input-group-addon" onclick="filter_service()">Search</button>
                                 </div>
@@ -104,7 +101,8 @@
                                         <td><?php echo money($value->service_price, '$') ?></td>
                                         <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" >
                                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_edit_service(<?php echo $value->id; ?>)" >Edit </a>
-                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_service(<?php echo $value->id; ?>)" >  Delete</a>
+                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_service(<?php echo $value->id; ?>)" >Delete</a>
+                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_service_features(<?php echo $value->id; ?>)" >Features</a>
                                             </div>
                                         </td>
                                         <td>
@@ -130,9 +128,5 @@
     <style>
         .error_class { border:1px solid #ff0000 !important; }
     </style>
-
-<?php
-
-    ?>
 
 <?php }include '../admin_template.php';?>

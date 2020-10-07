@@ -1,9 +1,9 @@
 <?php 
+define('ABSPATH', dirname(__DIR__, 2));
+require ABSPATH . "/includes.php";
+$action = $_POST['act'];
 
-require "../includes.php";?>
-
-
-<?php if ($_POST['act'] == 'add_edit_service_category_form') {
+if ($action == 'add_edit_service_category_form') {
     $categoryId = $_POST['id'];
     $btnName = $title = 'Add New';
     $joined_date = '';
@@ -13,16 +13,15 @@ require "../includes.php";?>
         foreach ($rsCategory as $K => $V) {
             $$K = $V;
         }
-
         $btnName = $title = 'Edit ';
     }?>
 
             <div class="card-header bg-c-lite-green">
-                <h5><?php echo $btnName ?> Service Category</h5>
-                <!-- <a href="javascript:void(0);" onclick="close_service_category()" class="btn btn-success right-float"><i class="icofont icofont-document-search">View Table</i></a> -->
+                <h5 class="card-header-text"><?php echo $btnName ?> Service Categories</h5>
+                <a href="javascript:void(0);" onclick="close_service_category()" class="right-float label label-danger">Cancel</a>
             </div>
-            <div class="card-block">
-                <form action="javascript:void(0);" id="service_category">
+            <div class="card-block" style="background-color: rgb(255, 255, 255);">
+                <form action="javascript:void(0);" id="service_category" >
                     <input type="hidden" value="service_categories" name="act">
                     <input type="hidden"  name="id" value="<?php echo $id; ?>">
                     <input type="hidden"  name="access_level" value="<?php echo $_SESSION['access_level']; ?>">
@@ -68,7 +67,7 @@ require "../includes.php";?>
 
                 var formData = $('form#service_category').serialize();
                 ajax({
-                    a:"admin_ajax",
+                    a:"service_ajax",
                     b:formData,
                     c:function(){},
                     d:function(data){
@@ -77,7 +76,6 @@ require "../includes.php";?>
                             toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                            // admin_submenu_service('<?php //echo SERVICE_CATEGORIES ?>');
                         }
                     }
                 });
@@ -86,7 +84,7 @@ require "../includes.php";?>
     <script src="<?php echo ADMIN_JS ?>/tinymce/tinymce.custom.js"></script>
 <?php }?>
 
-<?php if ($_POST['act'] == 'category_draggable') {?>
+<?php if ($action == 'category_draggable') {?>
 
         <div class="card">
             <div class="card-header bg-c-lite-green">
@@ -99,12 +97,11 @@ require "../includes.php";?>
                     <input type="hidden" name="act" value="category_position">
                     <div class="col-md-12">
                     <div  id="draggableMultiple">
-
                             <?php $rsCategory = Service::get_service_category();
-    $sno = 0;
-    if (count($rsCategory) > 0) {
-        foreach ($rsCategory as $key => $value) {
-            if ($value->status == 'A') {?>
+                                $sno = 0;
+                                if (count($rsCategory) > 0) {
+                                    foreach ($rsCategory as $key => $value) {
+                                        if ($value->status == 'A') {?>
                                     <div class="sortable-moves" style="padding:10px;margin-bottom:10px;">
                                         <p style="margin:0px;"><?php echo $sno + 1; ?>.<?php echo $value->category_name ?></p>
                                         <input type="hidden" name="category_id[]" value="<?php echo $value->id ?>">
@@ -127,7 +124,7 @@ require "../includes.php";?>
             $("form#category_position").submit(function () {
                 var formData = $('form#category_position').serialize();
                 ajax({
-                    a:"admin_ajax",
+                    a:"service_ajax",
                     b:formData,
                     c:function(){},
                     d:function(data){
@@ -145,9 +142,10 @@ require "../includes.php";?>
         </script>
 <?php }?>
 
-<?php if ($_POST['act'] == 'add_edit_service_form') {
+<?php if ($action == 'add_edit_service_form') {
     $serviceId = $_POST['id'];
     $btnName = $title = 'Add New';
+	$category_id = $_POST['category_id'];
     $joined_date = '';
     if ($serviceId > 0) {
         $param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' => array('id' => $serviceId . '-INT'), 'showSql' => 'N');
@@ -155,12 +153,12 @@ require "../includes.php";?>
         foreach ($rsService as $K => $V) {
             $$K = $V;
         }
-
         $btnName = $title = 'Edit ';
     }?>
 
             <div class="card-header bg-c-lite-green">
-                <h5><?php echo $btnName ?> Service </h5>
+                <h5 class="card-header-text"><?php echo $btnName ?> Service </h5>
+                <a href="javascript:void(0);" onclick="close_service(<?php echo $_POST['category_id'];?>)" class="right-float label label-danger">Cancel</a>
             </div>
             <div class="card-block">
                 <form action="javascript:void(0);" id="our_service" enctype="multipart/form-data">
@@ -172,17 +170,15 @@ require "../includes.php";?>
                         <div class="col-sm-12 col-lg-12">
                             <label class="col-form-label">Select Category</label>
                             <div class="input-group input-group-inverse">
-
-                                <select  class="form-control" required name="category_id">
+                              
+                                <select  class="form-control" required name="category_id" id="category_id">
                                     <option value="">Select Category</option>
                                     <?php $rsCategory = Service::get_service_category();
-    if (count($rsCategory) > 0) {
-        foreach ($rsCategory as $key => $value) {
-            if ($value->status == 'A') {?>
+                                        if (count($rsCategory) > 0) {
+                                            foreach ($rsCategory as $key => $value) {
+                                                if ($value->status == 'A') {?>
                                             <option value="<?php echo $value->id ?>" <?php if ($category_id == $value->id) {echo 'selected';}?> ><?php echo $value->category_name ?></option>
-                                      <?php }}
-    }
-    ?>
+                                      <?php } } }   ?>
                                 </select>
                             </div>
                         </div>
@@ -300,7 +296,7 @@ require "../includes.php";?>
                 // var formData = $('form#our_service').serialize();
                 var formData = new FormData(this);
                 $.ajax({
-                    url: 'admin_ajax.php',
+                    url: 'service_ajax.php',
                     type: 'POST',
                     data: formData,
                     cache: false,
@@ -312,6 +308,7 @@ require "../includes.php";?>
                             toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_form').hide();
                             $("#service_table").load(location.href + " #service_table>*", "");
+							category_service_list($('#category_id').val());
                         }
                     }
                 });
@@ -321,7 +318,7 @@ require "../includes.php";?>
     <script src="<?php echo ADMIN_JS ?>/tinymce/tinymce.custom.js"></script>
 <?php }?>
 
-<?php if ($_POST['act'] == 'service_draggable') {?>
+<?php if ($action == 'service_draggable') { ?>
 
     <div class="card">
         <div class="card-header bg-c-lite-green">
@@ -335,12 +332,12 @@ require "../includes.php";?>
                 <div class="col-md-12">
                     <div id="draggableMultiple">
                         <?php $rsCategory = Service::get_service();
-    $sno = 0;
-    if (count($rsCategory) > 0) {
-        foreach ($rsCategory as $key => $value) {
-            if ($value->status == 'A') {
+                                    $sno = 0;
+                                    if (count($rsCategory) > 0) {
+                                        foreach ($rsCategory as $key => $value) {
+                                            if ($value->status == 'A') {
 
-                ?>
+                                                ?>
                                    <div class="sortable-moves" style="padding:10px;margin-bottom:10px;">
                                         <p style="margin:0px;"><?php echo $sno + 1; ?>.<?php echo $value->service_name ?></p>
                                     <input type="hidden" name="service_id[]" value="<?php echo $value->id ?>">
@@ -364,7 +361,7 @@ require "../includes.php";?>
         $("form#service_position").submit(function () {
             var formData = $('form#service_position').serialize();
             ajax({
-                a:"admin_ajax",
+                a:"service_ajax",
                 b:formData,
                 c:function(){},
                 d:function(data){
@@ -379,6 +376,160 @@ require "../includes.php";?>
         });
 
     </script>
-<?php }
+<?php } ?>
 
-?>
+<?php if ($action == 'service_category_draggable') { 
+    $category_id =  $_POST['category_id']; 
+	
+	$param = array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => array('*'), 'condition' =>array('id' => $category_id . '-INT', 'showSql' => 'N'));
+	$rsDtls = Table::getData($param);
+	?>
+
+    <div class="card">
+        <div class="card-header bg-c-lite-green">
+            <h5 class="card-header-text"> <?php echo $rsDtls->category_name;?> - Reposition  </h5>
+
+        </div>
+        <div class="card-block">
+            <div class="row">
+            <form action="javascript:void(0);" id="service_position" style="width:100%">
+                <input type="hidden" name="act" value="service_position">
+                <div class="col-md-12">
+                    <div id="draggableMultiple">
+                        <?php  
+						           $param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' =>array('category_id' => $category_id . '-INT', 'showSql' => 'N'),'orderby'=>'position', 'sortby'=>'asc');
+									$rsCategory = Table::getData($param);
+                                    $sno = 0;
+                                    if (count($rsCategory) > 0) {
+                                        foreach ($rsCategory as $key => $value) {
+                                            if ($value->status == 'A') {
+
+                                                ?>
+                                   <div class="sortable-moves" style="padding:10px;margin-bottom:10px;">
+                                        <p style="margin:0px;"><?php echo $sno + 1; ?>.<?php echo $value->service_name ?></p>
+                                    <input type="hidden" name="service_id[]" value="<?php echo $value->id ?>">
+                                </div>
+                        <?php $sno++;}}}?>
+
+                    </div>
+                      
+                    </div> 
+					 <div class="col-md-12"> 
+					 <input type="submit" class="btn btn-primary btn-sm" value="Update Position">
+					 
+					 <button class="btn btn-danger btn-sm  float-right" type="button" onclick="close_cat_service()">Close   </button>  
+					 <button class="btn btn-primary btn-sm float-right" style="margin-right:10px;"  onclick="category_service_list(<?php echo $category_id; ?>)">Back to Service List</button>    &nbsp; &nbsp;</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+	function close_cat_service() {
+		$('#service_category_form').hide();
+		$('#service_category_form').html('');
+	}
+        $( document ).ready(function() {
+                Sortable.create(draggableMultiple, {
+                group: 'draggableMultiple',
+                animation: 150
+            });
+        });
+        $("form#service_position").submit(function () {
+            var formData = $('form#service_position').serialize();
+            ajax({
+                a:"service_ajax",
+                b:formData,
+                c:function(){},
+                d:function(data){
+                    var records = JSON.parse(data);
+                    if(records.result == 'Success'){
+                        toastr.success('<h5>'+records.data+'</h5>');
+                        $('#service_form').hide();
+                        $("#service_table").load(location.href + " #service_table>*", "");
+						category_service_list(<?php echo $category_id;?>);
+                    }
+                }
+            });
+        });
+
+    </script>
+<?php } ?>
+
+<?php if($action == 'service_features_list'){ 
+    $feature_id = $_POST['feature_id'];
+
+        $rsDtls = Service::service_features($_POST['feature_id']);
+
+        foreach ($rsDtls as $K => $V) {$$K = $V;}
+        $service_id = $_POST['service_id'];
+        $rsService = Service::service_tbl($service_id); ?>
+        
+		<div class="card-header bg-c-lite-green">
+			<h5>Add New <?php echo $rsService->service_name; ?> Features</h5>
+			<!-- <a href="javascript:void(0);" onclick="close_service_category()" class="btn btn-success right-float"><i class="icofont icofont-document-search">View Table</i></a> -->
+		</div>
+            <div class="card-block">
+                <form action="javascript:void(0);" id="service_features_form">
+                    <input type="hidden"  name="id" value="">
+
+					<?php if ($feature_id == '') {?>
+ 					<div class="row" id="appeded_column"></div>	<?php } else {?>
+						 <div class="col-sm-12 col-lg-12">
+							 <label class="col-form-label">Features</label>
+								 <div class="input-group input-group-inverse">
+								 <input type="text" class="form-control" placeholder="Enter Features" required name="title" value="<?php echo $title; ?>">
+								 <input type="hidden" name="feature_id" value="<?php echo $id; ?>"/>
+							 </div>
+						 </div>
+					<?php }?>
+						<input type="hidden" name="service_id" id="service_id" value="<?php echo $service_id; ?>">
+						<input type="hidden" name="act" value="submit_service_features">
+					 <div class="row">
+						<div class="col-sm-6 col-lg-6">
+							 <button type="submit"  class="btn btn-primary btn-sm">Submit</button>
+						</div>
+
+					        <?php if ($feature_id == '') {?>	<div class="col-sm-6 col-lg-6">
+							 <button class="btn btn-primary btn-sm float-right" type="button" onclick="add_more_fields()">Add More</button>
+						</div>
+					<?php }?>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+
+			x=0;
+			add_more_fields();
+			function add_more_fields() {
+
+				html ='<div class="col-sm-12 col-lg-12" id="column_'+x+'">';
+                html+='<label class="col-form-label">Features</label>';
+                html+='<div class="input-group input-group-inverse"> ';
+                html+='<input type="text" class="form-control" placeholder="Enter Features" required name="title[]"><span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')">X</span> ';
+                html+='</div>';
+                html+='</div>';
+
+				 $('#appeded_column').append(html);
+				 x++;
+			}
+			function removeRow(id) {  if(x==1) {  return;   }  x--;	 $('#column_'+id).remove();  }
+            $("form#service_features_form").submit(function () {
+                var formData = $('form#service_features_form').serialize();
+                ajax({
+                    a:"service_ajax",
+                    b:formData,
+                    c:function(){},
+                    d:function(data){
+                        add_service_features($('#service_id').val());
+                        var records = JSON.parse(data);
+                        if(records.result == 'Success'){
+                            toastr.success('<h5>'+records.data+'</h5>');
+                            $('#service_category_form').hide();
+                            $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                        }
+                    }
+                });
+            });
+    </script>
+<?php } ?>
