@@ -103,6 +103,7 @@
                                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_edit_service(<?php echo $value->id; ?>)" >Edit </a>
                                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_service(<?php echo $value->id; ?>)" >Delete</a>
                                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_service_features(<?php echo $value->id; ?>)" >Features</a>
+                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_service_faq(<?php echo $value->id; ?>)" >Faq</a>
                                             </div>
                                         </td>
                                         <td>

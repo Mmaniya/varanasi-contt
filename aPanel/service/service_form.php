@@ -379,9 +379,166 @@ if ($action == 'add_edit_service_category_form') {
 <?php } ?>
 
 <?php if ($action == 'service_category_draggable') { 
-    $category_id =  $_POST['category_id']; 
+    $service_id =  $_POST['service_id']; 
 	
-	$param = array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => array('*'), 'condition' =>array('id' => $category_id . '-INT', 'showSql' => 'N'));
+	$param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' =>array('id' => $service_id . '-INT', 'showSql' => 'N'));
+	$rsDtls = Table::getData($param);
+	?>
+
+    <div class="card">
+        <div class="card-header bg-c-lite-green">
+            <h5 class="card-header-text"> <?php echo $rsDtls->service_name;?> - Reposition  </h5>
+
+        </div>
+        <div class="card-block">
+            <div class="row">
+            <form action="javascript:void(0);" id="service_position" style="width:100%">
+                <input type="hidden" name="act" value="feature_position">
+                <div class="col-md-12">
+                    <div id="draggableMultiple">
+                        <?php  
+ 
+		$param = array('tableName' => TBL_SERVICE_FEATURES, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'),'orderby'=>'position', 'sortby'=>'asc');
+		$rsFeatures = Table::getData($param);
+                                    $sno = 0;
+                                    if (count($rsFeatures) > 0) {
+                                        foreach ($rsFeatures as $key => $value) {
+                                            if ($value->status == 'A') {
+
+                                                ?>
+                                   <div class="sortable-moves" style="padding:10px;margin-bottom:10px;">
+                                        <p style="margin:0px;"><?php echo $sno + 1; ?>.<?php echo $value->title; ?></p>
+                                    <input type="hidden" name="features_id[]" value="<?php echo $value->id ?>">
+                                </div>
+                        <?php $sno++;}}}?>
+
+                    </div>
+                      
+                    </div> 
+					 <div class="col-md-12"> 
+					 <input type="submit" class="btn btn-primary btn-sm" value="Update Position">
+					 
+					 <button class="btn btn-danger btn-sm  float-right" type="button" onclick="close_cat_service()">Close   </button>  
+					 <button class="btn btn-primary btn-sm float-right" style="margin-right:10px;"  onclick="add_service_features(<?php echo $service_id;?>">Back to Service List</button>    &nbsp; &nbsp;</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+	function close_cat_service() {
+		$('#service_form').hide();
+		$('#service_form').html('');
+	}
+        $( document ).ready(function() {
+                Sortable.create(draggableMultiple, {
+                group: 'draggableMultiple',
+                animation: 150
+            });
+        });
+        $("form#service_position").submit(function () {
+            var formData = $('form#service_position').serialize();
+            ajax({
+                a:"service_ajax",
+                b:formData,
+                c:function(){},
+                d:function(data){
+                    var records = JSON.parse(data);
+                    if(records.result == 'Success'){
+                        toastr.success('<h5>'+records.data+'</h5>');
+                        $('#service_form').hide();
+                        $("#service_table").load(location.href + " #service_table>*", "");
+						add_service_features(<?php echo $service_id;?>);
+                    }
+                }
+            });
+        });
+
+    </script>
+<?php } ?>
+
+<?php if($action == 'service_features_list'){ 
+    $feature_id = $_POST['feature_id'];
+
+        $rsDtls = Service::service_features($_POST['feature_id']);
+
+        foreach ($rsDtls as $K => $V) {$$K = $V;}
+        $service_id = $_POST['service_id'];
+        $rsService = Service::service_tbl($service_id); ?>
+        
+		<div class="card-header bg-c-lite-green">
+			<h5>Add New <?php echo $rsService->service_name; ?> Features</h5>
+			<!-- <a href="javascript:void(0);" onclick="close_service_category()" class="btn btn-success right-float"><i class="icofont icofont-document-search">View Table</i></a> -->
+		</div>
+            <div class="card-block">
+                <form action="javascript:void(0);" id="service_features_form">
+                    <input type="hidden"  name="id" value="">
+
+					<?php if ($feature_id == '') {?>
+ 					<div class="row" id="appeded_column"></div>	<?php } else {?>
+						 <div class="col-sm-12 col-lg-12">
+							 <label class="col-form-label">Features</label>
+								 <div class="input-group input-group-inverse">
+								 <input type="text" class="form-control" placeholder="Enter Features" required name="title" value="<?php echo $title; ?>">
+								 <input type="hidden" name="feature_id" value="<?php echo $id; ?>"/>
+							 </div>
+						 </div>
+					<?php }?>
+						<input type="hidden" name="service_id" id="service_id" value="<?php echo $service_id; ?>">
+						<input type="hidden" name="act" value="submit_service_features">
+					 <div class="row">
+						<div class="col-sm-6 col-lg-6">
+							 <button type="submit"  class="btn btn-primary btn-sm">Submit</button>
+						</div>
+
+					        <?php if ($feature_id == '') {?>	<div class="col-sm-6 col-lg-6">
+							 <button class="btn btn-primary btn-sm float-right" type="button" onclick="add_more_fields()">Add More</button>
+						</div>
+					<?php }?>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+
+			x=0;
+			add_more_fields();
+			function add_more_fields() {
+
+				html ='<div class="col-sm-12 col-lg-12" id="column_'+x+'">';
+                html+='<label class="col-form-label">Features</label>';
+                html+='<div class="input-group input-group-inverse"> ';
+                html+='<input type="text" class="form-control" placeholder="Enter Features" required name="title[]"><span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')"><i class="icofont icofont-minus"></i></span> ';
+                html+='</div>';
+                html+='</div>';
+
+				 $('#appeded_column').append(html);
+				 x++;
+			}
+			function removeRow(id) {  if(x==1) {  return;   }  x--;	 $('#column_'+id).remove();  }
+            $("form#service_features_form").submit(function () {
+                var formData = $('form#service_features_form').serialize();
+                ajax({
+                    a:"service_ajax",
+                    b:formData,
+                    c:function(){},
+                    d:function(data){
+                        add_service_features($('#service_id').val());
+                        var records = JSON.parse(data);
+                        if(records.result == 'Success'){
+                            toastr.success('<h5>'+records.data+'</h5>');
+                            $('#service_category_form').hide();
+                            $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                        }
+                    }
+                });
+            });
+    </script>
+<?php } ?>
+
+<?php if ($action == 'features_draggable') { 
+    $service_id =  $_POST['service_id']; 
+	
+	$param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' =>array('id' => $service_id . '-INT', 'showSql' => 'N'));
 	$rsDtls = Table::getData($param);
 	?>
 
@@ -455,35 +612,45 @@ if ($action == 'add_edit_service_category_form') {
     </script>
 <?php } ?>
 
-<?php if($action == 'service_features_list'){ 
-    $feature_id = $_POST['feature_id'];
+<?php if ($action == 'service_faq_list') {
+    $faq_id = $_POST['faq_id'];
 
-        $rsDtls = Service::service_features($_POST['feature_id']);
+    $rsDtls = Service::service_faq($_POST['faq_id']);
+    foreach ($rsDtls as $K => $V) {$$K = $V;}
+    $service_id = $_POST['service_id'];
+    $rsService = Service::service_tbl($service_id);
+    $service_id = $_POST['service_id'];
 
-        foreach ($rsDtls as $K => $V) {$$K = $V;}
-        $service_id = $_POST['service_id'];
-        $rsService = Service::service_tbl($service_id); ?>
-        
+$param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' => array('id' => $service_id . '-INT', 'showSql' => 'N'));
+$rsService = Table::getData($param);
+
+    ?>
+
 		<div class="card-header bg-c-lite-green">
-			<h5>Add New <?php echo $rsService->service_name; ?> Features</h5>
+			<h5>Add New <?php echo $rsService->service_name; ?> Faq</h5>
 			<!-- <a href="javascript:void(0);" onclick="close_service_category()" class="btn btn-success right-float"><i class="icofont icofont-document-search">View Table</i></a> -->
 		</div>
             <div class="card-block">
-                <form action="javascript:void(0);" id="service_features_form">
+                <form action="javascript:void(0);" id="service_faq_form">
                     <input type="hidden"  name="id" value="">
 
-					<?php if ($feature_id == '') {?>
- 					<div class="row" id="appeded_column"></div>	<?php } else {?>
-						 <div class="col-sm-12 col-lg-12">
-							 <label class="col-form-label">Features</label>
+					<?php if ($faq_id == '') {?>
+ 					<div  id="appeded_column"></div>	<?php } else {?>
+						 <div class="col-sm-12 col-lg-12">		  <label class="col-form-label">Question</label> 				 
 								 <div class="input-group input-group-inverse">
-								 <input type="text" class="form-control" placeholder="Enter Features" required name="title" value="<?php echo $title; ?>">
-								 <input type="hidden" name="feature_id" value="<?php echo $id; ?>"/>
+                                   
+                                    <input type="text" class="form-control" placeholder="Enter Question" required name="question" value="<?php echo $question; ?>">                                   
 							 </div>
-						 </div>
+                         </div>
+                         	 <div class="col-sm-12 col-lg-12">	
+                                    <label class="col-form-label">Answer</label> 
+                                   <div class="input-group input-group-inverse">	                  
+                    <input type="text" class="form-control" placeholder="Enter Answer" required name="answer" value="<?php echo $answer; ?>">
+                    <input type="hidden" name="faq_id" value="<?php echo $id; ?>"/>
+                             </div>     </div>  
 					<?php }?>
 						<input type="hidden" name="service_id" id="service_id" value="<?php echo $service_id; ?>">
-						<input type="hidden" name="act" value="submit_service_features">
+						<input type="hidden" name="act" value="submit_service_faq">
 					 <div class="row">
 						<div class="col-sm-6 col-lg-6">
 							 <button type="submit"  class="btn btn-primary btn-sm">Submit</button>
@@ -499,29 +666,42 @@ if ($action == 'add_edit_service_category_form') {
 
             <script>
 
-			x=0;
+			x=1;
 			add_more_fields();
 			function add_more_fields() {
 
-				html ='<div class="col-sm-12 col-lg-12" id="column_'+x+'">';
-                html+='<label class="col-form-label">Features</label>';
+                html ='<div class="row"  id="column_'+x+'">';
+                html+='<div class="col-md-12 col-md-12">';
+                html+='<label class="col-form-label">Question'+x+'</label>';
                 html+='<div class="input-group input-group-inverse"> ';
-                html+='<input type="text" class="form-control" placeholder="Enter Features" required name="title[]"><span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')">X</span> ';
+                html+='<input type="text" class="form-control" placeholder="Enter Question" required name="question[]" value="<?php echo $question; ?>"> ';
+                html+='</div>';
+                html+='</div>';
+                html+='<div class="col-md-12 col-md-12">';
+                html+='<label class="col-form-label">Answer'+x+'</label>';
+                html+='<div class="input-group input-group-inverse"> ';
+                html+='<input type="text" class="form-control" placeholder="Enter Answer" required name="answer[]" value="<?php echo $answer; ?>">';
+                html+='</div>';
+                html+='</div>';
+                html+='<div class="col-md-12 col-lg-12">';
+                html+='<div class="input-group input-group-inverse"> ';
+                html+='<span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')"><i class="icofont icofont-minus"></i></span>';
+                html+='</div>';
                 html+='</div>';
                 html+='</div>';
 
 				 $('#appeded_column').append(html);
 				 x++;
 			}
-			function removeRow(id) {  if(x==1) {  return;   }  x--;	 $('#column_'+id).remove();  }
-            $("form#service_features_form").submit(function () {
-                var formData = $('form#service_features_form').serialize();
+			function removeRow(id) {  if(x==2) {  return;   }  x--;	 $('#column_'+id).remove();  }
+            $("form#service_faq_form").submit(function () {
+                var formData = $('form#service_faq_form').serialize();
                 ajax({
                     a:"service_ajax",
                     b:formData,
                     c:function(){},
                     d:function(data){
-                        add_service_features($('#service_id').val());
+                        add_service_faq($('#service_id').val());
                         var records = JSON.parse(data);
                         if(records.result == 'Success'){
                             toastr.success('<h5>'+records.data+'</h5>');
@@ -531,5 +711,82 @@ if ($action == 'add_edit_service_category_form') {
                     }
                 });
             });
+    </script>
+<?php } 
+
+ if ($action == 'faq_draggable') { 
+    $service_id =  $_POST['service_id']; 
+	
+	$param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' =>array('id' => $service_id . '-INT', 'showSql' => 'N'));
+	$rsDtls = Table::getData($param);
+	?>
+
+    <div class="card">
+        <div class="card-header bg-c-lite-green">
+            <h5 class="card-header-text"> <?php echo $rsDtls->service_name;?> - Reposition  </h5>
+
+        </div>
+        <div class="card-block">
+            <div class="row">
+            <form action="javascript:void(0);" id="service_position" style="width:100%">
+                <input type="hidden" name="act" value="faq_position">
+                <div class="col-md-12">
+                    <div id="draggableMultiple">
+                        <?php  
+						           $param = array('tableName' => TBL_SERVICE_FAQ, 'fields' => array('*'), 'condition' =>array('service_id' => $service_id . '-INT', 'showSql' => 'N'),'orderby'=>'position', 'sortby'=>'asc');
+									$rsFaq = Table::getData($param);
+                                    $sno = 0;
+                                    if (count($rsFaq) > 0) {
+                                        foreach ($rsFaq as $key => $value) {
+                                            if ($value->status == 'A') {
+
+                                                ?>
+                                   <div class="sortable-moves" style="padding:10px;margin-bottom:10px;">
+                                        <p style="margin:0px;"><?php echo $sno + 1; ?>.<?php echo $value->question ?></p>
+                                    <input type="hidden" name="faq_id[]" value="<?php echo $value->id ?>">
+                                </div>
+                        <?php $sno++;}}}?>
+
+                    </div>
+                      
+                    </div> 
+					 <div class="col-md-12"> 
+					 <input type="submit" class="btn btn-primary btn-sm" value="Update Position">
+					 
+					 <button class="btn btn-danger btn-sm  float-right" type="button" onclick="close_cat_service()">Close   </button>  
+					 <button class="btn btn-primary btn-sm float-right" style="margin-right:10px;"  onclick="category_service_list(<?php echo $service_id; ?>)">Back to Faq List</button>    &nbsp; &nbsp;</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+	function close_cat_service() {
+		$('#service_form').hide();
+		$('#service_form').html('');
+	}
+        $( document ).ready(function() {
+                Sortable.create(draggableMultiple, {
+                group: 'draggableMultiple',
+                animation: 150
+            });
+        });
+        $("form#service_position").submit(function () {
+            var formData = $('form#service_position').serialize();
+            ajax({
+                a:"service_ajax",
+                b:formData,
+                c:function(){},
+                d:function(data){
+                    var records = JSON.parse(data);
+                    if(records.result == 'Success'){
+                        toastr.success('<h5>'+records.data+'</h5>');
+                        $('#service_form').hide();
+                        $("#service_table").load(location.href + " #service_table>*", "");
+						add_service_faq(<?php echo $service_id;?>);
+                    }
+                }
+            });
+        });
+
     </script>
 <?php } ?>

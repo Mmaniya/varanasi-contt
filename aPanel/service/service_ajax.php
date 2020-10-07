@@ -130,6 +130,37 @@ if ($action == 'service_position') {
     exit();
 }
 
+
+if ($action == 'faq_position') {
+    ob_clean();
+    if (count($_POST['faq_id']) > 0) {
+        foreach ($_POST['faq_id'] as $key => $val) {
+            $param['position'] = $key + 1;
+            $where = array('id' => $val);
+            $result = Table::updateData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        }
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);
+    }
+    exit();
+}
+
+
+if ($action == 'feature_position') {
+    ob_clean();
+    if (count($_POST['features_id']) > 0) {
+        foreach ($_POST['features_id'] as $key => $val) {
+            $param['position'] = $key + 1;
+            $where = array('id' => $val);
+            $result = Table::updateData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        }
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);
+    }
+    exit();
+}
+
+
 if ($action == 'service_remove') {
     ob_clean();
 
@@ -190,11 +221,12 @@ if ($action == 'filter_service_category') {
 if ($action == 'delete_service_feature') {
     ob_clean();
         $where = array('id' => $_POST['feature_id']);
-        Table::deleteData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => "*", 'showSql' => 'Y', 'where' => $where));
+        Table::deleteData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => "*", 'showSql' => 'N', 'where' => $where));
         $response = array("result" => 'Success', "data" => 'Successfully Deleted');
         echo json_encode($response);
     exit();
 }
+
 
 if ($action == 'submit_service_features') {
     ob_clean();
@@ -222,12 +254,55 @@ if ($action == 'submit_service_features') {
         $result = Table::updateData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
         $explode = explode('::', $result);
         if (trim($explode[0]) == 'Success') {
-            $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
+            $response = array("result" => trim($explode[0]), "data" => 'Updated Successfully');
+            echo json_encode($response);
+        }
+    }
+    exit();
+} 
+
+if ($action == 'submit_service_faq') {
+    ob_clean();
+    $faq_id = $_POST['faq_id'];
+    $param['service_id'] = $_POST['service_id'];
+    if ($faq_id == '') {
+        if (count($_POST['question']) > 0) {
+            foreach ($_POST['question'] as $key => $val) {
+                $param['question'] = $_POST['question'][$key];
+                $param['answer'] = $_POST['answer'][$key];
+                $param['added_date'] = date('Y-m-d H:i:s', time());
+                $param['added_by'] = $_SESSION['admin_id'];
+                $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
+            }
+
+            $explode = explode('::', $result);
+            if (trim($explode[0]) == 'Success') {
+                $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
+                echo json_encode($response);
+            }
+        }
+    } else {
+        $param['question'] = $_POST['question'];
+        $param['answer'] = $_POST['answer'];
+        $param['updated_by'] = $_SESSION['admin_id'];
+        $where = array('id' => $_POST['faq_id']);
+        $result = Table::updateData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        $explode = explode('::', $result);
+        if (trim($explode[0]) == 'Success') {
+            $response = array("result" => trim($explode[0]), "data" => 'Updated Successfully');
             echo json_encode($response);
         }
     }
     exit();
 }
 
+if ($action == 'delete_service_faq') {
+    ob_clean();
+    $where = array('id' => $_POST['feature_id']);
+    Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => "*", 'showSql' => 'N', 'where' => $where));
+    $response = array("result" => 'Success', "data" => 'Successfully Deleted');
+    echo json_encode($response);
+    exit();
+}
 
 ?>

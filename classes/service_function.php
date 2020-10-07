@@ -24,4 +24,10 @@ class Service {
             return Table::getData($param);
         }
     }
+    static function service_faq($id){
+        if(!empty($id)){
+            $param = array('tableName' => TBL_SERVICE_FAQ, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('id' => $id . '-INT'));
+            return Table::getData($param);
+        }
+    }
 }

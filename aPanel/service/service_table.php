@@ -76,7 +76,7 @@ if ($action == 'show_category_service_list') {
         <div class="card-header bg-c-lite-green">
             <h5><?php echo $service->service_name; ?> Features </h5>
             <a href="javascript:void(0);" onclick="add_edit_features(<?php echo $_POST['service_id']; ?>,'')" class="right-float" > Add New</a>&nbsp;&nbsp;
-            <a href="javascript:void(0);" onclick="features_position()" class="right-float">Change Position &nbsp;&nbsp;</a>
+            <a href="javascript:void(0);" onclick="features_position(<?php echo $_POST['service_id']; ?>)" class="right-float">Change Position &nbsp;&nbsp;</a>
         </div>
         <div class="card-block">
             <div class="card-block table-border-style">
@@ -91,7 +91,7 @@ if ($action == 'show_category_service_list') {
                         </thead>
                         <tbody>
                             <?php
-                                $param = array('tableName' => TBL_SERVICE_FEATURES, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'));
+                                $param = array('tableName' => TBL_SERVICE_FEATURES, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'),'orderby'=>'position', 'sortby'=>'asc');
                                 $rsFeatures = Table::getData($param);
                                 if (count($rsFeatures) > 0) {
                                     foreach ($rsFeatures as $key => $value) {
@@ -102,6 +102,52 @@ if ($action == 'show_category_service_list') {
                                 <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" >
                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_edit_features(<?php echo $value->service_id; ?>,<?php echo $value->id; ?>)" >Edit</a>
                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_feature(<?php echo $value->id; ?>,<?php echo $value->service_id; ?>)" >Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                                <?php }} else {?>  <tr> <td colspan="4" class="text-center"> No Records Found. Click here to <a href="javascript:void(0);" onclick="add_edit_features(<?php echo $_POST['service_id']; ?>,0)" style="color:#01a9ac"> Add New</a> </td>  </tr>  <?php }?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php }?>
+
+<?php if ($action == 'service_faq_table') {
+    $service = Service::service_category($_POST['service_id']); 
+    
+    
+    ?>
+    <div class="card" id="service_category_table">
+        <div class="card-header bg-c-lite-green">
+            <h5><?php echo $service->service_name; ?> Faqs </h5>
+            <a href="javascript:void(0);" onclick="add_edit_faq(<?php echo $_POST['service_id']; ?>,'')" class="right-float" > Add New</a>&nbsp;&nbsp;
+            <a href="javascript:void(0);" onclick="faq_position(<?php echo $_POST['service_id']; ?>)" class="right-float">Change Position &nbsp;&nbsp;</a>
+        </div>
+        <div class="card-block">
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Question & Answer</th>                                    
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php   $param = array('tableName' => TBL_SERVICE_FAQ, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'),'orderby'=>'position', 'sortby'=>'asc');
+                                    $rsFeatures = Table::getData($param);
+                                    if (count($rsFeatures) > 0) {
+                                        foreach ($rsFeatures as $key => $value) {
+                                            ?>
+                            <tr class="row_id_<?php echo $value->id; ?>">
+                                <th><?php echo $key + 1 ?></th>
+                                <td>Qus:<?php echo $value->question ?><br>Ans:<?php echo $value->answer ?></td>
+                                <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" >
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_edit_faq(<?php echo $value->service_id; ?>,<?php echo $value->id; ?>)" >Edit</a>
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_faq(<?php echo $value->id; ?>,<?php echo $value->service_id; ?>)" >Delete</a>
                                     </div>
                                 </td>
                             </tr>
