@@ -109,7 +109,7 @@ function admin_submenu_service($submenu) {
 function add_edit_category(id) {
     param = { 'act': 'add_edit_service_category_form', 'id': id };
     ajax({
-        a: 'table/form/service_form',
+        a: 'service_form',
         b: $.param(param),
         c: function () { },
         d: function (data) {
@@ -192,7 +192,7 @@ function category_position() {
     param = { 'act': 'category_draggable' };
     $('.preloader').show();
     ajax({
-        a: "table/form/service_form",
+        a: "service_form",
         b: param,
         c: function () { },
         d: function (data) {
@@ -232,7 +232,7 @@ function category_position() {
 function add_edit_service(id) {
     param = { 'act': 'add_edit_service_form', 'id': id };
     ajax({
-        a: 'table/form/service_form',
+        a: 'service_form',
         b: $.param(param),
         c: function () { },
         d: function (data) {
@@ -313,7 +313,7 @@ function service_position() {
     param = { 'act': 'service_draggable' };
     $('.preloader').show();
     ajax({
-        a: "table/form/service_form",
+        a: "service_form",
         b: param,
         c: function () { },
         d: function (data) {

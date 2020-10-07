@@ -1,30 +1,32 @@
-<?php  require ("../includes.php"); 
-if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
+<?php 
+define('ABSPATH',  dirname(__DIR__, 1));
+require ABSPATH . "/includes.php";
+if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
     header('location: index.php');
     exit();
 
-}  else{
+} else {
 
     if ($_SESSION['last_activity'] + $_SESSION['expire_time'] < time()) {
         header('location: index.php');
         exit();
-    }else{
-        SessionWrite('last_activity',time());   
+    } else {
+        SessionWrite('last_activity', time());
     }
-} ?>
+}?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>MMS - Admin | Home</title>
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="#">
     <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="#">
-    <?php include 'admin_style.php'; ?>
+    <?php include 'admin_style.php';?>
 </head>
 
 <body>
@@ -309,10 +311,10 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                             <div class="pcoded-navigatio-lavel">Navigation</div>
                             <ul class="pcoded-item pcoded-left-item">
                             <li class="">
-                                    <a href="dashboard.php">
+                                    <a href="<?php echo ADMIN_URL ?>/dashboard.php">
                                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Dashboard</span>
-                                    
+
                                     </a>
                                 </li>
                                 <li class="pcoded-hasmenu">
@@ -321,28 +323,28 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <span class="pcoded-mtext">Service</span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <!-- <li class="">
-                                            <a href="javascript:void(0);" onclick="admin_submenu_service('<?php echo SERVICE_CATEGORIES ?>')">
+                                        <li class="">
+                                            <a href="<?php echo SERVICE_PAGE ?>/service_category.php">
                                                 <span class="pcoded-mtext">Add Categories</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="javascript:void(0);" onclick="admin_submenu_service('<?php echo SERVICES ?>')">
+                                            <a href="<?php echo SERVICE_PAGE ?>/services.php">
                                                 <span class="pcoded-mtext">Add Service</span>
-                                            </a>
-                                        </li> -->
-                                        <li class="">
-                                            <a href="service_category.php">
-                                                <span class="pcoded-mtext">Add Categories</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="services.php">
-                                                <span class="pcoded-mtext">Add Service</span>
+                                            <a href="<?php// echo SERVICE_PAGE ?>service_features.php">
+                                                <span class="pcoded-mtext">Service Features</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="<?php echo SERVICE_PAGE ?>/service_faq.php">
+                                                <span class="pcoded-mtext">Service Faq</span>
                                             </a>
                                         </li>
                                     </ul>
-                                </li>                         
+                                </li>
                             </ul>
                             <!-- <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu">
@@ -367,7 +369,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                             </a>
                                         </li>
                                     </ul>
-                                </li>                         
+                                </li>
                             </ul> -->
                             <!-- <div class="pcoded-navigatio-lavel">Settings</div> -->
                             <!-- <ul class="pcoded-item pcoded-left-item"> -->
@@ -386,7 +388,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                             <a href="javascript:void(0);">
                                                 <span class="pcoded-mtext">Service Settings</span>
                                             </a>
-                                        </li>                                 
+                                        </li>
                                     </ul>
                                 </li> -->
                                 <!-- <li class="pcoded-hasmenu">
@@ -1551,8 +1553,7 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 <div class="page-wrapper">
 
                                     <div class="page-body">
-                                            <!-- <div id="ajaxResponce"></div> -->
-                                        <?php  main(); ?>
+                                        <?php main();?>
                                     </div>
                                 </div>
                                 <div id="styleSelector" style="display:none">
@@ -1564,9 +1565,9 @@ if($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
             </div>
         </div>
     </div>
-    <?php include 'admin_script.php'; ?>
+    <?php include 'admin_script.php';?>
 
-   
+
      <div class="preloader" style="display:none;">
         <div id="loader"></div>
     </div>
