@@ -1,4 +1,5 @@
 <?php include '../includes.php';
+
 if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
     foreach ($_SESSION as $K => $V) {
         unset($_SESSION[$K]);

@@ -260,8 +260,6 @@ function getTimeDifferenceT($date) {
 		
 }
 
-
-
 function getDayDifference($from_date,$to_date) {
 	
 	$actualDiff = strtotime($from_date) - strtotime($to_date);

@@ -7,6 +7,9 @@ if ($action == 'show_category_service_list') {
     $category_id = $_POST['category_id'];
 	$param = array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => array('*'), 'condition' =>array('id' => $category_id . '-INT', 'showSql' => 'N'));
 	$rsCategory = Table::getData($param);
+	
+	$param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' =>array('category_id' => $category_id . '-INT', 'showSql' => 'Y'),'orderby'=>'position', 'sortby'=>'asc');
+	$rsServices = Table::getData($param);
     ?>
 	<div id="category_service_table">
 	   <div class="card">
@@ -14,7 +17,9 @@ if ($action == 'show_category_service_list') {
                     <h5><?php  echo $rsCategory->category_name;?> Services</h5>
 					
                     <a href="javascript:void(0);" onclick="add_edit_service_frm_category('',<?php  echo $rsCategory->id;?>)" class="right-float ">Add New</a> 
+					<?php if (count($rsServices) > 0) { ?>
                     <a href="javascript:void(0);" onclick="service_category_position(<?php echo $category_id;?>)" class="right-float ">Change Position &nbsp;&nbsp; </a>
+					<?php } ?>
                 </div>
                 <div class="card-block">
                     <div class="card-block table-border-style">                     
@@ -25,15 +30,14 @@ if ($action == 'show_category_service_list') {
                                         <th>#</th>
                                         <th>Service</th>
                                         <th>Price</th>
-                                        <th>Action</th>
+                                        <th >Action</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody class="service_body">
 									<?php
 									$statusArr = array('A' => 'checked', 'I' => ''); 									 
-									$param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' =>array('category_id' => $category_id . '-INT', 'showSql' => 'Y'),'orderby'=>'position', 'sortby'=>'asc');
-									$rsServices = Table::getData($param);
+									
 									if (count($rsServices) > 0) {
 									foreach ($rsServices as $key => $value) {
                                    ?>
@@ -71,12 +75,17 @@ if ($action == 'show_category_service_list') {
 
 <?php if ($action == 'service_features_table') {
     $service = Service::service_category($_POST['service_id']);
+	
+	$param = array('tableName' => TBL_SERVICE_FEATURES, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'),'orderby'=>'position', 'sortby'=>'asc');
+	$rsFeatures = Table::getData($param);
     ?>
     <div class="card" id="service_category_table">
         <div class="card-header bg-c-lite-green">
             <h5><?php echo $service->service_name; ?> Features </h5>
             <a href="javascript:void(0);" onclick="add_edit_features(<?php echo $_POST['service_id']; ?>,'')" class="right-float" > Add New</a>&nbsp;&nbsp;
+			<?php if (count($rsFeatures) > 0) { ?>
             <a href="javascript:void(0);" onclick="features_position(<?php echo $_POST['service_id']; ?>)" class="right-float">Change Position &nbsp;&nbsp;</a>
+			<?php } ?>
         </div>
         <div class="card-block">
             <div class="card-block table-border-style">
@@ -91,8 +100,7 @@ if ($action == 'show_category_service_list') {
                         </thead>
                         <tbody>
                             <?php
-                                $param = array('tableName' => TBL_SERVICE_FEATURES, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'),'orderby'=>'position', 'sortby'=>'asc');
-                                $rsFeatures = Table::getData($param);
+                               
                                 if (count($rsFeatures) > 0) {
                                     foreach ($rsFeatures as $key => $value) {
                                         ?>
@@ -117,13 +125,16 @@ if ($action == 'show_category_service_list') {
 <?php if ($action == 'service_faq_table') {
     $service = Service::service_category($_POST['service_id']); 
     
-    
+		$param = array('tableName' => TBL_SERVICE_FAQ, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'),'orderby'=>'position', 'sortby'=>'asc');
+		$rsFeatures = Table::getData($param);
     ?>
     <div class="card" id="service_category_table">
         <div class="card-header bg-c-lite-green">
             <h5><?php echo $service->service_name; ?> Faqs </h5>
             <a href="javascript:void(0);" onclick="add_edit_faq(<?php echo $_POST['service_id']; ?>,'')" class="right-float" > Add New</a>&nbsp;&nbsp;
+			<?php  if (count($rsFeatures) > 0) { ?>
             <a href="javascript:void(0);" onclick="faq_position(<?php echo $_POST['service_id']; ?>)" class="right-float">Change Position &nbsp;&nbsp;</a>
+			<?php } ?>
         </div>
         <div class="card-block">
             <div class="card-block table-border-style">
@@ -137,8 +148,7 @@ if ($action == 'show_category_service_list') {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php   $param = array('tableName' => TBL_SERVICE_FAQ, 'fields' => array('*'), 'showSql' => 'N', 'condition' => array('service_id' => $_POST['service_id'] . '-INT'),'orderby'=>'position', 'sortby'=>'asc');
-                                    $rsFeatures = Table::getData($param);
+                            <?php 
                                     if (count($rsFeatures) > 0) {
                                         foreach ($rsFeatures as $key => $value) {
                                             ?>

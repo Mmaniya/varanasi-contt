@@ -1,4 +1,6 @@
-<?php function main() { ?>
+<?php function main() { 
+   $serviceObj = new Service; ?>
+
 <div class="card borderless-card">
    <div class="card-block caption-breadcrumb">
       <div class="breadcrumb-header">
@@ -35,16 +37,16 @@
                      <thead>
                         <tr>
                            <th>#</th>
-                           <th>Category</th>
+                           <th>Category   </th>
                            <th style="text-align:center">Action</th>
                            <th>Status</th>
                         </tr>
                      </thead>
                      <tbody>
-                        <?php    $statusArr = array('A' => 'checked', 'I' => '');
-											$rsCategory = Service::get_service_category();
+                        <?php    $statusArr = array('A' => 'checked', 'I' => '');                                  
+											$rsCategory = $serviceObj->get_service_category();
 											if (count($rsCategory) > 0) {
-												foreach ($rsCategory as $key => $value) {?>
+												foreach ($rsCategory as $key => $value) { ?>
 												
                         <tr class="row_id_<?php echo $value->id; ?>">
                            <th><?php echo $key + 1 ?></th>
@@ -79,26 +81,23 @@
       </div>
    </div>
    <div class="col-5">
-      <div class="z-depth-5 waves-effect" id="service_category_form" style="display:none">
+      <div class="z-depth-5 waves-effect" id="service_category_form" style="display:none; background-color: rgb(255, 255, 255);">
       </div>
    </div>
 </div>
-<script>
-
-	
- function add_edit_category_service(id) {  
-    param = { 'act': 'add_edit_service_form', 'id': id };
-    ajax({
-        a: 'service_form',
-        b: $.param(param),
-        c: function () { },
-        d: function (data) {
-            $('#service_form').show();
-            $('#service_form').html(data); 			 
-        }
-    });
-}
-
+<script>	
+   function add_edit_category_service(id) {  
+      param = { 'act': 'add_edit_service_form', 'id': id };
+      ajax({
+         a: 'service_form',
+         b: $.param(param),
+         c: function () { },
+         d: function (data) {
+               $('#service_form').show();
+               $('#service_form').html(data); 			 
+         }
+      });
+   }
 </script>
 
 

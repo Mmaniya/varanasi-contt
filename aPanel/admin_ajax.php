@@ -15,7 +15,7 @@ if ($action == 'signInAdmin') {
     SessionWrite('expire_time', 30 * 60);
     $response = array("result" => "Success", "data" => 'Login successfully');
     echo json_encode($response);
-    
+
     exit();
 }
 ?>

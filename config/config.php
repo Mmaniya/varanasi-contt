@@ -15,7 +15,6 @@ if ($dev_server) {
 
     // DB connection
     $con = mysqli_connect(BA_DBHOST, BA_DBUSER, BA_DBPASSWORD, BA_DBNAME);
-    //Constants
 
 } else {
 
@@ -23,7 +22,6 @@ if ($dev_server) {
     // define("BA_DBUSER", "isvirtwo_isvir14");
     // define("BA_DBPASSWORD", "IpE3.x5!tk-!");
     // define("BA_DBNAME", "isvirtwo_isvir2014");
-
     // //Constants
     // define('BASE_URL', 'http://www.greenindiaecoproducts.com/');
     // define('BASE_ADMIN_URL', 'http://www.greenindiaecoproducts.com/admin');
@@ -54,12 +52,9 @@ define("ADMIN_JS", BASE_URL . 'assets/js');
 define("ADMIN_IMAGES", BASE_URL . 'assets/images');
 define("ADMIN_ICON", BASE_URL . 'assets/icon');
 
-define("SERVICE_IMGES", BASE_URL . 'aPanel/service/uploads/');
-define("SERVICE_PAGE", ADMIN_URL . '/service');
 
-// define('ROOT_DIR', BASE_URL . 'aPanel/');
-
-
+define("SERVICE_DIR", ADMIN_URL . '/service');
+define("SERVICE_IMAGES", SERVICE_DIR . '/uploads');
 
 define('PAGE_LIMIT', 10);
 

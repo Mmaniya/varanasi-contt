@@ -161,7 +161,7 @@ if ($action == 'add_edit_service_category_form') {
                 <a href="javascript:void(0);" onclick="close_service(<?php echo $_POST['category_id'];?>)" class="right-float label label-danger">Cancel</a>
             </div>
             <div class="card-block">
-                <form action="javascript:void(0);" id="our_service" enctype="multipart/form-data">
+                <form action="javascript:void(0);" id="our_service" enctype="multipart/form-data" >
                     <input type="hidden" value="services" name="act">
                     <input type="hidden"  name="id" value="<?php echo $id; ?>">
                     <input type="hidden"  name="access_level" value="<?php echo $_SESSION['access_level']; ?>">
@@ -199,7 +199,7 @@ if ($action == 'add_edit_service_category_form') {
                                 <input type="file" class="form-control" name="service_img"  value="<?php echo $service_img; ?>">
                             </div>
                             <?php if (!empty($service_img)) {?>
-                                <img src="<?php echo SERVICE_IMGES . $service_img; ?>" alt="Service Images" width="100" height="100">
+                                <img src="<?php echo SERVICE_IMAGES . $service_img; ?>" alt="Service Images" width="100" height="100">
                             <?php }?>
                         </div>
                     </div>
@@ -214,9 +214,10 @@ if ($action == 'add_edit_service_category_form') {
                                 </select>
                             </div>
                         </div>
+                        <?php  if($service_payment_type=='recurring') { ?> <script> service_payment('recurring'); </script> <?php } ?>
+            
                         <div class="col-sm-6 col-lg-6">
                             <label class="col-form-label">Service Price	</label>
-
                             <div class="input-group ">
                                 <input type="number" class="form-control" placeholder="Price" name="service_price" value="<?php echo $service_price; ?>">
                                 <span class="input-group-addon" id="basic-addon3">$</span>
@@ -614,20 +615,21 @@ if ($action == 'add_edit_service_category_form') {
 
 <?php if ($action == 'service_faq_list') {
     $faq_id = $_POST['faq_id'];
-
+    $label = 'Add New';
     $rsDtls = Service::service_faq($_POST['faq_id']);
     foreach ($rsDtls as $K => $V) {$$K = $V;}
     $service_id = $_POST['service_id'];
     $rsService = Service::service_tbl($service_id);
     $service_id = $_POST['service_id'];
 
-$param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' => array('id' => $service_id . '-INT', 'showSql' => 'N'));
-$rsService = Table::getData($param);
+    $param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' => array('id' => $service_id . '-INT', 'showSql' => 'N'));
+    $rsService = Table::getData($param);
 
+if($faq_id!='') {  $label = 'Edit'; }
     ?>
 
 		<div class="card-header bg-c-lite-green">
-			<h5>Add New <?php echo $rsService->service_name; ?> Faq</h5>
+			<h5>  <?php echo $label.' '.$rsService->service_name; ?> Faq</h5>
 			<!-- <a href="javascript:void(0);" onclick="close_service_category()" class="btn btn-success right-float"><i class="icofont icofont-document-search">View Table</i></a> -->
 		</div>
             <div class="card-block">
@@ -639,13 +641,13 @@ $rsService = Table::getData($param);
 						 <div class="col-sm-12 col-lg-12">		  <label class="col-form-label">Question</label> 				 
 								 <div class="input-group input-group-inverse">
                                    
-                                    <input type="text" class="form-control" placeholder="Enter Question" required name="question" value="<?php echo $question; ?>">                                   
+                                    <textarea class="form-control" placeholder="Enter Question" required name="question"><?php echo $question; ?></textarea>                                   
 							 </div>
                          </div>
                          	 <div class="col-sm-12 col-lg-12">	
                                     <label class="col-form-label">Answer</label> 
                                    <div class="input-group input-group-inverse">	                  
-                    <input type="text" class="form-control" placeholder="Enter Answer" required name="answer" value="<?php echo $answer; ?>">
+                    <textarea class="form-control" placeholder="Enter Answer" required name="answer"><?php echo $answer; ?></textarea>
                     <input type="hidden" name="faq_id" value="<?php echo $id; ?>"/>
                              </div>     </div>  
 					<?php }?>
@@ -656,7 +658,7 @@ $rsService = Table::getData($param);
 							 <button type="submit"  class="btn btn-primary btn-sm">Submit</button>
 						</div>
 
-					        <?php if ($feature_id == '') {?>	<div class="col-sm-6 col-lg-6">
+					        <?php if ($id == '') {?>	<div class="col-sm-6 col-lg-6">
 							 <button class="btn btn-primary btn-sm float-right" type="button" onclick="add_more_fields()">Add More</button>
 						</div>
 					<?php }?>
@@ -668,19 +670,18 @@ $rsService = Table::getData($param);
 
 			x=1;
 			add_more_fields();
-			function add_more_fields() {
-
+			function add_more_fields() { 
                 html ='<div class="row"  id="column_'+x+'">';
                 html+='<div class="col-md-12 col-md-12">';
                 html+='<label class="col-form-label">Question'+x+'</label>';
                 html+='<div class="input-group input-group-inverse"> ';
-                html+='<input type="text" class="form-control" placeholder="Enter Question" required name="question[]" value="<?php echo $question; ?>"> ';
+                html+='<textarea class="form-control" placeholder="Enter Question" required name="question[]"></textarea> ';
                 html+='</div>';
                 html+='</div>';
                 html+='<div class="col-md-12 col-md-12">';
                 html+='<label class="col-form-label">Answer'+x+'</label>';
                 html+='<div class="input-group input-group-inverse"> ';
-                html+='<input type="text" class="form-control" placeholder="Enter Answer" required name="answer[]" value="<?php echo $answer; ?>">';
+                html+='<textarea  class="form-control" placeholder="Enter Answer" required name="answer[]"></textarea>';
                 html+='</div>';
                 html+='</div>';
                 html+='<div class="col-md-12 col-lg-12">';
@@ -688,8 +689,7 @@ $rsService = Table::getData($param);
                 html+='<span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')"><i class="icofont icofont-minus"></i></span>';
                 html+='</div>';
                 html+='</div>';
-                html+='</div>';
-
+                html+='</div>'; 
 				 $('#appeded_column').append(html);
 				 x++;
 			}

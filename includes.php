@@ -9,13 +9,11 @@ require_once "includes/Session.php";
 
 require_once "classes/DatabaseConnection.php";
 require_once "classes/dB.php";
-require_once "classes/service_function.php";
+require_once "classes/Service.php";
 
-//classes
 require_once "classes/Table.php";
 require_once "classes/Users.php";
-
-require_once "classes/admin_user.php";
+require_once "classes/AdminUser.php";
 
 session_start();
 //ob_start();

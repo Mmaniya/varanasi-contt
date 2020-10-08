@@ -82,7 +82,7 @@
                                         <th>#</th>
                                         <th>Service</th>
                                         <th>Price</th>
-                                        <th>Action</th>
+                                        <th style="text-align:center">Action</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -102,8 +102,9 @@
                                         <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" >
                                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_edit_service(<?php echo $value->id; ?>)" >Edit </a>
                                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_service(<?php echo $value->id; ?>)" >Delete</a>
-                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_service_features(<?php echo $value->id; ?>)" >Features</a>
-                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_service_faq(<?php echo $value->id; ?>)" >Faq</a>
+                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" style="z-index: 999; color:#fff" onclick="add_service_features(<?php echo $value->id; ?>)" >Features</a>
+                                                <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_service_faq(<?php echo $value->id; ?>)" >Faq</a>    
+
                                             </div>
                                         </td>
                                         <td>
