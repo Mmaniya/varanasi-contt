@@ -1,4 +1,7 @@
-<?php require "../includes.php";
+<?php 
+define('ABSPATH',  dirname(__DIR__, 1));
+require ABSPATH . "/includes.php";
+
 $action = $_POST['act'];
 /*****************************/
 /*      ADMIN SIGNIN         */

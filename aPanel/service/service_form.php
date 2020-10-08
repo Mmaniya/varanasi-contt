@@ -86,7 +86,7 @@ if ($action == 'add_edit_service_category_form') {
 
 <?php if ($action == 'category_draggable') {?>
 
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-header bg-c-lite-green">
                 <h5 class="card-header-text">Repositioning Category List</h5>
 
@@ -132,14 +132,13 @@ if ($action == 'add_edit_service_category_form') {
                         if(records.result == 'Success'){
                             toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
-                            // admin_submenu_service('<?php // echo SERVICE_CATEGORIES ?>');
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
                         }
                     }
                 });
             });
 
-        </script>
+        </script> -->
 <?php }?>
 
 <?php if ($action == 'add_edit_service_form') {
@@ -625,7 +624,7 @@ if ($action == 'add_edit_service_category_form') {
     $param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' => array('id' => $service_id . '-INT', 'showSql' => 'N'));
     $rsService = Table::getData($param);
 
-if($faq_id!='') {  $label = 'Edit'; }
+    if($faq_id!='') {  $label = 'Edit'; }
     ?>
 
 		<div class="card-header bg-c-lite-green">
@@ -670,7 +669,8 @@ if($faq_id!='') {  $label = 'Edit'; }
 
 			x=1;
 			add_more_fields();
-			function add_more_fields() { 
+			function add_more_fields() {
+
                 html ='<div class="row"  id="column_'+x+'">';
                 html+='<div class="col-md-12 col-md-12">';
                 html+='<label class="col-form-label">Question'+x+'</label>';
@@ -689,7 +689,8 @@ if($faq_id!='') {  $label = 'Edit'; }
                 html+='<span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')"><i class="icofont icofont-minus"></i></span>';
                 html+='</div>';
                 html+='</div>';
-                html+='</div>'; 
+                html+='</div>';
+
 				 $('#appeded_column').append(html);
 				 x++;
 			}

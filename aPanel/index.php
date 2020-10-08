@@ -1,4 +1,7 @@
-<?php include '../includes.php';
+<?php 
+
+define('ABSPATH',  dirname(__DIR__, 1));
+require ABSPATH . "/includes.php";
 
 if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
     foreach ($_SESSION as $K => $V) {

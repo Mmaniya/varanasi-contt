@@ -14,33 +14,8 @@ function forgetpws_form() {
 }
 
 /**************************
- *      Side Menu         *
+ *      Categorys         *
  **************************/
-// function admin_submenu_employee($submenu) {
-//     param = { 'act': $submenu };
-//     ajax({
-//         a: 'form/emp_form',
-//         b: $.param(param),
-//         c: function () { },
-//         d: function (data) {
-//             $('#ajaxResponce').html(data);
-//         }
-//     });
-// }
-// function admin_submenu_service($submenu) {
-//     param = { 'act': $submenu };
-//     ajax({
-//         a: 'table/services_table',
-//         b: $.param(param),
-//         c: function () { },
-//         d: function (data) {
-//             $('#ajaxResponce').html(data);
-//         }
-//     });
-// }
-
-
-// Service  Category Page
 
 function add_edit_category(id) {
     param = { 'act': 'add_edit_service_category_form', 'id': id };
@@ -127,26 +102,49 @@ function statusCategory(id) {
 
 }
 
-function category_position() {
-    param = { 'act': 'category_draggable' };
-    $('.preloader').show();
-    ajax({
-        a: "service_form",
-        b: param,
-        c: function () { },
-        d: function (data) {
-            $('.preloader').hide();
-            $('#service_category_form').show();
-            $('#service_category_form').html(data);
-        }
+$(function () {
+    Sortable.create(draggableMultiple, {
+        group: 'draggableMultiple',
+        animation: 150,
+        accept: '.sortable-moves',
+        onUpdate: function (ui) {  
+            var formData = $('form#category_position').serialize();
+            ajax({
+                a: "service_ajax",
+                b: formData,
+                c: function () { },
+                d: function (data) {
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        toastr.success('<h5>' + records.data + '</h5>');
+                        $('#service_category_form').hide();
+                        // $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                    }
+                }
+            });
+        },
     });
 
-}
+});
+
+// function category_position() {
+//     param = { 'act': 'category_draggable' };
+//     $('.preloader').show();
+//     ajax({
+//         a: "service_form",
+//         b: param,
+//         c: function () { },
+//         d: function (data) {
+//             $('.preloader').hide();
+//             $('#service_category_form').show();
+//             $('#service_category_form').html(data);
+//         }
+//     });
+// }
 
 function close_service_category(category_id){
     $('#service_category_form').hide();	
 }
-
 
 function add_edit_service_frm_category(id,category_id) {
     param = { 'act': 'add_edit_service_form', 'id': id, 'category_id': category_id };
@@ -161,8 +159,13 @@ function add_edit_service_frm_category(id,category_id) {
     });
 }
 
+/**************************
+ *      End Categorys     *
+ **************************/
 
-// Service Page
+/**************************
+ *      Service           *
+ **************************/
 
 function add_edit_service(id) {  
     param = { 'act': 'add_edit_service_form', 'id': id };
@@ -265,43 +268,6 @@ function service_position() {
     });
 }
 
-function  features_position(service_id) {
-	 param = { 'act': 'service_category_draggable','service_id':service_id };
-    $('.preloader').show();
-    ajax({
-        a: "service_form",
-        b: param,
-        c: function () { },
-        d: function (data) {
-            $('.preloader').hide();
-            $('#service_category_table').show();
-            $('#service_category_table').html(data);			
-			 
-			
-        }
-    });
-	
-}
-
-function faq_position(service_id) {
-    param = { 'act': 'faq_draggable', 'service_id': service_id };
-    $('.preloader').show();
-    ajax({
-        a: "service_form",
-        b: param,
-        c: function () { },
-        d: function (data) {
-            $('.preloader').hide();
-            $('#service_form').show();
-            $('#service_form').html(data);
-
-
-        }
-    });
-
-}
-
-
 function service_category_position(category_id) {
     param = { 'act': 'service_category_draggable','category_id':category_id };
     $('.preloader').show();
@@ -312,11 +278,9 @@ function service_category_position(category_id) {
         d: function (data) {
             $('.preloader').hide();
             $('#service_form').show();
-            $('#service_form').html(data);
-			
+            $('#service_form').html(data);			
 			$('#service_category_form').show();
-            $('#service_category_form').html(data);
-			
+            $('#service_category_form').html(data);			
         }
     });
 }
@@ -372,6 +336,8 @@ function all_service_category() {
     });
 }
 
+/*========== Service Filters =============*/
+
 function filter_service() {
     err = 0;
 
@@ -426,8 +392,7 @@ function close_service(category_id) {
 	category_service_list(category_id);
 }
 
-
- function category_service_list(category_id) {   
+function category_service_list(category_id) {   
 	  paramData = {'act':'show_category_service_list','category_id':category_id};
           ajax({ 
             a:'service_table',
@@ -437,10 +402,11 @@ function close_service(category_id) {
 			   $('#service_category_form').show();
 			   $('#service_category_form').html(data);
 	    }});         
-	}
+}
 
 
-// Service Features add
+/*==========  Service Features =============*/
+
 function add_service_features(service_id){
     paramData = { 'act': 'service_features_table', 'service_id': service_id };
     ajax({
@@ -488,8 +454,24 @@ function add_edit_features(service_id, feature_id) {
     });
 }
 
+function features_position(service_id) {
+    param = { 'act': 'service_category_draggable', 'service_id': service_id };
+    $('.preloader').show();
+    ajax({
+        a: "service_form",
+        b: param,
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#service_category_table').show();
+            $('#service_category_table').html(data);
+        }
+    });
+}
 
-// Service Faq
+
+/*==========  Service Faq =============*/
+
 function add_service_faq(service_id) {
     paramData = { 'act': 'service_faq_table', 'service_id': service_id };
     ajax({
@@ -502,6 +484,7 @@ function add_service_faq(service_id) {
         }
     });
 }
+
 function add_edit_faq(service_id, faq_id) {
     paramData = { 'act': 'service_faq_list', 'faq_id': faq_id, 'service_id': service_id };
     ajax({
@@ -514,6 +497,7 @@ function add_edit_faq(service_id, faq_id) {
         }
     });
 }
+
 function delete_faq(feature_id, service_id) {
     paramData = { 'act': 'delete_service_faq', 'feature_id': feature_id };
     ajax({
@@ -534,3 +518,23 @@ function delete_faq(feature_id, service_id) {
         }
     });
 }
+
+function faq_position(service_id) {
+    param = { 'act': 'faq_draggable', 'service_id': service_id };
+    $('.preloader').show();
+    ajax({
+        a: "service_form",
+        b: param,
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#service_form').show();
+            $('#service_form').html(data);
+        }
+    });
+
+}
+
+/**************************
+ *     End  Service       *
+ **************************/

@@ -21,12 +21,17 @@
     <script src="<?php echo ADMIN_JS ?>/alert/sweetalert2.min.js"></script>      
     <script src="<?php echo ADMIN_JS ?>/alert/sweet-alerts.init.js"></script>
     <script src="<?php echo ADMIN_JS ?>/toastr/toastr.min.js"></script>
+    
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/toolbar/jquery.toolbar.min.js"></script>
 
    <!-- i18next.min.js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/i18next/i18next.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-i18next/jquery-i18next.min.js"></script>
+
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/toolbar/custom-toolbar.js"></script>
+
     <!--Forms - Wizard js-->
     <script src="<?php echo ADMIN_JS ?>/jquery.cookie/jquery.cookie.js"></script>
     <script src="<?php echo ADMIN_JS ?>/jquery.steps/jquery.steps.js"></script>

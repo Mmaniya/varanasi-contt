@@ -1,13 +1,15 @@
   <!-- Favicon icon -->
-  <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/favicon.ico" type="image/x-icon">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/bootstrap.min.css">
-    <!-- ico font -->
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/icofont/css/icofont.css">
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/feather/css/feather.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/font-awesome/css/font-awesome.min.css">
+    <!-- toolbar css -->
+    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/toolbar/jquery.toolbar.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/toolbar/custom-toolbar.css">
 
      <!--forms-wizard css-->
      <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/jquery.steps.css">
