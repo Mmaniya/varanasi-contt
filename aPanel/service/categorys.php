@@ -2,9 +2,9 @@
    $serviceObj = new Service; ?>
 
 <div class="card borderless-card">
-   <div class="card-block caption-breadcrumb">
+   <div class="card-block info-breadcrumb">
       <div class="breadcrumb-header">
-         <h5>Service Categories</h5>
+         <h5>Categories</h5>
       </div>
       <div class="page-header-breadcrumb">
          <ul class="breadcrumb-title">
@@ -13,9 +13,9 @@
                <i class="icofont icofont-home"></i>
                </a>
             </li>
-            <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a>
+            <li class="breadcrumb-item"><a href="<?php echo ADMIN_URL ?>/dashboard.php">Dashboard</a>
             </li>
-            <li class="breadcrumb-item"><a href="javascript:void(0);">Service Category</a>
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Categories</a>
             </li>
          </ul>
       </div>
@@ -25,14 +25,16 @@
    <div class="col-7">
       <div class="card" id="service_category_table">
          <div class="card-header bg-c-lite-green;">
-            <h5>Service Categories</h5>
+            <h5>Categories</h5>
             <a href="javascript:void(0);" onclick="add_edit_category()" class="right-float label label-success"> Add New</a>&nbsp;&nbsp;
-            <a href="javascript:void(0);" onclick="category_position()" class="right-float label label-warning">Change Position
+            <!-- <a href="javascript:void(0);" onclick="category_position()" class="right-float label label-warning">Change Position -->
             &nbsp;&nbsp;</a>
          </div>
          <div class="card-block">
             <div class="card-block table-border-style">
                <div class="table-responsive">
+                   <form action="javascript:void(0);" id="category_position" style="width:100%">
+                    <input type="hidden" name="act" value="category_position">
                   <table class="table table-bordered">
                      <thead>
                         <tr>
@@ -42,21 +44,22 @@
                            <th>Status</th>
                         </tr>
                      </thead>
-                     <tbody>
+                     <tbody  id="draggableMultiple">
                         <?php    $statusArr = array('A' => 'checked', 'I' => '');                                  
 											$rsCategory = $serviceObj->get_service_category();
 											if (count($rsCategory) > 0) {
 												foreach ($rsCategory as $key => $value) { ?>
 												
-                        <tr class="row_id_<?php echo $value->id; ?>">
+                        <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
+                           <input type="hidden" name="category_id[]" value="<?php echo $value->id ?>">
                            <th><?php echo $key + 1 ?></th>
                            <td><?php echo $value->category_name ?></td>
                            <td>
-                              <div class="btn-group " role="group" >
-                                 <a href="javascript:void(0);" class="btn btn-mat btn-info" onclick="add_edit_category(<?php echo $value->id; ?>)">Edit</a>
-                                 <a href="javascript:void(0);" class="btn btn-mat btn-danger" onclick="delete_category(<?php echo $value->id; ?>)">Delete</a>
-								         <a href="javascript:void(0);" class="btn btn-mat btn-warning " onclick="category_service_list(<?php echo $value->id; ?>)">Service</a> 
-                              </div>
+                              <!-- <div class="btn-group " role="group" > -->
+                                 <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category(<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
+                                 <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category(<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+								         <a href="javascript:void(0);" class="btn btn-sm btn-warning " onclick="category_service_list(<?php echo $value->id; ?>)"><i class="fa fa-plus" aria-hidden="true"></i>Service</a> 
+                              <!-- </div> -->
                            </td>
                            <td>
                               <label class="switch">
