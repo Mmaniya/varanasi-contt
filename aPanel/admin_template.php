@@ -180,12 +180,12 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class="">
-                                            <a href="<?php echo SERVICE_DIR ?>/categorys.php">
+                                            <a href="<?php echo CATEGORY_DIR ?>/index.php">
                                                 <span class="pcoded-mtext">Categories</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="<?php echo SERVICE_DIR ?>/services.php">
+                                            <a href="<?php echo SERVICE_DIR ?>/index.php">
                                                 <span class="pcoded-mtext">Services</span>
                                             </a>
                                         </li>                                 

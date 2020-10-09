@@ -3,66 +3,6 @@ define('ABSPATH', dirname(__DIR__, 2));
 require ABSPATH . "/includes.php";
 $action = $_POST['act'];
 
-if ($action == 'service_categories') {
-
-    ob_clean();
-    $param['category_name'] = $_POST['category_name'];
-    $param['category_abbr'] = $_POST['category_abbr'];
-    $param['category_description'] = $_POST['category_description'];
-
-    if (empty($_POST['id'])) {
-        $param['added_by'] = $_POST['access_level'];
-        $result = Table::insertData(array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => $param, 'showSql' => 'N'));
-        $explode = explode('::', $result);
-        if (trim($explode[0]) == 'Success') {
-            $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
-            echo json_encode($response);
-        }
-    } else {
-        $param['updated_by'] = $_POST['access_level'];
-        $where = array('id' => $_POST['id']);
-        $result = Table::updateData(array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-        $response = array("result" => 'Success', "data" => 'Updated Successfully');
-        echo json_encode($response);
-    }
-    exit();
-}
-
-if ($action == 'service_category_status_change') {
-    $param['status'] = $_POST['status'];
-    $param['updated_by'] = $_POST['access_level'];
-    $where = array('id' => $_POST['id']);
-    $result = Table::updateData(array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-    $response = array("result" => 'Success', "data" => 'Updated Successfully');
-    echo json_encode($response);
-}
-
-if ($action == 'category_position') {
-    ob_clean();
-    if (count($_POST['category_id']) > 0) {
-        foreach ($_POST['category_id'] as $key => $val) {
-            $param['position'] = $key + 1;
-            $where = array('id' => $val);
-            $result = Table::updateData(array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-
-        }
-        $response = array("result" => 'Success', "data" => 'Updated Successfully');
-        echo json_encode($response);
-    }
-    exit();
-}
-
-if ($action == 'category_remove') {
-    ob_clean();
-
-    $where = array('id' => $_POST['id']);
-    $result = Table::deleteData(array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-    $response = array("result" => 'Success', "data" => 'Successfully Removed');
-    echo json_encode($response);
-
-    exit();
-}
-
 if ($action == 'services') {
     ob_clean();
 
@@ -130,7 +70,6 @@ if ($action == 'service_position') {
     exit();
 }
 
-
 if ($action == 'faq_position') {
     ob_clean();
     if (count($_POST['faq_id']) > 0) {
@@ -145,7 +84,6 @@ if ($action == 'faq_position') {
     exit();
 }
 
-
 if ($action == 'feature_position') {
     ob_clean();
     if (count($_POST['features_id']) > 0) {
@@ -159,7 +97,6 @@ if ($action == 'feature_position') {
     }
     exit();
 }
-
 
 if ($action == 'service_remove') {
     ob_clean();
@@ -226,7 +163,6 @@ if ($action == 'delete_service_feature') {
         echo json_encode($response);
     exit();
 }
-
 
 if ($action == 'submit_service_features') {
     ob_clean();

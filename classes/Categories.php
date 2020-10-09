@@ -1,7 +1,6 @@
 <?php 
 class Categories {
-    public function get_category_count(){      
-         
+    public function get_category_count(){               
         $qry ="select id, count(*) total,
             sum(case when status = 'A' then 1 else 0 end) total_active,
             sum(case when status = 'I' then 1 else 0 end) total_inctive
@@ -9,8 +8,23 @@ class Categories {
         return  dB::sExecuteSql($qry);  
     }
 
-     public function get_category(){        
+    public function get_category(){        
         $query = "SELECT *  from ".TBL_SERVICE_CATEGORIES." ORDER BY position ASC"; 
+        return dB::mExecuteSql($query);   
+    }
+
+    public function get_category_details(){        
+          $query = "SELECT *  from ".TBL_SERVICE_CATEGORIES." Where id = ".$this->id;   
+        return dB::sExecuteSql($query);   
+    }
+
+    public function get_wrk_in_progress_category(){
+          $query = "SELECT count(*) as total from ".TBL_SERVICE." Where category_id = ".$this->id;   
+        return dB::sExecuteSql($query);   
+    }
+
+    public function get_category_service(){        
+        $query = "SELECT *  from ".TBL_SERVICE." Where category_id = ".$this->id ." ORDER BY position ASC ";
         return dB::mExecuteSql($query);   
     }
 } ?>

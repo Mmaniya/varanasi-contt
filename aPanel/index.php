@@ -23,7 +23,6 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
     <meta name="author" content="#">
     <!-- Favicon icon -->
     <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/favicon.ico" type="image/x-icon">
-    <!-- Google font--><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/bootstrap.min.css">
     <!-- themify-icons line icon -->
@@ -131,10 +130,10 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
     <script>
       $("form#formSignInAdmin").submit(function(){
         $('.preloader').show();
-            var formData = $('form#formSignInAdmin').serialize();
+            var param = $('form#formSignInAdmin').serialize();
                ajax({
                   a:"admin_ajax",
-                  b:formData,
+                  b:param,
                   c:function(){},
                   d:function(data){
                     var records = JSON.parse(data);

@@ -1,113 +1,8 @@
 <?php 
 define('ABSPATH', dirname(__DIR__, 2));
 require ABSPATH . "/includes.php";
-$action = $_POST['act'];
+$action = $_POST['act']; ?>
 
-if ($action == 'add_edit_service_category_form') {
-    $categoryId = $_POST['id'];
-    $btnName = $title = 'Add New';
-    $joined_date = '';
-    if ($categoryId > 0) {
-        $param = array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => array('*'), 'condition' => array('id' => $categoryId . '-INT'), 'showSql' => 'N');
-        $rsCategory = Table::getData($param);
-        foreach ($rsCategory as $K => $V) {
-            $$K = $V;
-        }
-        $btnName = $title = 'Edit ';
-    }?>
-
-    <script>
-        tinymce.remove();
-        tinymce.init();
-    </script>
-
-            <div class="card-header bg-c-lite-green">
-                <h5 class="card-header-text"><?php echo $btnName ?> Service Categories</h5>
-                <a href="javascript:void(0);" onclick="close_service_category()" class="right-float label label-danger">Cancel</a>
-            </div>
-            <div class="card-block" style="background-color: rgb(255, 255, 255);">
-                <form action="javascript:void(0);" id="service_category" >
-                    <input type="hidden" value="service_categories" name="act">
-                    <input type="hidden"  name="id" value="<?php echo $id; ?>">
-                    <input type="hidden"  name="access_level" value="<?php echo $_SESSION['access_level']; ?>">
-
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-6">
-                            <label class="col-form-label">Category Name</label>
-                            <div class="input-group input-group-inverse">
-
-                                <input type="text" class="form-control" placeholder="Enter Category Name" required name="category_name" value="<?php echo $category_name; ?>">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-6">
-                            <label class="col-form-label">Category Abbreviation</label>
-                            <div class="input-group input-group-inverse">
-
-                                <input type="text" class="form-control" placeholder="Enter Category Abbreviation" name="category_abbr" value="<?php echo $category_abbr; ?>" required>
-                            </div>
-                        </div>
-                    </div>
-             
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-12">
-                            <label class="col-form-label">Category Description</label>
-                            <div class="input-group input-group-inverse">
-                                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description" id="category_description"  name="category_description"><?php echo $category_description; ?></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-12">
-                            <input type="submit" class="btn btn-grd-primary" value="Submit">
-                       </div>
-                    </div>
-                </form>
-            </div>
-            <script> 
-            $("form#service_category").submit(function () { 
-                $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                tinyMCE.triggerSave();
-                var formData = $('form#service_category').serialize();
-                ajax({
-                    a:"service_ajax",
-                    b:formData,
-                    c:function(){},
-                    d:function(data){ 
-                        var records = JSON.parse(data);
-                        if(records.result == 'Success'){   tinymce.remove();
-                            // toastr.success('<h5>'+records.data+'</h5>');
-                            $('#service_category_form').hide();
-                            $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                          notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                        } else {
-                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                        }      
-                    }
-                });
-            });
-  
-            $(document).ready(function () {
-                tinymce.init({
-                    selector: '#category_description',
-                    height: 200,
-                    theme: 'modern',
-                    // plugins: [
-                    //     'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    //     'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    //     'insertdatetime media nonbreaking save table contextmenu directionality',
-                    //     'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
-                    // ],
-                    toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
-                    // toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
-                    image_advtab: true
-                });
-            });
-
-    </script>
-  
-    <!-- <script src="<?php echo ADMIN_JS ?>/tinymce/tinymce.custom.js"></script> -->
-<?php }?>
 
 <?php if ($action == 'category_draggable') {?>
 
@@ -186,7 +81,7 @@ if ($action == 'add_edit_service_category_form') {
 
             <div class="card-header bg-c-lite-green">
                 <h5 class="card-header-text"><?php echo $btnName ?> Service </h5>
-                <a href="javascript:void(0);" onclick="close_service(<?php echo $_POST['category_id'];?>)" class="right-float label label-danger">Cancel</a>
+                <a href="javascript:void(0);" onclick="hide_category_form()" class="right-float label label-danger">Cancel</a>
             </div>
             <div class="card-block">
                 <form action="javascript:void(0);" id="our_service" enctype="multipart/form-data" >
@@ -195,7 +90,7 @@ if ($action == 'add_edit_service_category_form') {
                     <input type="hidden"  name="access_level" value="<?php echo $_SESSION['access_level']; ?>">
 
                     <div class="row">
-                        <div class="col-sm-12 col-lg-12">
+                        <div class="col-sm-6 col-lg-6">
                             <label class="col-form-label">Select Category</label>
                             <div class="input-group input-group-inverse">
                               
@@ -210,16 +105,14 @@ if ($action == 'add_edit_service_category_form') {
                                 </select>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-12">
+                        <div class="col-sm-6 col-lg-6">
                             <label class="col-form-label">Service Name</label>
                             <div class="input-group input-group-inverse">
                                 <input type="text" class="form-control" placeholder="Enter Service Name" name="service_name" required value="<?php echo $service_name; ?>">
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
                             <label class="col-form-label">Service Image</label>
@@ -348,7 +241,7 @@ if ($action == 'add_edit_service_category_form') {
             });
 
     </script>
-    <script src="<?php echo ADMIN_JS ?>/tinymce/tinymce.custom.js"></script>
+    <!-- <script src="<?php echo ADMIN_JS ?>/tinymce/tinymce.custom.js"></script> -->
 <?php }?>
 
 <?php if ($action == 'service_draggable') { ?>

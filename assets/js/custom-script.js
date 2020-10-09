@@ -17,26 +17,56 @@ function forgetpws_form() {
  *      Categorys         *
  **************************/
 
-function add_edit_category(id) {  
- 
-    param = { 'act': 'add_edit_service_category_form', 'id': id };
+$(function () {
+    category_table();
+    category_statistics();
+});
+
+function category_table(){
+
+    param = { 'act': 'category_table' };
     ajax({
-        a: 'service_form',
+        a: 'category_table',
         b: $.param(param),
         c: function () { },
         d: function (data) {
-            // tinymce.init();
-            $('#service_category_form').show();
-            $('#service_category_form').html(data);
-			
-			 $('#service_category_form').html(data);
-			 $('#category_service_table').show();
+            $('#category_table').html(data);
         }
     });
 }
 
+function category_statistics(){    
+
+    param = { 'act': 'category_statistics' };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#category_statistics').html(data);
+        }
+    });
+}
+
+function add_edit_category(id) {  
+ 
+    param = { 'act': 'add_edit_category_form', 'id': id };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#category_form').show();
+            $('#category_form').html(data);			
+        }
+    });
+}
+
+function hide_category_form() {
+    $('#category_form').hide();
+}
+
 function delete_category(id) {
-    $('#service_category_form').hide();
     param = { 'act': 'category_remove', 'id': id };
     Swal.fire({
         title: "Are you sure?",
@@ -52,18 +82,19 @@ function delete_category(id) {
         if (result.value) {
             $('.preloader').show();
             ajax({
-                a: "service_ajax",
+                a: "category_ajax",
                 b: param,
                 c: function () { },
                 d: function (data) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        // toastr.success('<h5>' + records.data + '</h5>');
-                        $('.row_id_' + id).remove();
-                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        category_table();
+                        category_statistics();
+                        hide_category_form();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
-                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     }                                           
                 }
             });
@@ -72,34 +103,36 @@ function delete_category(id) {
 }
 
 function statusCategory(id) {
-    $('#service_category_form').hide();
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
-    param = { 'act': 'service_category_status_change', 'status': status, 'id': id };
+    param = { 'act': 'category_status_change', 'status': status, 'id': id };
     Swal.fire({
-        title: '',
-        text: "Are you sure want to change status?",
-        icon: 'warning',
+        title: "Are you sure?",
+        text: "You want to change status?",
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
     }).then((result) => {
-
         if (result.value) {
             $('.preloader').show();
             ajax({
-                a: "service_ajax",
+                a: "category_ajax",
                 b: param,
                 c: function () { },
                 d: function (data) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        // toastr.success('<h5>' + records.data + '</h5>');
-                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        category_table();
+                        category_statistics();
+                        hide_category_form();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
-                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     }      
                 }
             });
@@ -109,67 +142,68 @@ function statusCategory(id) {
             }
         }
     });
-
 }
 
-$(function () {
-    Sortable.create(draggableMultiple, {
-        group: 'draggableMultiple',
-        animation: 150,
-        accept: '.sortable-moves',
-        onUpdate: function (ui) {  
-            var formData = $('form#category_position').serialize();
-            ajax({
-                a: "service_ajax",
-                b: formData,
-                c: function () { },
-                d: function (data) {
-                    var records = JSON.parse(data);
-                    if (records.result == 'Success') {
-                        $('#service_category_form').hide();
-                        // $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    }else{
-                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    }
-                }
-            });
-        },
+function view_category(id){
+    hide_category_form();
+    view_category_statistics(id);
+    category_service_table(id);
+}
+
+function view_category_statistics(id) {
+
+    param = { 'act': 'view_category_statistics', 'id':id };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#category_statistics').html(data);
+        }
     });
+}
 
-});
+function category_service_table(id) {
 
-// function category_position() {
-//     param = { 'act': 'category_draggable' };
-//     $('.preloader').show();
+    param = { 'act': 'category_service_table','id':id };
+    ajax({
+        a: 'category_table',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#category_table').html(data);
+        }
+    });
+}
+
+function add_edit_category_service(id){
+
+    param = { 'act': 'add_edit_service_form', 'category_id': id };
+    ajax({
+        a: '../service/service_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#category_form').show();
+            $('#category_form').html(data);
+        }
+    });
+}
+
+
+// function add_edit_service_frm_category(id,category_id) {
+//     param = { 'act': 'add_edit_service_form', 'id': id, 'category_id': category_id };
 //     ajax({
-//         a: "service_form",
-//         b: param,
+//         a: 'service_form',
+//         b: $.param(param),
 //         c: function () { },
 //         d: function (data) {
-//             $('.preloader').hide();
 //             $('#service_category_form').show();
 //             $('#service_category_form').html(data);
 //         }
 //     });
 // }
 
-function close_service_category(category_id){
-    $('#service_category_form').hide();	
-}
-
-function add_edit_service_frm_category(id,category_id) {
-    param = { 'act': 'add_edit_service_form', 'id': id, 'category_id': category_id };
-    ajax({
-        a: 'service_form',
-        b: $.param(param),
-        c: function () { },
-        d: function (data) {
-            $('#service_category_form').show();
-            $('#service_category_form').html(data);
-        }
-    });
-}
 
 /**************************
  *      End Categorys     *
@@ -218,9 +252,9 @@ function delete_service(id) {
                     if (records.result == 'Success') {
                         // toastr.success('<h5>' + records.data + '</h5>');
                         $('.row_id_' + id).remove();
-                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
-                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     }      
                 }
             });
@@ -253,9 +287,9 @@ function statusService(id) {
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
                         // toastr.success('<h5>' + records.data + '</h5>');
-                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
-                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     }      
                 }
             });
@@ -453,9 +487,9 @@ function delete_feature(feature_id, service_id ) {
                 // toastr.success('<h5>' + records.data + '</h5>');
                 $('#service_category_form').hide();
                 $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
             } else {
-                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
             }      
         }
     });
@@ -533,9 +567,9 @@ function delete_faq(feature_id, service_id) {
                 // toastr.success('<h5>' + records.data + '</h5>');
                 $('#service_category_form').hide();
                 $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
             } else {
-                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
             }      
 
         }

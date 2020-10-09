@@ -20,15 +20,6 @@ function removeItemString($str, $item) {
 		return implode($pass);
 	}
 
-	function check_Date(){
-		$qry ='SELECT *  FROM '.TBL_BJP_MASTER_BOOTH_MEETINGS_SETTINGS.' where id=1';
-		$rsDtls = dB::sExecuteSql($qry); 
-		$start_meeting_date = $rsDtls->start_meeting_date; 
-		$end_meeting_date = $rsDtls->next_meeting_date;
-
-		return $selectedDate = $start_meeting_date.'::'.$end_meeting_date;
-	}
-
 
 	function getSeoName($seoname){	
 	$seoname = strtolower(stripslashes($seoname));
@@ -60,87 +51,6 @@ function removeItemString($str, $item) {
 	
 	return $seoname;
 }
-	
-function get_extra_fields() {
-	
-                $blood_group = array('A+','O+','B+','AB+','A-','O-','B-','AB-');
-
-               
-                $job_category = array(
-                                array('short_name'=>'B','value'=>'Entrepreneur / சுயதொழில்'),
-                                array('short_name'=>'D','value'=>'Doctor/மருத்துவர்'),
-                                array('short_name'=>'L','value'=>'Lawyer/வழக்கறிஞர்'),
-                                array('short_name'=>'E','value'=>'Educationalist/கல்வியாளர்'),
-                                array('short_name'=>'Engg.','value'=>'Engineer/பொறியாளர்'),
-                                array('short_name'=>'O','value'=>'Others/மற்றவை'));
-
-				$interested_sector[] = array('short_name'=>'BM','value'=>'Booth Management/கிளை மேலாண்மை');
-				$interested_sector[] = array('short_name'=>'EM','value'=>'Events & Meetings/நிகழ்ச்சிகள்');
-				$interested_sector[] = array('short_name'=>'GS','value'=>'Government Scheme/அரசாங்க திட்டங்கள்');
-				$interested_sector[] = array('short_name'=>'FN','value'=>'Finance/நிதி');
-				$interested_sector[] = array('short_name'=>'SM','value'=>'Social Media/சமூக ஊடகம்');
-				$interested_sector[] = array('short_name'=>'O','value'=>'Others/மற்றவை');  
-
-				$type_of_member[] = array('short_name'=>'K','value'=>'Karyakartha','value_ta'=>'கார்யகர்த்தா');
-				$type_of_member[] = array('short_name'=>'PT','value'=>'Part Time','value_ta'=>'பகுதி நேரம்');
-				$type_of_member[] = array('short_name'=>'EW','value'=>'Election Work','value_ta'=>'தேர்தல் வேலை');
-				$type_of_member[] = array('short_name'=>'S','value'=>'Supporter','value_ta'=>' ஆதரவாளர்');
-
-                $extra_fields = array('blood_group'=>$blood_group,
-                                                 'job_category'=>$job_category,
-                                                 'interest_category'=>$interest_category,
-                                                 'interested_sector'=>$interested_sector,
-                                                 'type_of_member'=>$type_of_member);
-												 
-			return 	$extra_fields;								 
-        }		 
-	
-
-
-function getSeoUrl($argvs=array()){
-	$argvs = is_array($argvs) ? $argvs : array(); extract($argvs);	
-	//$pn = $pn.'?seo=1';
-	
-	$seourl = '';
-   	$siteprefix = BASE_URL;
-	//print_r($siteprefix);
-	switch($pn)
-	{
-		case 'index.php':
-		{
-		$seourl='index.html';
-		break;
-		}
-		case 'contact.php':
-		{
-		$seourl='contact-us';
-		break;
-		}
-		case 'aboutus.php':
-		{
-		$seourl='profile';
-		break;
-		}
-		case 'wallputty.php':
-		{
-		$seourl='products-wallputty';
-		break;
-		}
-		case 'dealer.php':
-		{
-		$seourl='dealer';
-		break;
-		}
-		default:
-		$seourl=$pn;
-		break;	
-	}
-	if($htaccess<=0)
-	 	$seoprefix=BASE_URL;
-		
-	return $seoprefix.$seourl; 	
-}
-
 
 function check_input($value)
 {

@@ -52,11 +52,12 @@ define("ADMIN_JS", BASE_URL . 'assets/js');
 define("ADMIN_IMAGES", BASE_URL . 'assets/images');
 define("ADMIN_ICON", BASE_URL . 'assets/icon');
 
-
+// Service 
 define("SERVICE_DIR", ADMIN_URL . '/service');
 define("SERVICE_IMAGES", SERVICE_DIR . '/uploads');
 
-define('PAGE_LIMIT', 10);
+// Category
+define("CATEGORY_DIR", ADMIN_URL . '/category');
 
 $confval = ini_get("upload_max_filesize");
 $confval = substr($confval, 0, strlen($confval) - 1);
