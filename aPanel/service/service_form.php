@@ -16,6 +16,11 @@ if ($action == 'add_edit_service_category_form') {
         $btnName = $title = 'Edit ';
     }?>
 
+    <script>
+        tinymce.remove();
+        tinymce.init();
+    </script>
+
             <div class="card-header bg-c-lite-green">
                 <h5 class="card-header-text"><?php echo $btnName ?> Service Categories</h5>
                 <a href="javascript:void(0);" onclick="close_service_category()" class="right-float label label-danger">Cancel</a>
@@ -27,66 +32,86 @@ if ($action == 'add_edit_service_category_form') {
                     <input type="hidden"  name="access_level" value="<?php echo $_SESSION['access_level']; ?>">
 
                     <div class="row">
-                        <div class="col-sm-12 col-lg-12">
+                        <div class="col-sm-6 col-lg-6">
                             <label class="col-form-label">Category Name</label>
                             <div class="input-group input-group-inverse">
 
                                 <input type="text" class="form-control" placeholder="Enter Category Name" required name="category_name" value="<?php echo $category_name; ?>">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-sm-12 col-lg-12">
+                        <div class="col-sm-6 col-lg-6">
                             <label class="col-form-label">Category Abbreviation</label>
                             <div class="input-group input-group-inverse">
 
-                                <input type="text" class="form-control" placeholder="Enter Category Abbreviation" required name="category_abbr" value="<?php echo $category_abbr; ?>">
+                                <input type="text" class="form-control" placeholder="Enter Category Abbreviation" name="category_abbr" value="<?php echo $category_abbr; ?>" required>
                             </div>
                         </div>
                     </div>
+             
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
                             <label class="col-form-label">Category Description</label>
                             <div class="input-group input-group-inverse">
-
-                                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description"  required name="category_description"><?php echo $category_description; ?></textarea>
+                                <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description" id="category_description"  name="category_description"><?php echo $category_description; ?></textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
-                            <input type="submit" class="btn btn-primary col-4 mr-auto" value="Submit">
+                            <input type="submit" class="btn btn-grd-primary" value="Submit">
                        </div>
                     </div>
                 </form>
             </div>
-            <script>
-            $("form#service_category").submit(function () {
+            <script> 
+            $("form#service_category").submit(function () { 
                 $("#service_category_table").load(location.href + " #service_category_table>*", "");
-
+                tinyMCE.triggerSave();
                 var formData = $('form#service_category').serialize();
                 ajax({
                     a:"service_ajax",
                     b:formData,
                     c:function(){},
-                    d:function(data){
+                    d:function(data){ 
                         var records = JSON.parse(data);
-                        if(records.result == 'Success'){
-                            toastr.success('<h5>'+records.data+'</h5>');
+                        if(records.result == 'Success'){   tinymce.remove();
+                            // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                        }
+                          notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } else {
+                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        }      
                     }
                 });
             });
+  
+            $(document).ready(function () {
+                tinymce.init({
+                    selector: '#category_description',
+                    height: 200,
+                    theme: 'modern',
+                    // plugins: [
+                    //     'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    //     'searchreplace wordcount visualblocks visualchars code fullscreen',
+                    //     'insertdatetime media nonbreaking save table contextmenu directionality',
+                    //     'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                    // ],
+                    toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+                    // toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                    image_advtab: true
+                });
+            });
+
     </script>
-    <script src="<?php echo ADMIN_JS ?>/tinymce/tinymce.custom.js"></script>
+  
+    <!-- <script src="<?php echo ADMIN_JS ?>/tinymce/tinymce.custom.js"></script> -->
 <?php }?>
 
 <?php if ($action == 'category_draggable') {?>
 
-        <!-- <div class="card">
+        <div class="card">
             <div class="card-header bg-c-lite-green">
                 <h5 class="card-header-text">Repositioning Category List</h5>
 
@@ -130,15 +155,19 @@ if ($action == 'add_edit_service_category_form') {
                     d:function(data){
                         var records = JSON.parse(data);
                         if(records.result == 'Success'){
-                            toastr.success('<h5>'+records.data+'</h5>');
+                            // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                               notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            } else {
+                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            }      
                         }
                     }
                 });
             });
 
-        </script> -->
+        </script>
 <?php }?>
 
 <?php if ($action == 'add_edit_service_form') {
@@ -305,10 +334,14 @@ if ($action == 'add_edit_service_category_form') {
                     success: function(data){
                         var records = JSON.parse(data);
                         if(records.result == 'Success'){
-                            toastr.success('<h5>'+records.data+'</h5>');
+                            // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_form').hide();
                             $("#service_table").load(location.href + " #service_table>*", "");
-							category_service_list($('#category_id').val());
+                            category_service_list($('#category_id').val());
+                                 notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            } else {
+                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            } 
                         }
                     }
                 });
@@ -323,7 +356,6 @@ if ($action == 'add_edit_service_category_form') {
     <div class="card">
         <div class="card-header bg-c-lite-green">
             <h5 class="card-header-text"> Repositioning Service List</h5>
-
         </div>
         <div class="card-block">
             <div class="row">
@@ -335,9 +367,7 @@ if ($action == 'add_edit_service_category_form') {
                                     $sno = 0;
                                     if (count($rsCategory) > 0) {
                                         foreach ($rsCategory as $key => $value) {
-                                            if ($value->status == 'A') {
-
-                                                ?>
+                                            if ($value->status == 'A') {  ?>
                                    <div class="sortable-moves" style="padding:10px;margin-bottom:10px;">
                                         <p style="margin:0px;"><?php echo $sno + 1; ?>.<?php echo $value->service_name ?></p>
                                     <input type="hidden" name="service_id[]" value="<?php echo $value->id ?>">
@@ -367,9 +397,13 @@ if ($action == 'add_edit_service_category_form') {
                 d:function(data){
                     var records = JSON.parse(data);
                     if(records.result == 'Success'){
-                        toastr.success('<h5>'+records.data+'</h5>');
+                        // toastr.success('<h5>'+records.data+'</h5>');
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
+                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } else {
+                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } 
                     }
                 }
             });
@@ -444,10 +478,14 @@ if ($action == 'add_edit_service_category_form') {
                 d:function(data){
                     var records = JSON.parse(data);
                     if(records.result == 'Success'){
-                        toastr.success('<h5>'+records.data+'</h5>');
+                        // toastr.success('<h5>'+records.data+'</h5>');
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
-						add_service_features(<?php echo $service_id;?>);
+                        add_service_features(<?php echo $service_id;?>);
+                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } else {
+                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } 
                     }
                 }
             });
@@ -525,9 +563,13 @@ if ($action == 'add_edit_service_category_form') {
                         add_service_features($('#service_id').val());
                         var records = JSON.parse(data);
                         if(records.result == 'Success'){
-                            toastr.success('<h5>'+records.data+'</h5>');
+                            // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                                 notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            } else {
+                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            } 
                         }
                     }
                 });
@@ -600,10 +642,14 @@ if ($action == 'add_edit_service_category_form') {
                 d:function(data){
                     var records = JSON.parse(data);
                     if(records.result == 'Success'){
-                        toastr.success('<h5>'+records.data+'</h5>');
+                        // toastr.success('<h5>'+records.data+'</h5>');
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
-						category_service_list(<?php echo $category_id;?>);
+                        category_service_list(<?php echo $category_id;?>);
+                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } else {
+                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } 
                     }
                 }
             });
@@ -669,8 +715,7 @@ if ($action == 'add_edit_service_category_form') {
 
 			x=1;
 			add_more_fields();
-			function add_more_fields() {
-
+			function add_more_fields() { 
                 html ='<div class="row"  id="column_'+x+'">';
                 html+='<div class="col-md-12 col-md-12">';
                 html+='<label class="col-form-label">Question'+x+'</label>';
@@ -689,8 +734,7 @@ if ($action == 'add_edit_service_category_form') {
                 html+='<span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')"><i class="icofont icofont-minus"></i></span>';
                 html+='</div>';
                 html+='</div>';
-                html+='</div>';
-
+                html+='</div>'; 
 				 $('#appeded_column').append(html);
 				 x++;
 			}
@@ -705,9 +749,13 @@ if ($action == 'add_edit_service_category_form') {
                         add_service_faq($('#service_id').val());
                         var records = JSON.parse(data);
                         if(records.result == 'Success'){
-                            toastr.success('<h5>'+records.data+'</h5>');
+                            // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                                 notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            } else {
+                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            } 
                         }
                     }
                 });
@@ -780,10 +828,14 @@ if ($action == 'add_edit_service_category_form') {
                 d:function(data){
                     var records = JSON.parse(data);
                     if(records.result == 'Success'){
-                        toastr.success('<h5>'+records.data+'</h5>');
+                        // toastr.success('<h5>'+records.data+'</h5>');
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
-						add_service_faq(<?php echo $service_id;?>);
+                        add_service_faq(<?php echo $service_id;?>);
+                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } else {
+                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } 
                     }
                 }
             });

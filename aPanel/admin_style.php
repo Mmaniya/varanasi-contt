@@ -7,10 +7,8 @@
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/feather/css/feather.css">
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/font-awesome/css/font-awesome.min.css">
-    <!-- toolbar css -->
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/toolbar/jquery.toolbar.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/toolbar/custom-toolbar.css">
-
+    <!-- Notification.css -->
+    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/notification/notification.css">
      <!--forms-wizard css-->
      <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/jquery.steps.css">
 

@@ -77,7 +77,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                         <a class="mobile-menu" id="mobile-collapse" href="#">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a href="dashboard.php">
+                        <a href="<?php ADMIN_URL ?>/dashboard.php">
                             <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190" alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">

@@ -12,11 +12,11 @@
 //             'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
 //         ],
 //         toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
-//         // toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+//         toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
 //         image_advtab: true
 //     });
 // });
-
+// 
 
 // 'use strict';
 // $(document).ready(function () {

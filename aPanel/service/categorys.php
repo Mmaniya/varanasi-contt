@@ -1,5 +1,5 @@
 <?php function main() { 
-   $serviceObj = new Service; ?>
+   $categorObj = new Categories; ?>
 
 <div class="card borderless-card">
    <div class="card-block info-breadcrumb">
@@ -10,7 +10,7 @@
          <ul class="breadcrumb-title">
             <li class="breadcrumb-item">
                <a href="#!">
-               <i class="icofont icofont-home"></i>
+               <i class="fa fa-home"></i>
                </a>
             </li>
             <li class="breadcrumb-item"><a href="<?php echo ADMIN_URL ?>/dashboard.php">Dashboard</a>
@@ -21,11 +21,69 @@
       </div>
    </div>
 </div>
+
+<div class="row">
+    <!-- social download  start -->
+    <div class="col-xl-4 col-md-6">
+        <div class="card social-card bg-c-yellow">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="feather icon-bar-chart-2 f-34 text-c-blue social-icon"></i>
+                    </div>
+                    <div class="col">
+                        <h4 class="m-b-0">Total Categories</h4>
+                        <h4 class="m-b-0">
+                            <?php
+                            $countCategory=   $categorObj->get_category_count();
+                            echo $countCategory->total;  ?></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card social-card  bg-c-green">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="feather icon-bar-chart-2 f-34 text-c-pink social-icon"></i>
+                    </div>
+                    <div class="col">
+                        <h4 class="m-b-0">Work In Progress</h4>
+                        <h4 class="m-b-0">
+                           <?php  echo  $countCategory->total_active; ?>
+                           </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-12">
+      <a href="javascript:void(0)" onclick="add_edit_category()">
+         <div class="card social-card  bg-c-pink">
+               <div class="card-block">
+                  <div class="row align-items-center">
+                     <div class="col-auto">
+                           <i class="feather icon-plus f-34 text-c-green social-icon"></i>
+                     </div>
+                     <div class="col">
+                           <h4 class="m-b-0">Add Categories</h4>
+                           <br>
+                     </div>
+                  </div>
+               </div>
+         </div>
+      </a>
+    </div>
+    <!-- social download  end -->
+</div>
+
 <div class="row ">
    <div class="col-7">
       <div class="card" id="service_category_table">
          <div class="card-header bg-c-lite-green;">
-            <h5>Categories</h5>
+            <h5>Categories List</h5>
             <a href="javascript:void(0);" onclick="add_edit_category()" class="right-float label label-success"> Add New</a>&nbsp;&nbsp;
             <!-- <a href="javascript:void(0);" onclick="category_position()" class="right-float label label-warning">Change Position -->
             &nbsp;&nbsp;</a>
@@ -46,7 +104,7 @@
                      </thead>
                      <tbody  id="draggableMultiple">
                         <?php    $statusArr = array('A' => 'checked', 'I' => '');                                  
-											$rsCategory = $serviceObj->get_service_category();
+											$rsCategory = $categorObj->get_category();
 											if (count($rsCategory) > 0) {
 												foreach ($rsCategory as $key => $value) { ?>
 												

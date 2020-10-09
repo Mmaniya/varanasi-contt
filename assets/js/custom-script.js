@@ -17,13 +17,15 @@ function forgetpws_form() {
  *      Categorys         *
  **************************/
 
-function add_edit_category(id) {
+function add_edit_category(id) {  
+ 
     param = { 'act': 'add_edit_service_category_form', 'id': id };
     ajax({
         a: 'service_form',
         b: $.param(param),
         c: function () { },
         d: function (data) {
+            // tinymce.init();
             $('#service_category_form').show();
             $('#service_category_form').html(data);
 			
@@ -37,13 +39,15 @@ function delete_category(id) {
     $('#service_category_form').hide();
     param = { 'act': 'category_remove', 'id': id };
     Swal.fire({
-        title: '',
-        text: "Are you sure want to delete this record?",
-        icon: 'danger',
+        title: "Are you sure?",
+        text: "You want to delete this category? Deleting this category will also delete the ----- service?",
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
     }).then((result) => {
         if (result.value) {
             $('.preloader').show();
@@ -55,9 +59,12 @@ function delete_category(id) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        toastr.success('<h5>' + records.data + '</h5>');
+                        // toastr.success('<h5>' + records.data + '</h5>');
                         $('.row_id_' + id).remove();
-                    }
+                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }                                           
                 }
             });
         }
@@ -89,8 +96,11 @@ function statusCategory(id) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        toastr.success('<h5>' + records.data + '</h5>');
-                    }
+                        // toastr.success('<h5>' + records.data + '</h5>');
+                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }      
                 }
             });
         } else {
@@ -116,9 +126,11 @@ $(function () {
                 d: function (data) {
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        toastr.success('<h5>' + records.data + '</h5>');
                         $('#service_category_form').hide();
                         // $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }else{
+                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     }
                 }
             });
@@ -204,9 +216,12 @@ function delete_service(id) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        toastr.success('<h5>' + records.data + '</h5>');
+                        // toastr.success('<h5>' + records.data + '</h5>');
                         $('.row_id_' + id).remove();
-                    }
+                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }      
                 }
             });
         }
@@ -237,8 +252,11 @@ function statusService(id) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        toastr.success('<h5>' + records.data + '</h5>');
-                    }
+                        // toastr.success('<h5>' + records.data + '</h5>');
+                        notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }      
                 }
             });
         } else {
@@ -432,11 +450,13 @@ function delete_feature(feature_id, service_id ) {
             add_service_features(service_id);
             var records = JSON.parse(data);
             if (records.result == 'Success') {
-                toastr.success('<h5>' + records.data + '</h5>');
+                // toastr.success('<h5>' + records.data + '</h5>');
                 $('#service_category_form').hide();
                 $("#service_category_table").load(location.href + " #service_category_table>*", "");
-            }
-
+                notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+            } else {
+                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+            }      
         }
     });
 }
@@ -510,10 +530,13 @@ function delete_faq(feature_id, service_id) {
             add_service_faq(service_id);
             var records = JSON.parse(data);
             if (records.result == 'Success') {
-                toastr.success('<h5>' + records.data + '</h5>');
+                // toastr.success('<h5>' + records.data + '</h5>');
                 $('#service_category_form').hide();
                 $("#service_category_table").load(location.href + " #service_category_table>*", "");
-            }
+                notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+            } else {
+                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+            }      
 
         }
     });

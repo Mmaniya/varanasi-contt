@@ -8,7 +8,6 @@
     $rsServices = Table::getData($param);  ?>
 
 <div class="row">
-    <!-- task, page, download counter  start -->
     <div class="col-xl-3 col-md-4">
         <div class="card bg-c-yellow update-card">
             <div class="card-block">

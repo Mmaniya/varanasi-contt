@@ -14,15 +14,21 @@
     <script src="<?php echo ADMIN_JS ?>/tinymce/js/tinymce.min.js"></script>
 
    <!-- data-table js -->
-   <script src="<?php echo ADMIN_JS ?>/datatables.net/js/jquery.dataTables.min.js"></script>
-   <script src="<?php echo ADMIN_JS ?>/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+   <!-- <script src="<?php echo ADMIN_JS ?>/datatables.net/js/jquery.dataTables.min.js"></script>
+   <script src="<?php echo ADMIN_JS ?>/datatables.net-buttons/js/dataTables.buttons.min.js"></script> -->
+
+    <!-- sweet alert js -->
+    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/sweetalert/js/sweetalert.min.js"></script> -->
+    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/sweetalert/js/modal.js"></script> -->
 
     <!-- ALERT BOX -->
     <script src="<?php echo ADMIN_JS ?>/alert/sweetalert2.min.js"></script>      
     <script src="<?php echo ADMIN_JS ?>/alert/sweet-alerts.init.js"></script>
-    <script src="<?php echo ADMIN_JS ?>/toastr/toastr.min.js"></script>
+    <!-- <script src="<?php echo ADMIN_JS ?>/toastr/toastr.min.js"></script> -->
     
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/toolbar/jquery.toolbar.min.js"></script>
+    <!-- notification js -->
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/notification/bootstrap-growl.min.js"></script>
+    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/notification/notification.js"></script> -->
 
    <!-- i18next.min.js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/i18next/i18next.min.js"></script>
@@ -30,7 +36,6 @@
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-i18next/jquery-i18next.min.js"></script>
 
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/toolbar/custom-toolbar.js"></script>
 
     <!--Forms - Wizard js-->
     <script src="<?php echo ADMIN_JS ?>/jquery.cookie/jquery.cookie.js"></script>
