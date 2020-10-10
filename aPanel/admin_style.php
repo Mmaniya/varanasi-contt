@@ -10,7 +10,7 @@
     <!-- Notification.css -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/notification/notification.css">
      <!--forms-wizard css-->
-     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/jquery.steps.css">
+     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/jquery.steps/jquery.steps.css">
 
      <link href="<?php echo ADMIN_JS; ?>/alert/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <!-- Toastr -->

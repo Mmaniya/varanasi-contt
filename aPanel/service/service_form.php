@@ -53,9 +53,9 @@ $action = $_POST['act']; ?>
                             // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                               notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                               notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             } else {
-                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             }      
                         }
                     }
@@ -231,12 +231,11 @@ $action = $_POST['act']; ?>
                             $('#service_form').hide();
                             $("#service_table").load(location.href + " #service_table>*", "");
                             category_service_list($('#category_id').val());
-                                 notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                 notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             } else {
-                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             } 
-                        }
-                    }
+                        }                    
                 });
             });
 
@@ -293,9 +292,9 @@ $action = $_POST['act']; ?>
                         // toastr.success('<h5>'+records.data+'</h5>');
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
-                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } else {
-                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } 
                     }
                 }
@@ -375,9 +374,9 @@ $action = $_POST['act']; ?>
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
                         add_service_features(<?php echo $service_id;?>);
-                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } else {
-                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } 
                     }
                 }
@@ -459,9 +458,9 @@ $action = $_POST['act']; ?>
                             // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                                 notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                 notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             } else {
-                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             } 
                         }
                     }
@@ -539,9 +538,9 @@ $action = $_POST['act']; ?>
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
                         category_service_list(<?php echo $category_id;?>);
-                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } else {
-                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } 
                     }
                 }
@@ -645,9 +644,9 @@ $action = $_POST['act']; ?>
                             // toastr.success('<h5>'+records.data+'</h5>');
                             $('#service_category_form').hide();
                             $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                                 notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                 notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             } else {
-                                notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                             } 
                         }
                     }
@@ -725,9 +724,9 @@ $action = $_POST['act']; ?>
                         $('#service_form').hide();
                         $("#service_table").load(location.href + " #service_table>*", "");
                         add_service_faq(<?php echo $service_id;?>);
-                            notify('bottom', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } else {
-                            notify('bottom', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                            notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                         } 
                     }
                 }

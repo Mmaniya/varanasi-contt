@@ -164,14 +164,14 @@ function view_category_statistics(id) {
 }
 
 function category_service_table(id) {
-
     param = { 'act': 'category_service_table','id':id };
     ajax({
         a: 'category_table',
         b: $.param(param),
         c: function () { },
         d: function (data) {
-            $('#category_table').html(data);
+            $('#category_table').hide();            
+            $('#category_service').html(data);
         }
     });
 }
@@ -180,15 +180,55 @@ function add_edit_category_service(id){
 
     param = { 'act': 'add_edit_service_form', 'category_id': id };
     ajax({
-        a: '../service/service_form',
+        a: 'category_form',
         b: $.param(param),
         c: function () { },
         d: function (data) {
-            $('#category_form').show();
-            $('#category_form').html(data);
+            // $('#category_form').show();
+            $('#category_service').html(data);
         }
     });
 }
+
+function statuscategoryService(id,cid){
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
+    param = { 'act': 'service_status_change', 'status': status, 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to change status?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        view_category(cid);
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
+        }
+    });
+    }
 
 
 // function add_edit_service_frm_category(id,category_id) {
@@ -301,24 +341,24 @@ function statusService(id) {
     });
 }
 
-function service_position() {
-    param = { 'act': 'service_draggable' };
-    $('.preloader').show();
-    ajax({
-        a: "service_form",
-        b: param,
-        c: function () { },
-        d: function (data) {
-            $('.preloader').hide();
-            $('#service_form').show();
-            $('#service_form').html(data);
+// function service_position() {
+//     param = { 'act': 'service_draggable' };
+//     $('.preloader').show();
+//     ajax({
+//         a: "service_form",
+//         b: param,
+//         c: function () { },
+//         d: function (data) {
+//             $('.preloader').hide();
+//             $('#service_form').show();
+//             $('#service_form').html(data);
 			
-			$('#service_category_form').show();
-            $('#service_category_form').html(data);
+// 			$('#service_category_form').show();
+//             $('#service_category_form').html(data);
 			
-        }
-    });
-}
+//         }
+//     });
+// }
 
 function service_category_position(category_id) {
     param = { 'act': 'service_category_draggable','category_id':category_id };
@@ -338,10 +378,14 @@ function service_category_position(category_id) {
 }
 
 function service_payment(value) {
-    if (value == 'recurring') {
-        $('#recurring_period').show();
+    if (value == 'recurring') {  
+        $('.newclass').addClass('col-sm-3 col-lg-3');
+        $('.newclass').removeClass('col-sm-2 col-lg-2'); 
+        $('.recurring_period').show();
     } else {
-        $('#recurring_period').hide();
+        $('.newclass').removeClass('col-sm-3 col-lg-3');
+        $('.newclass').addClass('col-sm-2 col-lg-2');   
+        $('.recurring_period').hide();
     }
 }
 

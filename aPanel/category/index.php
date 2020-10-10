@@ -10,4 +10,6 @@
       <div class="z-depth-5 waves-effect" id="category_form" style="display:none; background-color: rgb(255, 255, 255);"> </div>
    </div>
 </div>
+<div class="row " id="category_service"></div>
+
 <?php }include '../admin_template.php';?>

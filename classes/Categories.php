@@ -19,7 +19,11 @@ class Categories {
     }
 
     public function get_wrk_in_progress_category(){
-          $query = "SELECT count(*) as total from ".TBL_SERVICE." Where category_id = ".$this->id;   
+        //   $query = "SELECT count(*) as total from ".TBL_SERVICE." Where category_id = ".$this->id; 
+          $query ="select id, count(*) total,
+            sum(case when status = 'A' then 1 else 0 end) total_active,
+            sum(case when status = 'I' then 1 else 0 end) total_inctive
+            from ".TBL_SERVICE."  Where category_id = ".$this->id;  
         return dB::sExecuteSql($query);   
     }
 

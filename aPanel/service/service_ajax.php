@@ -56,19 +56,19 @@ if ($action == 'service_status_change') {
     echo json_encode($response);
 }
 
-if ($action == 'service_position') {
-    ob_clean();
-    if (count($_POST['service_id']) > 0) {
-        foreach ($_POST['service_id'] as $key => $val) {
-            $param['position'] = $key + 1;
-            $where = array('id' => $val);
-            $result = Table::updateData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-        }
-        $response = array("result" => 'Success', "data" => 'Updated Successfully');
-        echo json_encode($response);
-    }
-    exit();
-}
+// if ($action == 'service_position') {
+//     ob_clean();
+//     if (count($_POST['service_id']) > 0) {
+//         foreach ($_POST['service_id'] as $key => $val) {
+//             $param['position'] = $key + 1;
+//             $where = array('id' => $val);
+//             $result = Table::updateData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+//         }
+//         $response = array("result" => 'Success', "data" => 'Updated Successfully');
+//         echo json_encode($response);
+//     }
+//     exit();
+// }
 
 if ($action == 'faq_position') {
     ob_clean();
