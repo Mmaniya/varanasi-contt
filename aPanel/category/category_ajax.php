@@ -87,5 +87,23 @@ if ($action == 'category_service_position') {
     exit();
 }
 
+if ($action == 'category_service_remove') {
+    ob_clean();
+
+    $where = array('id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+    $where = array('service_id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+    $where = array('service_id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        
+    $response = array("result" => 'Success', "data" => 'Successfully Removed');
+    echo json_encode($response);
+
+    exit();
+}
+
 
 ?>

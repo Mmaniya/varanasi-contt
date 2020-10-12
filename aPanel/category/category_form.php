@@ -451,22 +451,22 @@ $categoryObj = new Categories; ?>
                                                         if(count($rsServiceFaq)>0){
                                                             foreach ($rsServiceFaq as $key => $value){  ?>
 
-                                                       <div class="row" id="faq_column_'+i+'">
+                                                    <div class="row" id="faq_column_'+i+'">
                                                         <div class="col-md-6">
                                                             <label class="col-form-label">Question</label>
                                                            <div class="input-group input-group-inverse">
                                                               <span class="input-group-addon" onclick="add_more_faq_fields()"><i class="fa fa-plus"></i></span><input type="text" value="<?php echo $value->question; ?>" class="form-control" placeholder="Enter Question" required name="question[]">
                                                             </div>
                                                         </div>
-                                                       <div class="col-md-6">
-                                                           <label class="col-form-label">Answer</label>
-                                                           <div class="input-group input-group-inverse"> 
-                                                              <input type="text" value="<?php echo $value->answer; ?>" class="form-control" placeholder="Enter Answer" required name="answer[]"><span class="input-group-addon" onclick="removeFaq('+i+')"><i class="fa fa-minus"></i></span>
-                                                           </div>
+                                                        <div class="col-md-6">
+                                                            <label class="col-form-label">Answer</label>
+                                                            <div class="input-group input-group-inverse"> 
+                                                                <input type="text" value="<?php echo $value->answer; ?>" class="form-control" placeholder="Enter Answer" required name="answer[]"><span class="input-group-addon" onclick="removeFaq('+i+')"><i class="fa fa-minus"></i></span>
+                                                            </div>
                                                         </div>                                        
                                                     </div>
 
-                                                <?php } } ?>
+                                                <?php } }else{ ?> <script> add_more_faq_fields(); </script><?php } ?>
                                             </div>	
                                         </div>
                                             <script>

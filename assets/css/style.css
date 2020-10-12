@@ -21346,6 +21346,11 @@ table.footable-paging-center>tfoot>tr.footable-paging>td {
 	padding: 15px 0 15px 60px
 }
 
+.draggable{
+	/* cursor: move; */
+	cursor: -webkit-grab; cursor: grab;
+}
+
 .sortable-moves {
 	font-size: 14px;
 	line-height: 1.55556em;

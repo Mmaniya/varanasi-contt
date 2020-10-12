@@ -23,8 +23,8 @@ $categoryObj = new Categories;
                         <th>Status</th>
                     </tr>
                     </thead>
-                    <tbody  id="draggableCategories">
-                <?php  $statusArr = array('A' => 'checked', 'I' => '');                                  
+                    <tbody  id="draggableCategories" class="draggable">
+                    <?php  $statusArr = array('A' => 'checked', 'I' => '');                                  
                         $rsCategory = $categoryObj->get_category();
                         if (count($rsCategory) > 0) {
                             foreach ($rsCategory as $key => $value) { ?>
@@ -37,7 +37,6 @@ $categoryObj = new Categories;
                             <!-- <div class="btn-group " role="group" > -->
                                 <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category(<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category(<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
-                                <!-- <a href="javascript:void(0);" class="btn btn-sm btn-warning " onclick="category_service_list(<?php echo $value->id; ?>)"><i class="fa fa-plus" aria-hidden="true"></i>Service</a>  -->
                                 <a href="javascript:void(0);" class="btn btn-sm btn-success " onclick="view_category(<?php echo $value->id; ?>)"><i class="fa fa-eye" aria-hidden="true"></i>View</a> 
                             <!-- </div> -->
                         </td>
@@ -117,11 +116,11 @@ $categoryObj = new Categories;
                                 <th>#</th>
                                 <th>Service </th>
                                 <th>Price </th>
-                                <th style="text-align:center">Action</th>
+                                <th >Action</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
-                            <tbody  id="draggableService">
+                            <tbody  id="draggableService" class="draggable">
                             <?php   $statusArr = array('A' => 'checked', 'I' => ''); 
                                     $categoryObj->id = $_POST['id'];                                 
                                     $rsCategory = $categoryObj->get_category_service();
@@ -136,9 +135,9 @@ $categoryObj = new Categories;
                                 <td>
                                     <!-- <div class="btn-group " role="group" > -->
                                         <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
-                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category(<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                         <!-- <a href="javascript:void(0);" class="btn btn-sm btn-warning " onclick="category_service_list(<?php echo $value->id; ?>)"><i class="fa fa-plus" aria-hidden="true"></i>Service</a>  -->
-                                        <a href="javascript:void(0);" class="btn btn-sm btn-success " onclick="view_category(<?php echo $value->id; ?>)"><i class="fa fa-eye" aria-hidden="true"></i>View</a> 
+                                        <!-- <a href="javascript:void(0);" class="btn btn-sm btn-success " onclick="view_category(<?php // echo $value->id; ?>)"><i class="fa fa-eye" aria-hidden="true"></i>View</a>  -->
                                     <!-- </div> -->
                                 </td>
                                 <td>

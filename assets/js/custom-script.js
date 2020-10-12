@@ -228,21 +228,45 @@ function statuscategoryService(id,cid){
             }
         }
     });
-    }
+}
 
+function delete_category_service(category_id,id) {
+    param = { 'act': 'category_service_remove', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this service?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        // category_table();
+                        // category_statistics();
+                        // hide_category_form();
+                        view_category(category_id);
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
 
-// function add_edit_service_frm_category(id,category_id) {
-//     param = { 'act': 'add_edit_service_form', 'id': id, 'category_id': category_id };
-//     ajax({
-//         a: 'service_form',
-//         b: $.param(param),
-//         c: function () { },
-//         d: function (data) {
-//             $('#service_category_form').show();
-//             $('#service_category_form').html(data);
-//         }
-//     });
-// }
 
 
 /**************************
