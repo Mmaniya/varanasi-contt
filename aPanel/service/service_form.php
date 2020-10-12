@@ -604,55 +604,54 @@ $action = $_POST['act']; ?>
             </div>
 
             <script>
-
-			x=1;
-			add_more_fields();
-			function add_more_fields() { 
-                html ='<div class="row"  id="column_'+x+'">';
-                html+='<div class="col-md-12 col-md-12">';
-                html+='<label class="col-form-label">Question'+x+'</label>';
-                html+='<div class="input-group input-group-inverse"> ';
-                html+='<textarea class="form-control" placeholder="Enter Question" required name="question[]"></textarea> ';
-                html+='</div>';
-                html+='</div>';
-                html+='<div class="col-md-12 col-md-12">';
-                html+='<label class="col-form-label">Answer'+x+'</label>';
-                html+='<div class="input-group input-group-inverse"> ';
-                html+='<textarea  class="form-control" placeholder="Enter Answer" required name="answer[]"></textarea>';
-                html+='</div>';
-                html+='</div>';
-                html+='<div class="col-md-12 col-lg-12">';
-                html+='<div class="input-group input-group-inverse"> ';
-                html+='<span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')"><i class="icofont icofont-minus"></i></span>';
-                html+='</div>';
-                html+='</div>';
-                html+='</div>'; 
-				 $('#appeded_column').append(html);
-				 x++;
-			}
-			function removeRow(id) {  if(x==2) {  return;   }  x--;	 $('#column_'+id).remove();  }
-            $("form#service_faq_form").submit(function () {
-                var formData = $('form#service_faq_form').serialize();
-                ajax({
-                    a:"service_ajax",
-                    b:formData,
-                    c:function(){},
-                    d:function(data){
-                        add_service_faq($('#service_id').val());
-                        var records = JSON.parse(data);
-                        if(records.result == 'Success'){
-                            // toastr.success('<h5>'+records.data+'</h5>');
-                            $('#service_category_form').hide();
-                            $("#service_category_table").load(location.href + " #service_category_table>*", "");
-                                 notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                            } else {
-                                notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                            } 
+                x=1;
+                add_more_fields();
+                function add_more_fields() { 
+                    html ='<div class="row"  id="column_'+x+'">';
+                    html+='<div class="col-md-12 col-md-12">';
+                    html+='<label class="col-form-label">Question'+x+'</label>';
+                    html+='<div class="input-group input-group-inverse"> ';
+                    html+='<textarea class="form-control" placeholder="Enter Question" required name="question[]"></textarea> ';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='<div class="col-md-12 col-md-12">';
+                    html+='<label class="col-form-label">Answer'+x+'</label>';
+                    html+='<div class="input-group input-group-inverse"> ';
+                    html+='<textarea  class="form-control" placeholder="Enter Answer" required name="answer[]"></textarea>';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='<div class="col-md-12 col-lg-12">';
+                    html+='<div class="input-group input-group-inverse"> ';
+                    html+='<span class="input-group-addon" id="basic-addon3"onclick="removeRow('+x+')"><i class="icofont icofont-minus"></i></span>';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='</div>'; 
+                    $('#appeded_column').append(html);
+                    x++;
+                }
+                function removeRow(id) {  if(x==2) {  return;   }  x--;	 $('#column_'+id).remove();  }
+                $("form#service_faq_form").submit(function () {
+                    var formData = $('form#service_faq_form').serialize();
+                    ajax({
+                        a:"service_ajax",
+                        b:formData,
+                        c:function(){},
+                        d:function(data){
+                            add_service_faq($('#service_id').val());
+                            var records = JSON.parse(data);
+                            if(records.result == 'Success'){
+                                // toastr.success('<h5>'+records.data+'</h5>');
+                                $('#service_category_form').hide();
+                                $("#service_category_table").load(location.href + " #service_category_table>*", "");
+                                    notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                } else {
+                                    notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                                } 
+                            }
                         }
-                    }
+                    });
                 });
-            });
-    </script>
+            </script>
 <?php } 
 
  if ($action == 'faq_draggable') { 

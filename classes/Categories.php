@@ -31,4 +31,12 @@ class Categories {
         $query = "SELECT *  from ".TBL_SERVICE." Where category_id = ".$this->id ." ORDER BY position ASC ";
         return dB::mExecuteSql($query);   
     }
+    public function get_service_category_features(){
+          $query = "SELECT *  from ".TBL_SERVICE_FEATURES." Where service_id = ".$this->id;   
+        return dB::mExecuteSql($query);  
+    }
+    public function get_service_category_faq(){
+          $query = "SELECT *  from ".TBL_SERVICE_FAQ." Where service_id = ".$this->id;   
+        return dB::mExecuteSql($query);  
+    }
 } ?>

@@ -73,7 +73,6 @@ if ($action == 'service_status_change') {
     echo json_encode($response);
 }
 
-
 if ($action == 'category_service_position') {
     ob_clean();
     if (count($_POST['service_id']) > 0) {

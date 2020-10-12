@@ -176,9 +176,9 @@ function category_service_table(id) {
     });
 }
 
-function add_edit_category_service(id){
+function add_edit_category_service(category_id, id){
 
-    param = { 'act': 'add_edit_service_form', 'category_id': id };
+    param = { 'act': 'add_edit_service_form', 'category_id': category_id ,'service_id':id };
     ajax({
         a: 'category_form',
         b: $.param(param),

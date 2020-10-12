@@ -103,7 +103,7 @@ $categoryObj = new Categories;
         <div class="card">
             <div class="card-header bg-c-lite-green;">
                 <h5> <?php echo $category_name; ?> Category Service List</h5>
-                <a href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>)"  style="font-size:16px;" class="right-float label label-success"><i class="feather icon-plus"> Add New</i></a>
+                <a href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>,'')"  style="font-size:16px;" class="right-float label label-success"><i class="feather icon-plus"> Add New</i></a>
                 <a href="<?php echo CATEGORY_DIR ?>/index.php" style="font-size:16px;" class="right-float label label-danger"> <i class="feather icon-arrow-left"> Go Back</i></a>
             </div>
             <div class="card-block">
@@ -135,7 +135,7 @@ $categoryObj = new Categories;
                                         <td><?php echo money($value->service_price, '$') ?></td>
                                 <td>
                                     <!-- <div class="btn-group " role="group" > -->
-                                        <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category_service(<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
+                                        <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
                                         <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category(<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                         <!-- <a href="javascript:void(0);" class="btn btn-sm btn-warning " onclick="category_service_list(<?php echo $value->id; ?>)"><i class="fa fa-plus" aria-hidden="true"></i>Service</a>  -->
                                         <a href="javascript:void(0);" class="btn btn-sm btn-success " onclick="view_category(<?php echo $value->id; ?>)"><i class="fa fa-eye" aria-hidden="true"></i>View</a> 
@@ -152,7 +152,7 @@ $categoryObj = new Categories;
                             <?php }} else {?>
                             <tr>
                                 <td colspan="5" class="text-center"> No Records Found. Click here to <a
-                                    href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>)"
+                                    href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>,'')"
                                     style="color:#01a9ac"> Add New</a> </td>
                             </tr>
                             <?php }?>

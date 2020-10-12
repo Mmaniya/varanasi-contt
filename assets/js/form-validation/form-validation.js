@@ -97,8 +97,6 @@ $(document).ready(function () {
     // Hook up the form so we can prevent it from being posted
     var form = document.querySelector("form#emp_form");
     form.addEventListener("submit", function (ev) {
-        alert('ssss');
-
         ev.preventDefault();
         handleFormSubmit(form);
     });

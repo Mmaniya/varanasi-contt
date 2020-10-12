@@ -1,7 +1,7 @@
 <?php 
 define('ABSPATH', dirname(__DIR__, 2));
 require ABSPATH . "/includes.php";
-$action = $_POST['act'];
+$action = trim($_REQUEST['act']);
 
 if ($action == 'services') {
     ob_clean();
@@ -46,6 +46,78 @@ if ($action == 'services') {
 
     exit();
 }
+
+
+
+
+if ($action == 'category_services') {
+
+    $param['service_name'] = $_POST['service_name'];
+    $param['service_description'] = $_POST['service_description'];
+    $param['category_id'] = $_POST['category_id'];
+    $param['service_payment_type'] = $_POST['service_payment_type'];
+    $param['if_recurring_period'] = $_POST['if_recurring_period'];
+    $param['recurring_type'] = $_POST['recurring_type'];
+    $param['service_price'] = $_POST['service_price'];
+    $param['service_delivery_time'] = $_POST['service_delivery_time'];
+    $param['service_delivery_type'] = $_POST['service_delivery_type'];
+    $param['service_questionnaire_complete_days'] = $_POST['service_questionnaire_complete_days'];
+
+    if ($_FILES['service_img']['name'] != '') {
+        $newFileName = '';
+        $filename = basename($_FILES['service_img']['name']);
+        $file_tmp = $_FILES['service_img']["tmp_name"];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $baseName = basename($filename, $ext);
+        $newFileName = rand() . '.' . $ext;
+        $param['service_img'] = $newFileName;
+        move_uploaded_file($file_tmp = $_FILES['service_img']["tmp_name"], "uploads/" . $newFileName) or die('image upload fail');
+    }
+
+    if (empty(trim($_POST['id']))) {
+        $param['added_by'] = $_POST['admin_id'];
+        $result = Table::insertData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'showSql' => 'N'));
+        $explode = explode('::', $result);
+                
+        $serviceid = trim($explode[2]);
+        $param = array();
+        if (count($_POST['features']) > 0) {
+                $param['service_id'] =  $serviceid ;
+            foreach ($_POST['features'] as $key => $val) {
+                $param['features'] = $_POST['features'][$key];
+                $param['added_date'] = date('Y-m-d H:i:s', time());
+                $param['added_by'] = $_SESSION['admin_id'];
+                $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
+            }    
+        }
+
+        $param = array();
+        if (count($_POST['question']) > 0) {
+                $param['service_id'] =  $serviceid ;
+            foreach ($_POST['question'] as $key => $val) {
+                $param['question'] = $_POST['question'][$key];
+                $param['answer'] = $_POST['answer'][$key];
+                $param['added_date'] = date('Y-m-d H:i:s', time());
+                $param['added_by'] = $_SESSION['admin_id'];
+                $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
+            }
+        }
+
+        if (trim($explode[0]) == 'Success') {
+            $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
+            echo json_encode($response);
+        } 
+
+    } else {
+        $param['updated_by'] = $_POST['admin_id'];
+        $where = array('id' => $_POST['id']);
+        $result = Table::updateData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    }
+
+    exit();
+}
+
+
 
 if ($action == 'service_status_change') {
     $param['status'] = $_POST['status'];
@@ -176,7 +248,6 @@ if ($action == 'submit_service_features') {
                 $param['added_by'] = $_SESSION['admin_id'];
                 $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
             }
-
             $explode = explode('::', $result);
             if (trim($explode[0]) == 'Success') {
                 $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
