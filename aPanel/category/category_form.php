@@ -74,7 +74,6 @@ $categoryObj = new Categories; ?>
             </a>
         </div>
     </div>
-
 <?php }?>
 
 <?php if ($action == 'add_edit_category_form') {    
@@ -138,7 +137,7 @@ $categoryObj = new Categories; ?>
     </div>
     <script> 
         $("form#service_category").submit(function () { 
-            var cate_id = $('#cate_id').val();
+            // var cate_id = $('#cate_id').val();           
             tinyMCE.triggerSave();
             var formData = $('form#service_category').serialize();
             ajax({
@@ -151,7 +150,7 @@ $categoryObj = new Categories; ?>
                         tinymce.remove();
                         category_table();
                         category_statistics();
-                        view_category(cate_id);
+                        // view_category(cate_id);
                         hide_category_form();
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
@@ -165,7 +164,7 @@ $categoryObj = new Categories; ?>
 
 <?php }?>
 
-<?php if ($action == 'view_category_statistics'){ 
+<?php if ($action == 'view_category_breadcrumb'){ 
 
     $categoryId =  $_POST['id'];
     if ($categoryId > 0) {
@@ -190,78 +189,6 @@ $categoryObj = new Categories; ?>
             </div>       
         </div>
     </div>
-
-    <!-- <div  class="row">
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-c-green  text-white">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="m-b-5">Total Service</h5>
-                            <h4 class="m-b-0"><?php $categoryObj->category_id = $categoryId; $countCategory = $categoryObj->get_wrk_in_progress_category();  echo $countCategory->total; ?></h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-user f-50 text-c-green "></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-c-blue  text-white">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="m-b-5">Active Service</h5>
-                            <h4 class="m-b-0"><?php $categoryObj->category_id = $categoryId;  $countCategory =  $categoryObj->get_wrk_in_progress_category(); echo $countCategory->total_active; ?></h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-book f-50 text-c-blue"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <a href="javascript:void(0)" onclick="add_edit_category_service(<?php echo $id ?>)">
-            <div class="card bg-c-pink   text-white">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="m-b-5">Add Service</h5>
-                            <h4 class="m-b-0"><?php //  $categoryObj->id = $_POST['id']; $rsCount =  $categoryObj->get_wrk_in_progress_category(); echo $rsCount->total; ?></h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-plus f-50 text-c-pink "></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <a href="javascript:void(0)" onclick="category_service_layout(<?php echo $id ?>)">
-            <div class="card bg-c-yellow   text-white">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="m-b-5">View Layout</h5>
-                            <h4 class="m-b-0"><?php //  $categoryObj->id = $_POST['id']; $rsCount =  $categoryObj->get_wrk_in_progress_category(); echo $rsCount->total; ?></h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-layout f-50 text-c-yellow "></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </a>
-        </div>
-    </div> -->
-
 <?php } ?>
 
 <?php if($action == 'add_edit_service_form'){ 
@@ -304,7 +231,7 @@ $categoryObj = new Categories; ?>
                                         <h3> Service </h3>
                                         <fieldset>
                                             <div class="row">
-                                                <div class="col-sm-4 col-lg-4">
+                                                <?php if(!empty($id)) { ?> <div class="col-sm-3 col-lg-3"> <?php } else { ?> <div class="col-sm-4 col-lg-4"> <?php } ?> 
                                                     <label class="col-form-label">Select Category</label>
                                                     <div class="input-group input-group-inverse">                                                    
                                                         <select  class="form-control" name="category_id" id="category_id">
@@ -317,21 +244,23 @@ $categoryObj = new Categories; ?>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4 col-lg-4">
+                                                <?php if(!empty($service_name)) { ?> <div class="col-sm-3 col-lg-3"> <?php } else { ?> <div class="col-sm-4 col-lg-4"> <?php } ?> 
                                                     <label class="col-form-label">Service Name</label>
                                                     <div class="input-group input-group-inverse">
                                                         <input type="text" class="form-control"  placeholder="Enter Service Name" name="service_name" value="<?php echo $service_name; ?>">
                                                     </div>
                                                 </div>                 
-                                                <div class="col-sm-4 col-lg-4">
+                                                <?php if(!empty($service_img)) { ?> <div class="col-sm-3 col-lg-3"> <?php } else { ?> <div class="col-sm-4 col-lg-4"> <?php } ?> 
                                                     <label class="col-form-label">Service Image</label>
                                                     <div class="input-group input-group-inverse">
                                                         <input type="file" class="form-control" name="service_img" id="service_img"  value="<?php echo $service_img; ?>">
-                                                    </div>
-                                                    <?php if (!empty($service_img)) {?>
+                                                    </div>                                                 
+                                                </div> 
+                                                <?php if (!empty($service_img)) {?>
+                                                    <div class="col-sm-3 col-lg-3">
                                                         <img src="<?php echo SERVICE_IMAGES .'/'. $service_img; ?>" alt="Service Images" width="100" height="100">
-                                                    <?php }?>
-                                                </div>                            
+                                                    </div>
+                                                <?php }?>                           
                                             </div>                                
                                             <div class="row">
                                                 <div class="col-sm-3 col-lg-3">
@@ -613,4 +542,33 @@ $categoryObj = new Categories; ?>
     </script>
 <?php } ?>
 
+<?php if ($action == 'category_service_breadcrumb'){ 
+
+    $serviceId =  $_POST['id'];
+    if ($serviceId > 0) {
+        $categoryObj->id = $_POST['id'];        
+        $rsService = $categoryObj->category_service_data();  
+        foreach ($rsService as $K => $V) {
+            $$K = $V;
+        } } ?>
+    
+        <div class="card borderless-card">
+            <div class="card-block warning-breadcrumb">
+                <div class="breadcrumb-header">
+                <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item"><a href="<?php echo ADMIN_URL ?>/dashboard.php"> <i class="fa fa-home"></i>Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo CATEGORY_DIR ?>/index.php">Categories</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);"  onclick="view_category(<?php echo $category_id ?>)"><?php  $categoryObj->id = $category_id; $rsCategory = $categoryObj->get_category_details(); echo $rsCategory->category_name; ?></a></li>
+                        <li class="breadcrumb-item"><a href="#!"><?php echo $service_name; ?></a></li>
+                    </ul>
+                </div> 
+                <div class="page-header-breadcrumb">
+                    <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);"  onclick="view_category(<?php echo $category_id ?>)"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a></li>               
+                    </ul>
+                </div>       
+            </div>
+        </div>
+
+<?php } ?>
 

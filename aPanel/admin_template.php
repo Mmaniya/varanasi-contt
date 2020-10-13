@@ -173,23 +173,23 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <span class="pcoded-mtext">Dashboard</span>
                                     </a>
                                 </li>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
+                                <li class="">
+                                    <a href="<?php echo CATEGORY_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="feather icon-box"></i></span>
                                         <span class="pcoded-mtext">Categories & Services</span>
                                     </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="">
+                                    <!-- <ul class="pcoded-submenu"> -->
+                                        <!-- <li class="">
                                             <a href="<?php echo CATEGORY_DIR ?>/index.php">
                                                 <span class="pcoded-mtext">Categories</span>
                                             </a>
-                                        </li>
-                                        <li class="">
+                                        </li> -->
+                                        <!-- <li class="">
                                             <a href="<?php echo SERVICE_DIR ?>/index.php">
                                                 <span class="pcoded-mtext">Services</span>
                                             </a>
-                                        </li>                                 
-                                    </ul>
+                                        </li>                                  -->
+                                    <!-- </ul> -->
                                 </li>
                             </ul>                           
                         </div>

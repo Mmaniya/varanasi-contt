@@ -69,7 +69,7 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
                                 <div class="row ">
                                     <div class="col-12">
                                         <div class="forgot-phone text-right f-right">
-                                        <a href="javascript:void(0);" onclick="forgetpws_form()" class="text-right f-w-600"> Forgot Password?</a>
+                                            <a href="javascript:void(0);" onclick="forgetpws_form()" class="text-right f-w-600"> Forgot Password?</a>
                                         </div>
                                     </div>
                                 </div>
