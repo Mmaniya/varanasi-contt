@@ -18,13 +18,12 @@ function forgetpws_form() {
  **************************/
 
 $(function () {
-    category_table();
+    category_table('');
     category_statistics();
 });
 
-function category_table(){
-
-    param = { 'act': 'category_table' };
+function category_table(status){
+    param = { 'act': 'category_table', 'status': status };
     ajax({
         a: 'category_table',
         b: $.param(param),
@@ -61,16 +60,30 @@ function add_edit_category(id) {
         }
     });
 }
+function update_category_form(id) {
+
+    param = { 'act': 'add_edit_category_form', 'id': id };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#update_category_form').show();
+            $('#update_category_form').html(data);
+        }
+    });
+}
 
 function hide_category_form() {
     $('#category_form').hide();
+    $('#update_category_form').hide();
 }
 
 function delete_category(id) {
     param = { 'act': 'category_remove', 'id': id };
     Swal.fire({
         title: "Are you sure?",
-        text: "You want to delete this category? Deleting this category will also delete the ----- service?",
+        text: "You want to delete this category? Deleting this category will also delete the releted service?",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
@@ -89,7 +102,7 @@ function delete_category(id) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        category_table();
+                        category_table('');
                         category_statistics();
                         hide_category_form();
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
@@ -127,7 +140,7 @@ function statusCategory(id) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        category_table();
+                        category_table('');
                         category_statistics();
                         hide_category_form();
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
@@ -145,9 +158,13 @@ function statusCategory(id) {
 }
 
 function view_category(id){
+    $('#category_service').removeClass('col-12');
+    $('#category_service').addClass('col-7');  
     hide_category_form();
     view_category_statistics(id);
     category_service_table(id);
+    $('.preloader').hide();
+
 }
 
 function view_category_statistics(id) {
@@ -184,7 +201,8 @@ function add_edit_category_service(category_id, id){
         b: $.param(param),
         c: function () { },
         d: function (data) {
-            // $('#category_form').show();
+            $('#category_service').removeClass('col-7');
+            $('#category_service').addClass('col-12');   
             $('#category_service').html(data);
         }
     });
@@ -253,9 +271,6 @@ function delete_category_service(category_id,id) {
                     $('.preloader').hide();
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
-                        // category_table();
-                        // category_statistics();
-                        // hide_category_form();
                         view_category(category_id);
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
@@ -266,7 +281,6 @@ function delete_category_service(category_id,id) {
         }
     });
 }
-
 
 
 /**************************

@@ -8,8 +8,12 @@ class Categories {
         return  dB::sExecuteSql($qry);  
     }
 
-    public function get_category(){        
-        $query = "SELECT *  from ".TBL_SERVICE_CATEGORIES." ORDER BY position ASC"; 
+    public function get_category(){   
+        if(!empty($this->status)){
+            $query = "SELECT *  from ".TBL_SERVICE_CATEGORIES." WHERE status = 'A' ORDER BY position ASC"; 
+        } else { 
+            $query = "SELECT *  from ".TBL_SERVICE_CATEGORIES." ORDER BY position ASC"; 
+        }
         return dB::mExecuteSql($query);   
     }
 
