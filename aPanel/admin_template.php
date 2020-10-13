@@ -179,11 +179,8 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <span class="pcoded-mtext">Categories & Services</span>
                                     </a>
                                     <!-- <ul class="pcoded-submenu"> -->
-                                        <!-- <li class="">
-                                            <a href="<?php echo CATEGORY_DIR ?>/index.php">
-                                                <span class="pcoded-mtext">Categories</span>
-                                            </a>
-                                        </li> -->
+                                       
+                          
                                         <!-- <li class="">
                                             <a href="<?php echo SERVICE_DIR ?>/index.php">
                                                 <span class="pcoded-mtext">Services</span>
@@ -191,6 +188,14 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         </li>                                  -->
                                     <!-- </ul> -->
                                 </li>
+                                <li class="">
+                                    <a href="<?php echo EMPLOYEE_DIR ?>/index.php">
+                                    <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                                        <span class="pcoded-mtext">Employees</span>
+                                    </a>
+                                </li> 
+
+
                             </ul>                           
                         </div>
                     </nav>
@@ -213,8 +218,6 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
         </div>
     </div>
     <?php include 'admin_script.php';?>
-
-
      <div class="preloader" style="display:none;">
         <div id="loader"></div>
     </div>

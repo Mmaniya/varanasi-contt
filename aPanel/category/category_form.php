@@ -224,7 +224,7 @@ $categoryObj = new Categories; ?>
                         <div class="card-block">                       
                             <div id="wizard1">
                                 <section>
-                                <form action="javascript:void(0);" class="wizard-form " id="cotegory_service_forms" enctype="multipart/form-data" >
+                                <form action="javascript:void(0);" class="wizard-form " id="category_service_forms" enctype="multipart/form-data" >
                                     <input type="hidden" value="category_services" name="act">
                                     <input type="hidden"  name="id" value="<?php echo $id; ?>">
                                     <input type="hidden"  name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
@@ -483,14 +483,14 @@ $categoryObj = new Categories; ?>
 
     <script src="<?php echo ADMIN_JS ?>/tinymce/wysiwyg-editor.js"></script>
     <script>
-        $("#cotegory_service_forms").steps({ headerTag: "h3", bodyTag: "fieldset", transitionEffect: "slideLeft", autoFocus: true });
+        $("#category_service_forms").steps({ headerTag: "h3", bodyTag: "fieldset", transitionEffect: "slideLeft", autoFocus: true });
         $(".actions a[href$='#finish']").on('click', function(){
             tinyMCE.triggerSave();
               
                 var cate_id = $('#category_id').val();
                 var formData = new FormData();
                 formData.append("service_img", document.getElementById('service_img').files[0]); 
-                    var fields  = $('form#cotegory_service_forms').serializeArray();
+                    var fields  = $('form#category_service_forms').serializeArray();
                     jQuery.each( fields, function( i, field ) { 
                         
                             formData.append(field.name, field.value + ""); 
@@ -553,7 +553,7 @@ $categoryObj = new Categories; ?>
         } } ?>
     
         <div class="card borderless-card">
-            <div class="card-block warning-breadcrumb">
+            <div class="card-block info-breadcrumb">
                 <div class="breadcrumb-header">
                 <ul class="breadcrumb-title">
                         <li class="breadcrumb-item"><a href="<?php echo ADMIN_URL ?>/dashboard.php"> <i class="fa fa-home"></i>Dashboard</a></li>

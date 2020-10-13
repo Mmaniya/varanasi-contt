@@ -57,6 +57,8 @@ define("SERVICE_DIR", ADMIN_URL . '/service');
 define("SERVICE_IMAGES", SERVICE_DIR . '/uploads');
 // Category
 define("CATEGORY_DIR", ADMIN_URL . '/category');
+//Employee
+define("EMPLOYEE_DIR",  ADMIN_URL . '/employee');
 
 
 $confval = ini_get("upload_max_filesize");

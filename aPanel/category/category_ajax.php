@@ -106,4 +106,35 @@ if ($action == 'category_service_remove') {
 }
 
 
+// Features position update
+
+if ($action == 'service_features_position') {
+    ob_clean();
+    if (count($_POST['features_id']) > 0) {
+        foreach ($_POST['features_id'] as $key => $val) {
+            $param['position'] = $key + 1;
+            $where = array('id' => $val);
+            $result = Table::updateData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        }
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);
+    }
+    exit();
+}
+
+// faq position update
+
+if ($action == 'service_faq_position') {
+    ob_clean();
+    if (count($_POST['faq_id']) > 0) {
+        foreach ($_POST['faq_id'] as $key => $val) {
+            $param['position'] = $key + 1;
+            $where = array('id' => $val);
+            $result = Table::updateData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        }
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);
+    }
+    exit();
+}
 ?>

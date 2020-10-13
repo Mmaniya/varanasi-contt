@@ -20,6 +20,7 @@ function forgetpws_form() {
 $(function () {
     category_table('');
     category_statistics();
+    add_edit_employee();
 });
 
 function category_table(status){
@@ -306,9 +307,41 @@ function category_service_breadcrumb(id) {
     });
 }
 
+
+
+// Features
+
+// function features_position(service_id) {
+//     param = { 'act': 'service_category_draggable', 'service_id': service_id };
+//     $('.preloader').show();
+//     ajax({
+//         a: "service_form",
+//         b: param,
+//         c: function () { },
+//         d: function (data) {
+//             $('.preloader').hide();
+//             $('#service_category_table').show();
+//             $('#service_category_table').html(data);
+//         }
+//     });
+// }
+
 /**************************
  *      End Categorys     *
  **************************/
+
+function add_edit_employee() {
+     param = { 'act': 'category_table' };
+     ajax({
+         a: 'employee_table',
+         b: $.param(param),
+         c: function () { },
+         d: function (data) {
+            alert('k');
+             $('#employee_service').html(data);
+         }
+     });
+}
 
 /**************************
  *      Service           *
