@@ -54,9 +54,9 @@ define("ADMIN_ICON", BASE_URL . 'assets/icon');
 
 // Service 
 define("SERVICE_DIR", ADMIN_URL . '/service');
-define("SERVICE_IMAGES", SERVICE_DIR . '/uploads');
 // Category
 define("CATEGORY_DIR", ADMIN_URL . '/category');
+define("SERVICE_IMAGES", CATEGORY_DIR . '/uploads');
 //Employee
 define("EMPLOYEE_DIR",  ADMIN_URL . '/employee');
 

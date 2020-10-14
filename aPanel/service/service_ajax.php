@@ -49,111 +49,110 @@ $action = trim($_REQUEST['act']);
 
 
 
+// if ($action == 'category_services') {
 
-if ($action == 'category_services') {
+//     $param['service_name'] = $_POST['service_name'];
+//     $param['service_description'] = $_POST['service_description'];
+//     $param['category_id'] = $_POST['category_id'];
+//     $param['service_payment_type'] = $_POST['service_payment_type'];
+//     $param['if_recurring_period'] = $_POST['if_recurring_period'];
+//     $param['recurring_type'] = $_POST['recurring_type'];
+//     $param['service_price'] = $_POST['service_price'];
+//     $param['service_delivery_time'] = $_POST['service_delivery_time'];
+//     $param['service_delivery_type'] = $_POST['service_delivery_type'];
+//     $param['service_questionnaire_complete_days'] = $_POST['service_questionnaire_complete_days'];
 
-    $param['service_name'] = $_POST['service_name'];
-    $param['service_description'] = $_POST['service_description'];
-    $param['category_id'] = $_POST['category_id'];
-    $param['service_payment_type'] = $_POST['service_payment_type'];
-    $param['if_recurring_period'] = $_POST['if_recurring_period'];
-    $param['recurring_type'] = $_POST['recurring_type'];
-    $param['service_price'] = $_POST['service_price'];
-    $param['service_delivery_time'] = $_POST['service_delivery_time'];
-    $param['service_delivery_type'] = $_POST['service_delivery_type'];
-    $param['service_questionnaire_complete_days'] = $_POST['service_questionnaire_complete_days'];
+//     if ($_FILES['service_img']['name'] != '') {
+//         $newFileName = '';
+//         $filename = basename($_FILES['service_img']['name']);
+//         $file_tmp = $_FILES['service_img']["tmp_name"];
+//         $ext = pathinfo($filename, PATHINFO_EXTENSION);
+//         $baseName = basename($filename, $ext);
+//         $newFileName = rand() . '.' . $ext;
+//         $param['service_img'] = $newFileName;
+//         move_uploaded_file($file_tmp = $_FILES['service_img']["tmp_name"], "uploads/" . $newFileName) or die('image upload fail');
+//     }
 
-    if ($_FILES['service_img']['name'] != '') {
-        $newFileName = '';
-        $filename = basename($_FILES['service_img']['name']);
-        $file_tmp = $_FILES['service_img']["tmp_name"];
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $baseName = basename($filename, $ext);
-        $newFileName = rand() . '.' . $ext;
-        $param['service_img'] = $newFileName;
-        move_uploaded_file($file_tmp = $_FILES['service_img']["tmp_name"], "uploads/" . $newFileName) or die('image upload fail');
-    }
-
-    if (empty(trim($_POST['id']))) {
-        $param['added_by'] = $_POST['admin_id'];
-        $result = Table::insertData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'showSql' => 'N'));
-        $explode = explode('::', $result);
+//     if (empty(trim($_POST['id']))) {
+//         $param['added_by'] = $_POST['admin_id'];
+//         $result = Table::insertData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'showSql' => 'N'));
+//         $explode = explode('::', $result);
                 
-        $serviceid = trim($explode[2]);
-        $param = array();
-        if (count($_POST['features']) > 0) {
-                $param['service_id'] =  $serviceid ;
-            foreach ($_POST['features'] as $key => $val) {
-                $param['features'] = $_POST['features'][$key];
-                $param['added_date'] = date('Y-m-d H:i:s', time());
-                $param['added_by'] = $_SESSION['admin_id'];
-                $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
-            }    
-        }
+//         $serviceid = trim($explode[2]);
+//         $param = array();
+//         if (count($_POST['features']) > 0) {
+//                 $param['service_id'] =  $serviceid ;
+//             foreach ($_POST['features'] as $key => $val) {
+//                 $param['features'] = $_POST['features'][$key];
+//                 $param['added_date'] = date('Y-m-d H:i:s', time());
+//                 $param['added_by'] = $_SESSION['admin_id'];
+//                 $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
+//             }    
+//         }
 
-        $param = array();
-        if (count($_POST['question']) > 0) {
-                $param['service_id'] =  $serviceid ;
-            foreach ($_POST['question'] as $key => $val) {
-                $param['question'] = $_POST['question'][$key];
-                $param['answer'] = $_POST['answer'][$key];
-                $param['added_date'] = date('Y-m-d H:i:s', time());
-                $param['added_by'] = $_SESSION['admin_id'];
-                $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
-            }
-        }
+//         $param = array();
+//         if (count($_POST['question']) > 0) {
+//                 $param['service_id'] =  $serviceid ;
+//             foreach ($_POST['question'] as $key => $val) {
+//                 $param['question'] = $_POST['question'][$key];
+//                 $param['answer'] = $_POST['answer'][$key];
+//                 $param['added_date'] = date('Y-m-d H:i:s', time());
+//                 $param['added_by'] = $_SESSION['admin_id'];
+//                 $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
+//             }
+//         }
 
-        if (trim($explode[0]) == 'Success') {
-            $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
-            echo json_encode($response);
-        } 
+//         if (trim($explode[0]) == 'Success') {
+//             $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
+//             echo json_encode($response);
+//         } 
 
-    } else {
+//     } else {
 
         
-        $param['updated_by'] = $_POST['admin_id'];
-        $where = array('id' => $_POST['id']);
-        $result = Table::updateData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-        $response = array("result" => 'Success', "data" => 'Updated Successfully');
-        echo json_encode($response);
+//         $param['updated_by'] = $_POST['admin_id'];
+//         $where = array('id' => $_POST['id']);
+//         $result = Table::updateData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+//         $response = array("result" => 'Success', "data" => 'Updated Successfully');
+//         echo json_encode($response);
         
-        $where = array('service_id' => $_POST['id']);
-        $result = Table::deleteData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+//         $where = array('service_id' => $_POST['id']);
+//         $result = Table::deleteData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
 
-        $param = array();
-        if (count($_POST['features']) > 0) {
-                $param['service_id'] =  $_POST['id'] ;
-            foreach ($_POST['features'] as $key => $val) {
-                if(!empty($_POST['features'][$key])){
-                $param['features'] = $_POST['features'][$key];
-                $param['added_date'] = date('Y-m-d H:i:s', time());
-                $param['added_by'] = $_SESSION['admin_id'];
-                $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
-                }
-            }    
-        }
+//         $param = array();
+//         if (count($_POST['features']) > 0) {
+//                 $param['service_id'] =  $_POST['id'] ;
+//             foreach ($_POST['features'] as $key => $val) {
+//                 if(!empty($_POST['features'][$key])){
+//                 $param['features'] = $_POST['features'][$key];
+//                 $param['added_date'] = date('Y-m-d H:i:s', time());
+//                 $param['added_by'] = $_SESSION['admin_id'];
+//                 $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
+//                 }
+//             }    
+//         }
         
-        $where = array('service_id' => $_POST['id']);
-        $result = Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+//         $where = array('service_id' => $_POST['id']);
+//         $result = Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
         
-        $param = array();
-        if (count($_POST['question']) > 0) {
-                $param['service_id'] =  $_POST['id'] ;
-            foreach ($_POST['question'] as $key => $val) {
-                if(!empty($_POST['question'][$key]) && !empty($_POST['answer'][$key])){
-                $param['question'] = $_POST['question'][$key];
-                $param['answer'] = $_POST['answer'][$key];
-                $param['added_date'] = date('Y-m-d H:i:s', time());
-                $param['added_by'] = $_SESSION['admin_id'];
-                $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
-                }
-            }
-        }
+//         $param = array();
+//         if (count($_POST['question']) > 0) {
+//                 $param['service_id'] =  $_POST['id'] ;
+//             foreach ($_POST['question'] as $key => $val) {
+//                 if(!empty($_POST['question'][$key]) && !empty($_POST['answer'][$key])){
+//                 $param['question'] = $_POST['question'][$key];
+//                 $param['answer'] = $_POST['answer'][$key];
+//                 $param['added_date'] = date('Y-m-d H:i:s', time());
+//                 $param['added_by'] = $_SESSION['admin_id'];
+//                 $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
+//                 }
+//             }
+//         }
 
-    }
+//     }
 
-    exit();
-}
+//     exit();
+// }
 
 
 
@@ -243,24 +242,29 @@ if ($action == 'filter_service_category') {
     if (count($rsServices) > 0) {
         foreach ($rsServices as $key => $value) {
             ?>
-            <tr class="row_id_<?php echo $value->id; ?>">
-                <th><?php echo $key + 1 ?></th>
-                <td><?php echo $value->service_name ?></td>
-                <td><?php echo money($value->service_price, '$') ?></td>
-                <td> <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
-                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="add_edit_service(<?php echo $value->id; ?>)" >Edit</a>
-                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light" onclick="delete_service(<?php echo $value->id; ?>)" >Delete</a>
-                    </div>
-                </td>
-                <td>
-                <label class="switch">
-                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>" onchange="statusService(<?php echo $value->id; ?>)" <?php echo $statusArr[$value->status]; ?> >
-                    <span class="slider round"></span>
-                </label>
-                </td>
-            </tr>
+<tr class="row_id_<?php echo $value->id; ?>">
+    <th><?php echo $key + 1 ?></th>
+    <td><?php echo $value->service_name ?></td>
+    <td><?php echo money($value->service_price, '$') ?></td>
+    <td>
+        <div class="btn-group " role="group" data-toggle="tooltip" data-placement="top" title=""
+            data-original-title=".btn-xlg">
+            <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light"
+                onclick="add_edit_service(<?php echo $value->id; ?>)">Edit</a>
+            <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect waves-light"
+                onclick="delete_service(<?php echo $value->id; ?>)">Delete</a>
+        </div>
+    </td>
+    <td>
+        <label class="switch">
+            <input type="checkbox" class="status_update_<?php echo $value->id; ?>"
+                onchange="statusService(<?php echo $value->id; ?>)" <?php echo $statusArr[$value->status]; ?>>
+            <span class="slider round"></span>
+        </label>
+    </td>
+</tr>
 
-        <?php }
+<?php }
     }
     exit();
 }

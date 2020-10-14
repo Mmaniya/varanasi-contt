@@ -16,27 +16,15 @@ function forgetpws_form() {
 /**************************
  *      Categorys         *
  **************************/
-
 $(function () {
     category_table('');
     category_statistics();
-    add_edit_employee();
+    add_edit_employee();   /* optinal  */
 });
 
-function category_table(status){
-    param = { 'act': 'category_table', 'status': status };
-    ajax({
-        a: 'category_table',
-        b: $.param(param),
-        c: function () { },
-        d: function (data) {
-            $('#category_table').html(data);
-        }
-    });
-}
+/* Category Statistics  Update*/
 
-function category_statistics(){    
-
+function category_statistics() {
     param = { 'act': 'category_statistics' };
     ajax({
         a: 'category_form',
@@ -48,8 +36,31 @@ function category_statistics(){
     });
 }
 
-function add_edit_category(id) {  
- 
+/* Show Category Table */
+
+function category_table(status) {
+    param = { 'act': 'category_table', 'status': status };
+    ajax({
+        a: 'category_table',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#category_table').html(data);
+        }
+    });
+}
+
+/* Add & Edit Category Form Hide Show */
+
+function hide_category_form() {
+    $('#category_form').hide();
+    $('#update_category_form').hide();
+}
+
+/* Add & Edit Category Form */
+
+function add_edit_category(id) {
+
     param = { 'act': 'add_edit_category_form', 'id': id };
     ajax({
         a: 'category_form',
@@ -57,10 +68,13 @@ function add_edit_category(id) {
         c: function () { },
         d: function (data) {
             $('#category_form').show();
-            $('#category_form').html(data);			
+            $('#category_form').html(data);
         }
     });
 }
+
+/* Add & Edit Category Form Update */
+
 function update_category_form(id) {
 
     param = { 'act': 'add_edit_category_form', 'id': id };
@@ -75,10 +89,7 @@ function update_category_form(id) {
     });
 }
 
-function hide_category_form() {
-    $('#category_form').hide();
-    $('#update_category_form').hide();
-}
+
 
 function delete_category(id) {
     param = { 'act': 'category_remove', 'id': id };
@@ -109,7 +120,7 @@ function delete_category(id) {
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
                         notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    }                                           
+                    }
                 }
             });
         }
@@ -147,7 +158,7 @@ function statusCategory(id) {
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
                         notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    }      
+                    }
                 }
             });
         } else {
@@ -158,9 +169,9 @@ function statusCategory(id) {
     });
 }
 
-function view_category(id){
+function view_category(id) {
     $('#category_service').removeClass('col-12');
-    $('#category_service').addClass('col-7');  
+    $('#category_service').addClass('col-7');
     hide_category_form();
     category_breadcrumb(id);
     category_dashboard(id);
@@ -168,7 +179,7 @@ function view_category(id){
 
 function category_breadcrumb(id) {
 
-    param = { 'act': 'view_category_breadcrumb', 'id':id };
+    param = { 'act': 'service_breadcrumb', 'id': id };
     ajax({
         a: 'category_form',
         b: $.param(param),
@@ -180,34 +191,34 @@ function category_breadcrumb(id) {
 }
 
 function category_dashboard(id) {
-    param = { 'act': 'category_dashboard','id':id };
+    param = { 'act': 'category_dashboard', 'id': id };
     ajax({
         a: 'category_table',
         b: $.param(param),
         c: function () { },
         d: function (data) {
-            $('#category_table').hide();            
+            $('#category_table').hide();
             $('#category_service').html(data);
         }
     });
 }
 
-function add_edit_category_service(category_id, id){
+function add_edit_category_service(category_id, id) {
 
-    param = { 'act': 'add_edit_service_form', 'category_id': category_id ,'service_id':id };
+    param = { 'act': 'add_edit_service_form', 'category_id': category_id, 'service_id': id };
     ajax({
         a: 'category_form',
         b: $.param(param),
         c: function () { },
         d: function (data) {
             $('#category_service').removeClass('col-7');
-            $('#category_service').addClass('col-12');   
+            $('#category_service').addClass('col-12');
             $('#category_service').html(data);
         }
     });
 }
 
-function statuscategoryService(id,cid){
+function statuscategoryService(id, cid) {
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
     param = { 'act': 'service_status_change', 'status': status, 'id': id };
@@ -247,7 +258,7 @@ function statuscategoryService(id,cid){
     });
 }
 
-function delete_category_service(category_id,id) {
+function delete_category_service(category_id, id) {
     param = { 'act': 'category_service_remove', 'id': id };
     Swal.fire({
         title: "Are you sure?",
@@ -281,7 +292,7 @@ function delete_category_service(category_id,id) {
     });
 }
 
-function view_category_service(id){
+function view_category_service(id) {
     category_service_breadcrumb(id);
     param = { 'act': 'category_service', 'id': id };
     ajax({
@@ -296,7 +307,7 @@ function view_category_service(id){
 }
 
 function category_service_breadcrumb(id) {
-    param = { 'act': 'category_service_breadcrumb', 'id': id };
+    param = { 'act': 'service_dashboard', 'id': id };
     ajax({
         a: 'category_form',
         b: $.param(param),
@@ -307,40 +318,100 @@ function category_service_breadcrumb(id) {
     });
 }
 
+function statusServiceFeatures(id) {
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
+    param = { 'act': 'features_status_change', 'status': status, 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to change status?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
+        }
+    });
+}
 
 
-// Features
-
-// function features_position(service_id) {
-//     param = { 'act': 'service_category_draggable', 'service_id': service_id };
-//     $('.preloader').show();
-//     ajax({
-//         a: "service_form",
-//         b: param,
-//         c: function () { },
-//         d: function (data) {
-//             $('.preloader').hide();
-//             $('#service_category_table').show();
-//             $('#service_category_table').html(data);
-//         }
-//     });
-// }
+function statusServiceFaq(id) {
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
+    param = { 'act': 'service_faq_status', 'status': status, 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to change status?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
+        }
+    });
+}
 
 /**************************
  *      End Categorys     *
  **************************/
 
 function add_edit_employee() {
-     param = { 'act': 'category_table' };
-     ajax({
-         a: 'employee_table',
-         b: $.param(param),
-         c: function () { },
-         d: function (data) {
+    param = { 'act': 'category_table' };
+    ajax({
+        a: 'employee_table',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
             alert('k');
-             $('#employee_service').html(data);
-         }
-     });
+            $('#employee_service').html(data);
+        }
+    });
 }
 
 /**************************
@@ -446,10 +517,10 @@ function add_edit_employee() {
 // //             $('.preloader').hide();
 // //             $('#service_form').show();
 // //             $('#service_form').html(data);
-			
+
 // // 			$('#service_category_form').show();
 // //             $('#service_category_form').html(data);
-			
+
 // //         }
 // //     });
 // // }
@@ -576,7 +647,7 @@ function add_edit_employee() {
 
 // function close_service(category_id) {
 //     $('#service_form').hide();
-	
+
 // 	$('#service_category_form').hide();
 // 	$('.category_service_table').show();  
 // 	category_service_list(category_id);
