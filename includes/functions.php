@@ -67,7 +67,7 @@ function check_input($value)
 	}
 	
 	$value = trim($value);
-	$value = htmlspecialchars($value);
+	$value = html_entity_decode($value);
 	//  $ostring = htmlentities($ostring);
 	return $value;
 }

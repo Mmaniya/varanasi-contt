@@ -89,7 +89,17 @@ function update_category_form(id) {
     });
 }
 
-
+function service_payment(value) {
+    if (value == 'recurring') {  
+        $('.newclass').addClass('col-sm-3 col-lg-3');
+        $('.newclass').removeClass('col-sm-2 col-lg-2'); 
+        $('.recurring_period').show();
+    } else {
+        $('.newclass').removeClass('col-sm-3 col-lg-3');
+        $('.newclass').addClass('col-sm-2 col-lg-2');   
+        $('.recurring_period').hide();
+    }
+}
 
 function delete_category(id) {
     param = { 'act': 'category_remove', 'id': id };
@@ -218,6 +228,21 @@ function add_edit_category_service(category_id, id) {
     });
 }
 
+function update_category_service(category_id, id) {
+
+    param = { 'act': 'add_edit_service_form', 'category_id': category_id, 'service_id': id, 'page':'service_page' };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#category_service').removeClass('col-7');
+            $('#category_service').addClass('col-12');
+            $('#category_service').html(data);
+        }
+    });
+}
+
 function statuscategoryService(id, cid) {
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
@@ -301,6 +326,8 @@ function view_category_service(id) {
         c: function () { },
         d: function (data) {
             $('#category_table').hide();
+            $('#category_service').removeClass('col-12');
+            $('#category_service').addClass('col-7');
             $('#category_service').html(data);
         }
     });
@@ -318,7 +345,7 @@ function category_service_breadcrumb(id) {
     });
 }
 
-function statusServiceFeatures(id) {
+function status_service_features(id) {
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
     param = { 'act': 'features_status_change', 'status': status, 'id': id };
@@ -357,6 +384,39 @@ function statusServiceFeatures(id) {
     });
 }
 
+function delete_category_service_features(service_id, id) {
+    param = { 'act': 'category_service_features_remove', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this fatures?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        view_category_service(service_id);
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
 
 function statusServiceFaq(id) {
     var ischecked = $('.status_update_' + id).is(':checked');
@@ -397,6 +457,112 @@ function statusServiceFaq(id) {
     });
 }
 
+function delete_category_service_faq(service_id, id) {
+    param = { 'act': 'category_service_faq_remove', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this fatures?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        view_category_service(service_id);
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
+
+function statusServiceSteps(id) {
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
+    param = { 'act': 'steps_status_change', 'status': status, 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to change status?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
+        }
+    });
+}
+
+function delete_category_service_steps(service_id, id) {
+    param = { 'act': 'category_service_step_remove', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this fatures?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        view_category_service(service_id);
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
 /**************************
  *      End Categorys     *
  **************************/
@@ -415,7 +581,7 @@ function add_edit_employee() {
 }
 
 /**************************
- *      Service           *
+ *      User page           *
  **************************/
 
 // function add_edit_service(id) {  

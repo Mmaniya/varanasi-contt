@@ -216,8 +216,8 @@ $categoryObj = new Categories; ?>
     $btnName = $title = 'Add New';
 	$category_id = $_POST['category_id'];  
     if ($serviceId > 0) {
-        $param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' => array('id' => $serviceId . '-INT'), 'showSql' => 'N');
-        $rsService = Table::getData($param);
+        $categoryObj->id = $serviceId;
+        $rsService = $categoryObj->category_service_data();  
         foreach ($rsService as $K => $V) {
             $$K = $V;
         }
@@ -236,9 +236,11 @@ $categoryObj = new Categories; ?>
                     <div class="card">
                         <div class="card-header">
                             <h5><?php echo $btnName ?> Service</h5>
-                            <a href="javascript:void(0);" onclick="view_category(<?php echo $_POST['category_id'] ?>)"
-                                style="font-size:16px;" class="right-float label label-danger"> <i
-                                    class="feather icon-x">Cancel</i></a>
+                            <?php if(empty($_POST['page'])){ ?>
+                                <a href="javascript:void(0);" onclick="view_category(<?php echo $_POST['category_id'] ?>)" style="font-size:16px;" class="right-float label label-danger"> <i class="feather icon-x">Cancel</i></a>
+                            <?php } else { ?>
+                                <a href="javascript:void(0);" onclick="view_category_service(<?php echo $_POST['service_id'] ?>)" style="font-size:16px;" class="right-float label label-danger"> <i class="feather icon-x">Cancel</i></a>
+                            <?php } ?>
                         </div>
                         <div class="card-block">
                             <div id="wizard1">
@@ -306,9 +308,7 @@ $categoryObj = new Categories; ?>
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <?php  if($service_payment_type=='recurring') { ?> <script>
-                                                            service_payment('recurring');
-                                                            </script> <?php } ?>
+                                                            <?php  if($service_payment_type=='recurring') { ?> <script>  service_payment('recurring'); </script> <?php } ?>
                                                             <div class="col-sm-2 col-lg-2 newclass">
                                                                 <label class="col-form-label">Service Price </label>
                                                                 <div class="input-group ">
@@ -412,9 +412,7 @@ $categoryObj = new Categories; ?>
                                                     <script>
                                                          z++;
                                                     </script>
-                                                    <?php } } else { ?> <script>
-                                                    add_more_features_fields();
-                                                    </script><?php } ?>
+                                                    <?php } } else { ?> <script>  add_more_features_fields(); </script><?php } ?>
                                                 </div>
                                             </div>
                                             <script>
@@ -463,35 +461,24 @@ $categoryObj = new Categories; ?>
                                                                 if(count($rsServiceFaq)>0){
                                                                     foreach ($rsServiceFaq as $key => $value){  ?>
 
-                                                    <div class="col-sm-6 col-lg-6 " id="faq_column_<?php echo $key;?>">
-                                                        <label class="col-form-label">Question</label>
-                                                        <div class="input-group input-group-inverse">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Enter Question"
-                                                                value="<?php echo $value->question; ?>" name="question[]">
-                                                        </div>
-                                                        <label class="col-form-label">Answer</label>
-                                                        <textarea name="answer[]"><?php echo $value->answer; ?></textarea>
-                                                        <button class="clone btn btn-primary m-b-15 m-t-15  m-r-15"
-                                                            onclick="add_more_faq_fields()">Add</button>
-                                                        <button class="delete btn btn-danger m-b-15 m-t-15"
-                                                            onclick="removeFaq(<?php echo $key;?>)">Delete</button>
-                                                    </div>
-
-
-                                                    <?php } }else{ ?> <script>
-                                                    add_more_faq_fields();
-                                                    </script><?php } ?>
+                                                                    <div class="col-sm-6 col-lg-6 " id="faq_column_<?php echo $key;?>">
+                                                                        <label class="col-form-label">Question</label>
+                                                                        <div class="input-group input-group-inverse">
+                                                                            <input type="text" class="form-control"  placeholder="Enter Question"  value="<?php echo $value->question; ?>" name="question[]">
+                                                                        </div>
+                                                                        <label class="col-form-label">Answer</label>
+                                                                        <textarea name="answer[]"><?php echo $value->answer; ?></textarea>
+                                                                        <button class="clone btn btn-primary m-b-15 m-t-15  m-r-15" onclick="add_more_faq_fields()">Add</button>
+                                                                        <button class="delete btn btn-danger m-b-15 m-t-15"  onclick="removeFaq(<?php echo $key;?>)">Delete</button>
+                                                                    </div>
+                                                                    <?php } }else{ ?> <script> add_more_faq_fields(); </script><?php } ?>
                                                 </div>
                                             </div>
                                             <script>
-                                            tinymce.init({
-                                                selector: 'myeditable'
-                                            })
+                                  
                                             i = 1;
 
                                             function add_more_faq_fields() {
-
                                                 html = '<div class="col-sm-6 col-lg-6 " id="faq_column_' + i + '">';
                                                 html += '<label class="col-form-label">Question</label>';
                                                 html += '<div class="input-group input-group-inverse">';
@@ -499,16 +486,11 @@ $categoryObj = new Categories; ?>
                                                 html += '</div>';
                                                 html += '<textarea name="answer[]" class="myeditable"></textarea>';
                                                 html += '<button class=" clone btn btn-primary m-b-15 m-t-15 m-r-15" onclick="add_more_faq_fields()">Add</button>';
-                                                html += '<button class=" delete  btn btn-danger m-b-15 m-t-15" onclick="removeFaq(' +
-                                                    i + ')">Delete</button>';
+                                                html += '<button class=" delete  btn btn-danger m-b-15 m-t-15" onclick="removeFaq(' + i + ')">Delete</button>';
                                                 html += '</div>';
                                                 $('#appeded_column_faq').append(html);
                                                 i++;
                                             }
-
-                                            tinymce.init({
-                                                selector: 'myeditable'
-                                            })
 
                                             function removeFaq(id) {
                                                 if (i == 1) {
@@ -518,6 +500,81 @@ $categoryObj = new Categories; ?>
                                                 $('#faq_column_' + id).remove();
                                             }
                                             </script>
+                                        </fieldset>
+                                        <h3> Steps </h3>
+                                        <fieldset>
+
+                                            <div class="card-header bg-c-lite-green">
+                                                <h5>Add New <?php //echo $rsService->service_name; ?> Steps</h5>
+                                            </div>
+                                            <div class="card-block">
+                                                <div id="appeded_column_step" class="row">
+                                                    <?php   $categoryObj->id = $id;
+                                                    $rsServiceFaq = $categoryObj->get_service_category_steps();
+                                                    if(count($rsServiceFaq)>0){
+                                                        foreach ($rsServiceFaq as $key => $value){  ?>
+
+                                                        <div class="col-sm-6 col-lg-6 " id="step_column_<?php echo $key;?>">
+                                                            <label class="col-form-label">Title</label>
+                                                            <div class="input-group input-group-inverse">
+                                                                <input type="text" class="form-control"  placeholder="Enter Steps Title"  value="<?php echo $value->title; ?>" name="title[]">
+                                                            </div>
+                                                            <label class="col-form-label">Discription</label>
+                                                            <textarea name="description[]"><?php echo $value->description; ?></textarea>
+                                                            <label class="col-form-label">Estimated Time to Complete</label>
+                                                            <div class="input-group input-group-inverse">
+                                                                <input type="text" class="form-control col-5"  placeholder="Enter Time"  value="<?php echo $value->estimated_time; ?>" name="estimated_time[]">
+                                                                <select class="form-control col-6 offset-1" name="estimated_type[]">
+                                                                    <option value="H" <?php if ($value->estimated_type == 'H') {echo 'selected';}?>> Hours</option>
+                                                                    <option value="D" <?php if ($value->estimated_type == 'D') {echo 'selected';}?>> Days</option>
+                                                                    <option value="W" <?php if ($value->estimated_type == 'W') {echo 'selected';}?>> Weeks </option>
+                                                                    <option value="M" <?php if ($value->estimated_type == 'M') {echo 'selected';}?>> Months</option>
+                                                                </select>
+                                                            </div>
+                                                            <button class="clone btn btn-primary m-b-15 m-t-15  m-r-15" onclick="add_more_step_fields()">Add</button>
+                                                            <button class="delete btn btn-danger m-b-15 m-t-15"  onclick="removeSteps(<?php echo $key;?>)">Delete</button>
+                                                        </div>
+                                                        <?php } }else{ ?> <script> add_more_step_fields(); </script><?php  } ?>
+                                                </div>
+                                            </div>
+                                            <script>
+                                  
+                                            y = 1;
+
+                                            function add_more_step_fields() {
+                                                html = '<div class="col-sm-6 col-lg-6 " id="step_column_' + y + '">';
+                                                html += '<label class="col-form-label">Discription</label>';
+                                                html += '<div class="input-group input-group-inverse">';
+                                                html += '<input type="text" class="form-control" placeholder="Enter Steps Title" value="" name="title[]">';
+                                                html += '</div>';
+                                                html += '<label class="col-form-label" >Discription</label>';
+                                                html += '<textarea name="description[]" class="myeditable"></textarea>';
+                                                html += '<label class="col-form-label">Estimated Time to Complete</label>';
+                                                html += '<div class="input-group input-group-inverse">';
+                                                html += '<input type="text" class="form-control col-5"  placeholder="Enter Time"  value="<?php echo $value->estimated_time; ?>" name="estimated_time[]">';
+                                                html += '<select class="form-control col-6 offset-1" name="estimated_type[]">';
+                                                html += '<option value="H"> Hours</option>';
+                                                html += '<option value="D"> Days</option>';
+                                                html += '<option value="W" selected=""> Weeks </option>';
+                                                html += '<option value="M"> Months</option>';
+                                                html += '</select>';
+                                                html += '</div>';
+                                                html += '<button class=" clone btn btn-primary m-b-15 m-t-15 m-r-15" onclick="add_more_step_fields()">Add</button>';
+                                                html += '<button class=" delete  btn btn-danger m-b-15 m-t-15" onclick="removeSteps(' + y + ')">Delete</button>';
+                                                html += '</div>';
+                                                $('#appeded_column_step').append(html);
+                                                y++;
+                                            }
+
+                                            function removeSteps(id) {
+                                                if (y == 1) {
+                                                    return;
+                                                }
+                                                y--;
+                                                $('#step_column_' + id).remove();
+                                            }
+                                            </script>
+
                                         </fieldset>
                                     </form>
                                 </section>
@@ -558,7 +615,11 @@ $categoryObj = new Categories; ?>
                 success: function(data) {
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
+                        <?php if(empty($_POST['page'])){ ?>
                         view_category(cate_id);
+                        <?php } else { ?>
+                        view_category_service(<?php echo $_POST['service_id']; ?>);
+                        <?php } ?>
                         hide_category_form();
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft',
                             'animated fadeOutLeft', records.data);
@@ -569,31 +630,30 @@ $categoryObj = new Categories; ?>
                 }
             });
         });
-
-        $("form#our_service").submit(function() {
-            cate_id = $('#category_id').val();
-            var formData = new FormData(this);
-            $.ajax({
-                url: '<?php echo SERVICE_DIR ?>/service_ajax.php',
-                type: 'POST',
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    var records = JSON.parse(data);
-                    if (records.result == 'Success') {
-                        view_category(cate_id);
-                        hide_category_form();
-                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft',
-                            'animated fadeOutLeft', records.data);
-                    } else {
-                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft',
-                            'animated fadeOutLeft', records.data);
-                    }
-                }
-            });
-        });
+        // $("form#our_service").submit(function() {
+        //     cate_id = $('#category_id').val();
+        //     var formData = new FormData(this);
+        //     $.ajax({
+        //         url: '<?php echo SERVICE_DIR ?>/service_ajax.php',
+        //         type: 'POST',
+        //         data: formData,
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false,
+        //         success: function(data) {
+        //             var records = JSON.parse(data);
+        //             if (records.result == 'Success') {
+        //                 view_category(cate_id);
+        //                 hide_category_form();
+        //                 notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft',
+        //                     'animated fadeOutLeft', records.data);
+        //             } else {
+        //                 notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft',
+        //                     'animated fadeOutLeft', records.data);
+        //             }
+        //         }
+        //     });
+        // });
     </script>
 <?php } ?>
 

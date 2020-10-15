@@ -35,8 +35,7 @@ $categoryObj = new Categories;
                             <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
                                 <input type="hidden" name="category_id[]" value="<?php echo $value->id ?>">
                                 <th><?php echo $key + 1 ?></th>
-                                <td><a href="javascript:void(0);" onclick="view_category(<?php echo $value->id; ?>)"
-                                        class="text-primary"><?php echo $value->category_name ?></a></td>
+                                <td><a href="javascript:void(0);" onclick="view_category(<?php echo $value->id; ?>)"  class="text-primary"><?php echo $value->category_name ?></a></td>
                                 <td>
                                     <!-- <div class="btn-group " role="group" > -->
                                     <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category(<?php echo $value->id; ?>)"><i class="fa fa-edit"  aria-hidden="true"></i>Edit</a>
@@ -167,35 +166,24 @@ $categoryObj = new Categories;
                                         <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
                                             <input type="hidden" name="service_id[]" value="<?php echo $value->id ?>">
                                             <th><?php echo $key + 1 ?></th>
-                                            <td><a href="javascript:void(0);" class="text-primary"
-                                                    onclick="view_category_service(<?php  echo $value->id; ?>)"><?php echo $value->service_name ?></a>
-                                            </td>
+                                            <td><a href="javascript:void(0);" class="text-primary" onclick="view_category_service(<?php  echo $value->id; ?>)"><?php echo $value->service_name ?></a></td>
                                             <td><?php echo money($value->service_price, '$') ?></td>
                                             <td>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-info"
-                                                    onclick="add_edit_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i
-                                                        class="fa fa-edit" aria-hidden="true"></i>Edit</a>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger"
-                                                    onclick="delete_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i
-                                                        class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                                 <!-- <a href="javascript:void(0);" class="btn btn-sm btn-warning " onclick="category_service_list(<?php echo $value->id; ?>)"><i class="fa fa-plus" aria-hidden="true"></i>Service</a>  -->
                                                 <!-- <a href="javascript:void(0);" class="btn btn-sm btn-success " onclick="view_category(<?php // echo $value->id; ?>)"><i class="fa fa-eye" aria-hidden="true"></i>View</a>  -->
                                             </td>
                                             <td>
                                                 <label class="switch">
-                                                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>"
-                                                        onchange="statuscategoryService(<?php echo $value->id; ?>,<?php echo $id ?>)"
-                                                        <?php echo $statusArr[$value->status]; ?>>
+                                                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>" onchange="statuscategoryService(<?php echo $value->id; ?>,<?php echo $id ?>)" <?php echo $statusArr[$value->status]; ?>>
                                                     <span class="slider round"></span>
                                                 </label>
                                             </td>
                                         </tr>
                                         <?php }} else {?>
                                         <tr>
-                                            <td colspan="5" class="text-center"> No Records Found. Click here to <a
-                                                    href="javascript:void(0);"
-                                                    onclick="add_edit_category_service(<?php echo $id ?>,'')"
-                                                    style="color:#01a9ac"> Add New</a> </td>
+                                            <td colspan="5" class="text-center"> No Records Found. Click here to <a href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>,'')" style="color:#01a9ac"> Add New</a> </td>
                                         </tr>
                                         <?php }?>
                                     </tbody>
@@ -260,7 +248,7 @@ $categoryObj = new Categories;
     <div class="card">
         <div class="card-header bg-c-lite-green" style="border-bottom: 1px solid lightgray;">
             <h4 style="color:#ffffff"> <?php echo $service_name; ?>
-                <a href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>)" style="font-size:15px;" class="right-float label label-warning"><i class="fa fa-edit"></i> Edit</a>
+                <a href="javascript:void(0);" onclick="update_category_service(<?php echo $category_id; ?>,<?php echo $id ?>)" style="font-size:15px;" class="right-float label label-warning"><i class="fa fa-edit"></i> Edit</a>
             </h4>
             <!-- <a href="<?php echo CATEGORY_DIR ?>/index.php" style="font-size:16px;" class="right-float label label-danger"> <i class="feather icon-arrow-left"> Go Back</i></a> -->
         </div>
@@ -270,8 +258,7 @@ $categoryObj = new Categories;
                 <div class="col-sm-4  bg-c-lite-green user-profile">
                     <div class="card-block text-center text-white">
                         <div class="m-b-25">
-                            <img src="<?php echo SERVICE_IMAGES .'/'. $service_img; ?>" alt="Service Images" width="100"
-                                height="100">
+                            <img src="<?php echo SERVICE_IMAGES .'/'. $service_img; ?>" alt="Service Images" width="100" height="100">
                         </div>
                         <h4 class="f-w-600">PRICE</h4>
                         <h4>$ <?php echo $service_price; ?></h4>
@@ -364,12 +351,12 @@ $categoryObj = new Categories;
                                             <th><?php echo $key + 1 ?></th>
                                             <td><?php echo $value->features ?></a></td>
                                             <td>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="add_edit_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+                                                <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="update_category_service(<?php echo $id; ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a> -->
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service_features(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                             </td>                                            
                                             <td>
                                                 <label class="switch">
-                                                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>" onchange="statusServiceFeatures(<?php echo $value->id; ?>,<?php echo $id ?>)" <?php echo $statusArr[$value->status]; ?>>
+                                                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>" onchange="status_service_features(<?php echo $value->id; ?>,<?php echo $id ?>)" <?php echo $statusArr[$value->status]; ?>>
                                                     <span class="slider round"></span>
                                                 </label>
                                             </td>
@@ -397,6 +384,7 @@ $categoryObj = new Categories;
                                         <tr>
                                             <th>#</th>
                                             <th>Question & Answer </th>
+                                            <th>Action</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
@@ -414,6 +402,10 @@ $categoryObj = new Categories;
                                                 <p>Que: <?php echo $value->question ?></p>
                                                 <p>Ans: <?php echo strip_tags($value->answer) ?></p></a>
                                             </td>
+                                            <td>
+                                                <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="update_category_service(<?php echo $id ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a> -->
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service_faq(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+                                            </td>  
                                             <td>
                                                 <label class="switch">
                                                     <input type="checkbox" class="status_update_<?php echo $value->id; ?>"  onchange="statusServiceFaq(<?php echo $value->id; ?>)"
@@ -438,7 +430,57 @@ $categoryObj = new Categories;
                     </p>
                 </div>
                 <div class="tab-pane" id="steps" role="tabpanel" aria-expanded="false">
-                    <p class="m-0"></p>
+                    <p class="m-0">
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <form action="javascript:void(0);" id="steps_position" style="width:100%">
+                                <input type="hidden" name="act" value="service_step_position">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Title</th>
+                                            <th>Action</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="draggableStep" class="draggable">
+                                        <?php   $statusArr = array('A' => 'checked', 'I' => ''); 
+                                                    $categoryObj->id = $_POST['id'];                                 
+                                                    $rsSteps = $categoryObj->get_service_category_steps();
+                                                    if (count($rsSteps) > 0) {
+                                                        foreach ($rsSteps as $key => $value) { ?>
+
+                                        <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
+                                            <input type="hidden" name="step_id[]" value="<?php echo $value->id ?>">
+                                            <th><?php echo $key + 1 ?></th>
+                                            <td> <?php echo $value->title ?></td>
+                                            <td>
+                                                <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="update_category_service(<?php echo $id ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a> -->
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service_steps(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+                                            </td>  
+                                            <td>
+                                                <label class="switch">
+                                                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>"  onchange="statusServiceSteps(<?php echo $value->id; ?>)"
+                                                        <?php echo $statusArr[$value->status]; ?>>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <?php } } else {?>
+                                        <tr>
+                                            <td colspan="5" class="text-center"> No Records Found. Click here to <a
+                                                    href="javascript:void(0);"
+                                                    onclick="add_edit_category_service(<?php echo $id ?>,'')"
+                                                    style="color:#01a9ac"> Add New</a> </td>
+                                        </tr>
+                                        <?php }?>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    </p>
                 </div>
             </div>
         </div>
@@ -477,6 +519,31 @@ $categoryObj = new Categories;
             accept: '.sortable-moves',
             onUpdate: function(ui) {
                 var param = $('form#faq_position').serialize();
+                ajax({
+                    a: "category_ajax",
+                    b: param,
+                    c: function() {},
+                    d: function(data) {
+                        var records = JSON.parse(data);
+                        if (records.result == 'Success') {
+                            notify('top', 'right', 'fa fa-check', 'success',
+                                'animated fadeInLeft', 'animated fadeOutLeft', records
+                                .data);
+                        } else {
+                            notify('top', 'right', 'fa fa-times', 'danger',
+                                'animated fadeInLeft', 'animated fadeOutLeft', records
+                                .data);
+                        }
+                    }
+                });
+            },
+        });
+        Sortable.create(draggableStep, {
+            group: 'draggableStep',
+            animation: 150,
+            accept: '.sortable-moves',
+            onUpdate: function(ui) {
+                var param = $('form#steps_position').serialize();
                 ajax({
                     a: "category_ajax",
                     b: param,

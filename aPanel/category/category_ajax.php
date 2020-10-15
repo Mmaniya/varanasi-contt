@@ -67,7 +67,7 @@ if ($action == 'category_status_change') {
 if ($action == 'category_services') {
 
     $param['service_name'] = $_POST['service_name'];
-    $param['service_description'] = $_POST['service_description'];
+    $param['service_description'] = check_input($_POST['service_description']);
     $param['category_id'] = $_POST['category_id'];
     $param['service_payment_type'] = $_POST['service_payment_type'];
     $param['if_recurring_period'] = $_POST['if_recurring_period'];
@@ -110,13 +110,27 @@ if ($action == 'category_services') {
                 $param['service_id'] =  $serviceid ;
             foreach ($_POST['question'] as $key => $val) {
                 $param['question'] = $_POST['question'][$key];
-                $param['answer'] = $_POST['answer'][$key];
+                $param['answer'] = check_input($_POST['answer'][$key]);
                 $param['added_date'] = date('Y-m-d H:i:s', time());
                 $param['added_by'] = $_SESSION['admin_id'];
                 $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
             }
         }
 
+        $param = array();
+        if (count($_POST['title']) > 0) {
+                $param['service_id'] =  $serviceid ;
+            foreach ($_POST['title'] as $key => $val) {
+                $param['title'] = $_POST['title'][$key];
+                $param['description'] = check_input($_POST['description'][$key]);
+                $param['estimated_time'] = $_POST['estimated_time'][$key];
+                $param['estimated_type'] = $_POST['estimated_type'][$key];
+                $param['added_date'] = date('Y-m-d H:i:s', time());
+                $param['added_by'] = $_SESSION['admin_id'];
+                $result = Table::insertData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'showSql' => 'N'));
+            }
+        }
+        
         if (trim($explode[0]) == 'Success') {
             $response = array("result" => trim($explode[0]), "data" => 'Added Successfully');
             echo json_encode($response);
@@ -236,6 +250,19 @@ if ($action == 'features_status_change') {
     echo json_encode($response);
 }
 
+if ($action == 'category_service_features_remove') {
+    ob_clean();
+
+    $where = array('id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+    $response = array("result" => 'Success', "data" => 'Successfully Removed');
+    echo json_encode($response);
+
+    exit();
+}
+
+
 
 // faq position update
 
@@ -262,5 +289,60 @@ if ($action == 'service_faq_status') {
     $response = array("result" => 'Success', "data" => 'Updated Successfully');
     echo json_encode($response);
 }
+
+if ($action == 'category_service_faq_remove') {
+    ob_clean();
+
+    $where = array('id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+    $response = array("result" => 'Success', "data" => 'Successfully Removed');
+    echo json_encode($response);
+
+    exit();
+}
+
+
+// steps position update
+
+if ($action == 'service_step_position') {
+    ob_clean();
+    if (count($_POST['step_id']) > 0) {
+        foreach ($_POST['step_id'] as $key => $val) {
+            $param['position'] = $key + 1;
+            $where = array('id' => $val);
+            $result = Table::updateData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        }
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);
+    }
+    exit();
+}
+
+
+if ($action == 'steps_status_change') {
+    $param['status'] = $_POST['status'];
+    $param['updated_by'] = $_POST['access_level'];
+    $where = array('id' => $_POST['id']);
+    $result = Table::updateData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    $response = array("result" => 'Success', "data" => 'Updated Successfully');
+    echo json_encode($response);
+}
+
+
+if ($action == 'category_service_step_remove') {
+    ob_clean();
+
+    $where = array('id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+    $response = array("result" => 'Success', "data" => 'Successfully Removed');
+    echo json_encode($response);
+
+    exit();
+}
+
+
+
 
 ?>
