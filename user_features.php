@@ -12,31 +12,22 @@ $categoryObj = new Categories; ?>
     <title>MMS - Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-            .paragraph-2.feature {
-                margin-bottom: 0px;
-                padding-top: 12px;
-                opacity: 1;
-            }
-            .paragraph-2 {
-                opacity: 0.65;
-                font-family: 'Circular STD', sans-serif;
-                font-size: 17px;
-            }
+    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/user-style.css">
 
-      </style>
   </head>
   <body>
   <div class="container">
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom">
-      <h5 class="my-0 mr-md-auto font-weight-normal">Mastermind Solutions</h5>		 
-      <a class="btn btn-outline-primary" href="#">View Profile</a>
-    </div>  
-  </div>
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">Welcome to your agency delivery hub! </h1>
-      <p class="lead">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
-    </div>
+	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom">
+        <!-- <h5 class="my-0 mr-md-auto font-weight-normal">Mastermind Solutions</h5>		  -->
+            <img src="<?php echo ADMIN_IMAGES ?>/mmslogo.png" alt="logo" class="log-img"/>
+		    <a class="button-3 col-md-2 offset-md-7" href="#">View Profile</a>
+	</div>
+</div>
+<!-- <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <div class="heading-7">Welcome to your agency delivery hub! ⚡</div>
+  <p class="paragraph-2">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
+</div> -->
+
 <div class="container">
   <div class="row">
     <div class="col-12">

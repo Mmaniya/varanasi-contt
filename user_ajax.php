@@ -6,9 +6,9 @@ $categoryObj = new Categories; ?>
     $categoryObj->id = $_POST['id'];   
     $rsService = $categoryObj->get_category_service();
     if (count($rsService) > 0) {
-    foreach ($rsService as $key => $value) { ?>
+    foreach ($rsService as $key => $value) {  if($value->status == 'A'){  ?>
     
-    <div class="card col-md-6 col-sm-12 main-card">
+    <div class="card col-12 col-sm-12 col-md-6 main-card">
         <div class="card-body">
 
                 <div class="title-service">
@@ -19,18 +19,20 @@ $categoryObj = new Categories; ?>
                 <?php } ?>
                 <div class="title-name"><?php echo $value->service_name; ?></div>
                 </div>
-            <h4 class="text-block-16 price">$&nbsp;<?php echo $value->service_price; ?>/M</h4>
-            <div class="row">
-                <div class="w-col w-col-6">
-                    <div class="div-block-185 srp">
-                        <p class="paragraph-3 caps srp">SRP: $960/M</p>
-                    </div>
+            <h4 class="text-block-16 price"><?php echo money($value->service_price,'$'); ?>/M</h4>
+            <div class="row price_details">
+                <?php   $categoryObj->id = $value->id;   
+                        $rsFeatured = $categoryObj->get_service_category_featured();
+                        foreach ($rsFeatured as $k => $v) {
+                            if($v->status == 'A'){
+                        ?>
+            <div class="w-col col-md-6 col-sm-12">
+                <div class="div-block-185">
+                    <p class="paragraph-3 caps"><?php echo $v->featured ?></p>
                 </div>
-                <div class="column-8 w-col w-col-6">
-                    <div class="div-block-185">
-                        <p class="paragraph-3 caps">$500 - $3,000 Ad Budget</p>
-                    </div>
-                </div>
+            </div>
+            <?php } } ?>
+
             </div>
             <div class="row">
                 <div class="col-12">
@@ -43,8 +45,13 @@ $categoryObj = new Categories; ?>
         </div>
     </div>
 
-<?php } } ?> 
-<script>
+<?php } } } ?>
+
+<script> 
+
+ $('.price_details .div-block-185:even').addClass('srp');
+ $('.price_details .paragraph-3:even').addClass('srp');
+
   $(function () {
     $(".text-box p").text(function(index, currentText) {
         var maxLength = $(this).parent().attr('data-maxlength');
@@ -62,7 +69,7 @@ $categoryObj = new Categories; ?>
 
     $categoryObj->id = $_POST['id'];   
     $rsService = $categoryObj->get_category_details(); ?>
-    <div class="text-block-15"><?php echo $rsService->category_name?></div>
+    <div class="text-block-15"><?php echo $rsService->category_name; ?><?php if($rsService->category_image){ ?><img src="<?php echo CATEGORY_IMAGES ?>/<?php echo $rsService->category_image; ?>"  width="60" height="50" /><?php } ?></div>
 
 
 <?php } ?>

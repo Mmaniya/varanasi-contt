@@ -102,7 +102,7 @@ $categoryObj = new Categories; ?>
             class="right-float label label-danger"><i class="feather icon-x">Cancel</i></a>
     </div>
     <div class="card-block" style="background-color: rgb(255, 255, 255);">
-        <form action="javascript:void(0);" id="service_category">
+        <form action="javascript:void(0);" id="service_category"  enctype="multipart/form-data">
             <input type="hidden" value="service_categories" name="act">
             <input type="hidden" name="id" id="cate_id" value="<?php echo $id; ?>">
             <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
@@ -111,7 +111,6 @@ $categoryObj = new Categories; ?>
                 <div class="col-sm-6 col-lg-6">
                     <label class="col-form-label">Category Name</label>
                     <div class="input-group input-group-inverse">
-
                         <input type="text" class="form-control" placeholder="Enter Category Name" name="category_name"
                             value="<?php echo $category_name; ?>">
                     </div>
@@ -119,20 +118,30 @@ $categoryObj = new Categories; ?>
                 <div class="col-sm-6 col-lg-6">
                     <label class="col-form-label">Category Abbreviation</label>
                     <div class="input-group input-group-inverse">
-
                         <input type="text" class="form-control" placeholder="Enter Category Abbreviation"
                             name="category_abbr" value="<?php echo $category_abbr; ?>">
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label class="col-form-label">Category Image</label>
+                    <div class="input-group input-group-inverse">
+                        <input type="file" class="form-control" placeholder="Enter Category Image" name="category_image" >
+                    </div>
+                </div>
+                <?php if(!empty($category_image)) {  ?>
+                <div class="col-sm-12 col-lg-12">
+                    <img src="<?php echo CATEGORY_IMAGES .'/'. $category_image; ?>" width="100" height="100">
+                </div>
+                <?php } ?>
             </div>
 
             <div class="row">
                 <div class="col-sm-12 col-lg-12">
                     <label class="col-form-label">Category Description</label>
                     <div class="input-group input-group-inverse">
-                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description"
-                            id="category_description"
-                            name="category_description"><?php echo $category_description; ?></textarea>
+                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description" id="category_description" name="category_description"><?php echo $category_description; ?></textarea>
                     </div>
                 </div>
             </div>
@@ -146,14 +155,18 @@ $categoryObj = new Categories; ?>
     </div>
     <script>
         $("form#service_category").submit(function() {
-            // var cate_id = $('#cate_id').val();           
             tinyMCE.triggerSave();
-            var formData = $('form#service_category').serialize();
-            ajax({
-                a: "category_ajax",
-                b: formData,
-                c: function() {},
-                d: function(data) {
+            // var formData = $('form#service_category').serialize();
+            var formData = new FormData(this);        
+                $.ajax({
+                url: '<?php echo CATEGORY_DIR ?>/category_ajax.php',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {
                         tinymce.remove();

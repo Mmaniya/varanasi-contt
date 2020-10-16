@@ -46,7 +46,7 @@ class Categories {
     public function get_service_category_featured(){
         $query = "SELECT *  from ".TBL_SERVICE_FEATURED." Where service_id = ".$this->id ." ORDER BY position ASC";   
       return dB::mExecuteSql($query);  
-  }
+    }
     public function get_service_category_faq(){
           $query = "SELECT *  from ".TBL_SERVICE_FAQ." Where service_id = ".$this->id ." ORDER BY position ASC"; 
         return dB::mExecuteSql($query);  
@@ -55,11 +55,5 @@ class Categories {
         $query = "SELECT *  from ".TBL_SERVICE_STEPS_LINE_ITEM." Where service_id = ".$this->id ." ORDER BY position ASC"; 
       return dB::mExecuteSql($query);  
     }
-    // public function get_servies(){
-        
-    //     $param = array('tableName' => TBL_SERVICE, 'fields' => array('*'), 'condition' => array('id' => $serviceId . '-INT'), 'showSql' => 'N');
-    //     $rsService = Table::getData($param);
-    // }
-
 
 } ?>

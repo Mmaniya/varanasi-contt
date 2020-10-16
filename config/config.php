@@ -57,6 +57,7 @@ define("SERVICE_DIR", ADMIN_URL . '/service');
 // Category
 define("CATEGORY_DIR", ADMIN_URL . '/category');
 define("SERVICE_IMAGES", CATEGORY_DIR . '/uploads');
+define("CATEGORY_IMAGES", SERVICE_IMAGES . '/categorys_img');
 //Employee
 define("EMPLOYEE_DIR",  ADMIN_URL . '/employee');
 

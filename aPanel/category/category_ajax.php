@@ -13,6 +13,18 @@ if ($action == 'service_categories') {
 
     $param['category_description'] = html_entity_decode($discription);
 
+    if ($_FILES['category_image']['name'] != '') {
+        $newFileName = '';
+        $filename = basename($_FILES['category_image']['name']);
+        $file_tmp = $_FILES['category_image']["tmp_name"];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $baseName = basename($filename, $ext);
+        $newFileName = rand() . '.' . $ext;
+        $param['category_image'] = $newFileName;
+        move_uploaded_file($file_tmp = $_FILES['category_image']["tmp_name"], "uploads/categorys_img/" . $newFileName) or die('image upload fail');
+    }
+
+
     if (empty($_POST['id'])) {
         $param['added_by'] = $_POST['admin_id'];
         $result = Table::insertData(array('tableName' => TBL_SERVICE_CATEGORIES, 'fields' => $param, 'showSql' => 'N'));
