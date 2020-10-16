@@ -12,23 +12,8 @@ $categoryObj = new Categories; ?>
     <title>MMS - Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-      .main-card{
-        position: relative;
-        margin-bottom: 25px;
-        margin-right:8%;
-        border: 2px solid #e4e4e4;
-        border-radius: 17px;
-        background-color: #fff;
-        box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1);
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 49%;
-            flex: 0 0 49%;
-            max-width: 49%;
-            margin-right: 1%;
-      }
+    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/user-style.css">
 
-      </style>
   </head>
   <body>
   <div class="container">
@@ -38,204 +23,55 @@ $categoryObj = new Categories; ?>
 	</div>
 </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">Welcome to your agency delivery hub! </h1>
-  <p class="lead">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
+  <h1 class="heading-7">Welcome to your agency delivery hub! ⚡</h1>
+  <p class="paragraph-2">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
 </div>
-<style> .services_list li {margin-bottom: 10px; } 
-
-
-.w-inline-block {
-    max-width: 100%;
-    display: inline-block;
-}
-
-
-.tab {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    text-transform:capitalize;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border: 1px none #000;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    background-color: transparent;
-    opacity: 0.7;
-    -webkit-transition: all 200ms ease;
-    transition: all 200ms ease;
-    font-family: 'Circular STD', sans-serif;
-    font-size: 17px;
-    font-weight: 400;
-}
-.tab.w--current {
-    z-index: 2;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border-style: none;
-    border-color: #3e66fc;
-    border-right-width: 3px;
-    border-left-width: 3px;
-    border-radius: 15px;
-    background-color: #f5f6fc;
-    background-image: linear-gradient(34deg, #3e66fc, #4a9cfa);
-    opacity: 1;
-    color: #fff;
-    font-weight: 400;}
-    .tab:hover {
-    border-top-color: #3e66fc;
-    border-bottom-color: #3e66fc;
-    border-left-color: #3e66fc;
-    opacity: 1;
-    text-decoration:none;
-    
-    color: #fff; }
-
-
-    .w-tab-link {
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    text-decoration: none;
-    padding: 9px 30px;
-    text-align: left;
-    cursor: pointer;
-    color: #222222;
-    background-color: #dddddd;}
-
-    .w-tab-link:focus {
-    outline: 0;
-}
-
-.w-col {
-    position: relative;
-    float: left;
-    width: 100%;
-    min-height: 1px;
-    padding-left: 10px;
-    padding-right: 10px; }
-
-    .w-col .w-col {
-    padding-left: 0;
-    padding-right: 0;
-}
-.w-col-6 {
-    width: 50%;
-}
-
-.div-block-185.srp {
-    border-color: #28c916;
-    background-color: rgba(40, 201, 22, 0.15);
-}
-.div-block-185 {
-    width: 95%;
-    margin-right: 0px;
-    padding-top: 9px;
-    padding-bottom: 9px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #e4e4e4;
-    border-radius: 5px;
-}
-
-.paragraph-3.caps.srp {
-    opacity: 1;
-    color: #28c916;
-    font-weight: 700;
-}
-.paragraph-3.caps {
-    margin-bottom: 0px;
-    font-size: 13px;
-    font-weight: 400;
-    text-align: center;
-    text-transform: none;
-}
-.paragraph-3 {
-    margin-bottom: 25px;
-    opacity: 0.6;
-    font-family: 'Circular STD', sans-serif;
-}
-p {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-.w-col .w-col {
-    padding-left: 0;
-    padding-right: 0;
-}
-.div-block-185 {
-    width: 95%;
-    margin-right: 0px;
-    padding-top: 9px;
-    padding-bottom: 9px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #e4e4e4;
-    border-radius: 5px;
-}
-
-.paragraph-3.caps {
-    margin-bottom: 0px;
-    font-size: 13px;
-    font-weight: 400;
-    text-align: center;
-    text-transform: none;
-}
-.paragraph-3 {
-    margin-bottom: 25px;
-    opacity: 0.6;
-    font-family: 'Circular STD', sans-serif;
-}
-p {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.text-block-16.price {
-    color: #3e66fc;
-    font-weight: 700;
-}
-</style>
 
 <div class="container">
-  <div class="row">
-    <div class="col-3">
-          <ul class="services_list list-unstyled text-small">
-          <?php  $statusArr = array('A' => 'checked', 'I' => '');  
-                  $categoryObj->status = $_POST['status'];   
-                  $rsCategory = $categoryObj->get_category();
-                  if (count($rsCategory) > 0) {
-                      foreach ($rsCategory as $key => $value) { ?> 
-                      
-                      <a data-w-tab="Tab 1" class="tab w-inline-block w-tab-link w--current" href="javascript:void(0);" onclick="get_service(<?php echo $value->id?>)" ><div><?php echo $value->category_abbr?></div></a>
-
-
-                          <!-- <li><a class="btn btn-lg btn-block btn-primary" ></a></li>                         -->
-                      <?php } } ?>
-          </ul>
-    </div> 
-    <div class="col-9"> 
-    <div class="col-12" id="userservicesname"></div>   
-      <div class="row" id="userservices">
- 
-      </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <ul class="tabs-menu">
+            <?php  $statusArr = array('A' => 'checked', 'I' => '');  
+                    $categoryObj->status = $_POST['status'];   
+                    $rsCategory = $categoryObj->get_category();
+                    if (count($rsCategory) > 0) {
+                    foreach ($rsCategory as $key => $value) { ?>                         
+                    <a data-w-tab="Tab 1" class="tab w-inline-block w-tab-link w--current" href="javascript:void(0);" onclick="get_service(<?php echo $value->id?>)" ><div><?php echo $value->category_abbr?></div></a>
+            <?php } } ?>
+            </ul>
+        </div> 
+        <div class="col-md-9 col-sm-12"> 
+            <div class="col-12" id="userservicesname"></div>   
+            <div class="row" id="userservices"></div>
+        </div>
     </div>
-  </div>
+
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="heading-7">Agency University 🏫 Learn More, Earn More</h1>
+            <p class="paragraph-2">Every week, we host a webinar where the community's questions get answered, and we teach you how to grow a successful agency.</p>
+        </div>
+
+        <div class="row">
+            <div class="card col-5" style="border: 2px solid #e4e4e4; border-radius: 17px; background-color: #fff; box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1);" >
+                <div class="card-body">
+                    <div class="text-block-20">Have a question that needs answering?</div>
+                    <p class="paragraph-2 bottom hero left">Fill out the form below &amp; we'll cover your questions on next week's webinar!<br><br><strong>Our next webinar will be on Friday, August 7 at 17:00 CEST!</strong><br><br>You'll recieve an email with a link to the private webinar 24 hours before it starts!&nbsp;Looking forward to seeing you there!<br></p>
+                    <div class="w-form">
+                        <form id="email-form" name="email-form" data-name="Email Form">
+                            <textarea placeholder="What's your question?" maxlength="5000" id="Question" name="Question" required="" data-name="Question" class="textarea w-input"></textarea>
+                            <input type="submit" value="Submit Question" data-wait="Please wait..." class="submit-button w-button">
+                        </form>
+                        <div class="success-message w-form-done"><div>Thank you! Watch next week's webinar to hear our answer! 🎯</div></div>
+                        <div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7">
+                <img src="<?php echo  ADMIN_IMAGES ?>/hompageimg.png" style="max-width: 677px" class="image-15">
+            </div>
+        </div>
+        <br>
+    </div>
 </div>
 
 <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>

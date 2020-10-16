@@ -28,6 +28,7 @@ define("TBL_QUESTIONS_LINE_ITEM", "tbl_questions_line_item");
 define("TBL_REFERENCE", "tbl_reference");
 define("TBL_SERVICE", "tbl_service");
 define("TBL_SERVICE_CATEGORIES", "tbl_service_categories");
+define("TBL_SERVICE_FEATURED", "tbl_service_featured");
 define("TBL_SERVICE_FAQ", "tbl_service_faq");
 define("TBL_SERVICE_FEATURES", "tbl_service_features");
 define("TBL_SERVICE_STEPS", "tbl_service_steps");

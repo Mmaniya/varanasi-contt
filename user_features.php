@@ -28,15 +28,15 @@ $categoryObj = new Categories; ?>
   </head>
   <body>
   <div class="container">
-	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom">
-		<h5 class="my-0 mr-md-auto font-weight-normal">Mastermind Solutions</h5>		 
-		<a class="btn btn-outline-primary" href="#">View Profile</a>
-	</div>
-</div>
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">Welcome to your agency delivery hub! </h1>
-  <p class="lead">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
-</div>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom">
+      <h5 class="my-0 mr-md-auto font-weight-normal">Mastermind Solutions</h5>		 
+      <a class="btn btn-outline-primary" href="#">View Profile</a>
+    </div>  
+  </div>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">Welcome to your agency delivery hub! </h1>
+      <p class="lead">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
+    </div>
 <div class="container">
   <div class="row">
     <div class="col-12">
@@ -48,7 +48,7 @@ $categoryObj = new Categories; ?>
             <img src="<?php echo SERVICE_IMAGES .'/'. $rsService->service_img; ?>" alt="Service Images" width="50" height="50">
             <h2 class="col-9"><?php echo $rsService->service_name; ?></h2>
         </div>
-        <p class="paragraph-2 bottom"><?php echo $rsService->service_description; ?></p>
+            <p class="paragraph-2 bottom"><?php echo $rsService->service_description; ?></p>
             <div class="row"><img src="<?php echo ADMIN_IMAGES ?>/featurs_icon.png" alt="Features Image" height='30' width='30' style="margin-top: 1%; margin-right: 1%;"><h1>Features</h1></div>
             <ul style="list-style-type:none;">
                     <?php 
@@ -59,6 +59,7 @@ $categoryObj = new Categories; ?>
                             <div class="row"><img src="<?php echo ADMIN_IMAGES ?>/features_tick.png"  height='25' width='25' style="margin-top: 1%; margin-right: 1%;"><li class="paragraph-2 feature"><?php echo  $value->features ?></li></div>
                 <?php } } ?>
             </ul>
+            <br>
             <div class="row"><img src="<?php echo ADMIN_IMAGES ?>/faq.svg" alt="Features Image" height='30' width='30' style="margin-top: 1%; margin-right: 1%;"><h1>FAQ's</h1></div>
             <div id="accordion">
 
@@ -71,11 +72,10 @@ $categoryObj = new Categories; ?>
 
             <div class="card" style="border:0px;">
                 <div class="card-head" id="headingOne">
-                <h4 class="mb-0" data-toggle="collapse" style="height: 38px;" data-target="#collapse<?php echo $keyValue ?>" aria-expanded="true" aria-controls="collapseOne">
-                 <?php echo $value->question ?>
-                </h4>
+                  <h4 class="mb-0" data-toggle="collapse" style="height: 38px;" data-target="#collapse<?php echo $keyValue ?>" aria-expanded="true" aria-controls="collapseOne">
+                  <?php echo $value->question ?>
+                  </h4>
                 </div>
-
                 <div id="collapse<?php echo $keyValue ?>" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <?php echo $value->answer ?>
@@ -83,7 +83,6 @@ $categoryObj = new Categories; ?>
                 </div>
             </div>    
             <hr>     
-
             <?php } } ?>
             </div>
 

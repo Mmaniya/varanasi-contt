@@ -94,6 +94,7 @@ if ($action == 'category_services') {
         $explode = explode('::', $result);
                 
         $serviceid = trim($explode[2]);
+
         $param = array();
         if (count($_POST['features']) > 0) {
                 $param['service_id'] =  $serviceid ;
@@ -102,6 +103,17 @@ if ($action == 'category_services') {
                 $param['added_date'] = date('Y-m-d H:i:s', time());
                 $param['added_by'] = $_SESSION['admin_id'];
                 $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
+            }    
+        }
+
+        $param = array();
+        if (count($_POST['featured']) > 0) {
+                $param['service_id'] =  $serviceid ;
+            foreach ($_POST['featured'] as $key => $val) {
+                $param['featured'] = $_POST['featured'][$key];
+                $param['added_date'] = date('Y-m-d H:i:s', time());
+                $param['added_by'] = $_SESSION['admin_id'];
+                $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURED, 'fields' => $param, 'showSql' => 'N'));
             }    
         }
 
@@ -150,7 +162,7 @@ if ($action == 'category_services') {
 
         $param = array();
         if (count($_POST['features']) > 0) {
-                $param['service_id'] =  $_POST['id'] ;
+                $param['service_id'] =  $_POST['id'];
             foreach ($_POST['features'] as $key => $val) {
                 if(!empty($_POST['features'][$key])){
                 $param['features'] = $_POST['features'][$key];
@@ -160,13 +172,27 @@ if ($action == 'category_services') {
                 }
             }    
         }
+
+        $where = array('service_id' => $_POST['id']);
+        $result = Table::deleteData(array('tableName' => TBL_SERVICE_FEATURED, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+        $param = array();
+        if (count($_POST['featured']) > 0) {
+                $param['service_id'] =  $_POST['id'];
+            foreach ($_POST['featured'] as $key => $val) {
+                $param['featured'] = $_POST['featured'][$key];
+                $param['added_date'] = date('Y-m-d H:i:s', time());
+                $param['added_by'] = $_SESSION['admin_id'];
+                $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURED, 'fields' => $param, 'showSql' => 'N'));
+            }    
+        }
         
         $where = array('service_id' => $_POST['id']);
         $result = Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
         
         $param = array();
         if (count($_POST['question']) > 0) {
-                $param['service_id'] =  $_POST['id'] ;
+                $param['service_id'] =  $_POST['id'];
             foreach ($_POST['question'] as $key => $val) {
                 if(!empty($_POST['question'][$key]) && !empty($_POST['answer'][$key])){
                 $param['question'] = $_POST['question'][$key];
@@ -177,6 +203,23 @@ if ($action == 'category_services') {
                 }
             }
         }
+
+        $where = array('service_id' => $_POST['id']);
+        $result = Table::deleteData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));    
+
+        $param = array();
+        if (count($_POST['title']) > 0) {
+                $param['service_id'] = $_POST['id'];
+            foreach ($_POST['title'] as $key => $val) {
+                $param['title'] = $_POST['title'][$key];
+                $param['description'] = check_input($_POST['description'][$key]);
+                $param['estimated_time'] = $_POST['estimated_time'][$key];
+                $param['estimated_type'] = $_POST['estimated_type'][$key];
+                $param['added_date'] = date('Y-m-d H:i:s', time());
+                $param['added_by'] = $_SESSION['admin_id'];
+                $result = Table::insertData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'showSql' => 'N'));
+            }
+        }        
 
     }
 
@@ -280,7 +323,6 @@ if ($action == 'service_faq_position') {
     exit();
 }
 
-
 if ($action == 'service_faq_status') {
     $param['status'] = $_POST['status'];
     $param['updated_by'] = $_POST['access_level'];
@@ -319,7 +361,6 @@ if ($action == 'service_step_position') {
     exit();
 }
 
-
 if ($action == 'steps_status_change') {
     $param['status'] = $_POST['status'];
     $param['updated_by'] = $_POST['access_level'];
@@ -328,7 +369,6 @@ if ($action == 'steps_status_change') {
     $response = array("result" => 'Success', "data" => 'Updated Successfully');
     echo json_encode($response);
 }
-
 
 if ($action == 'category_service_step_remove') {
     ob_clean();
@@ -341,6 +381,45 @@ if ($action == 'category_service_step_remove') {
 
     exit();
 }
+
+
+// Featured position update
+
+if ($action == 'service_featured_position') {
+    ob_clean();
+    if (count($_POST['featured_id']) > 0) {
+        foreach ($_POST['featured_id'] as $key => $val) {
+            $param['position'] = $key + 1;
+            $where = array('id' => $val);
+            $result = Table::updateData(array('tableName' => TBL_SERVICE_FEATURED, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        }
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);
+    }
+    exit();
+}
+
+if ($action == 'featured_status_change') {
+    $param['status'] = $_POST['status'];
+    $param['updated_by'] = $_POST['access_level'];
+    $where = array('id' => $_POST['id']);
+    $result = Table::updateData(array('tableName' => TBL_SERVICE_FEATURED, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    $response = array("result" => 'Success', "data" => 'Updated Successfully');
+    echo json_encode($response);
+}
+
+if ($action == 'category_service_featured_remove') {
+    ob_clean();
+
+    $where = array('id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_SERVICE_FEATURED, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+    $response = array("result" => 'Success', "data" => 'Successfully Removed');
+    echo json_encode($response);
+
+    exit();
+}
+
 
 
 

@@ -311,7 +311,7 @@ $categoryObj = new Categories;
             <ul class="nav nav-tabs md-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#features" role="tab"
-                        aria-expanded="false">Featured</a>
+                        aria-expanded="false">Features</a>
                     <div class="slide"></div>
                 </li>
                 <li class="nav-item">
@@ -320,6 +320,10 @@ $categoryObj = new Categories;
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#steps" role="tab" aria-expanded="false">Steps</a>
+                    <div class="slide"></div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#featured" role="tab" aria-expanded="false">Featured</a>
                     <div class="slide"></div>
                 </li>
             </ul>
@@ -334,7 +338,7 @@ $categoryObj = new Categories;
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Featured </th>
+                                            <th>Features </th>
                                             <th>Action</th>
                                             <th>Status</th>
                                         </tr>
@@ -482,6 +486,54 @@ $categoryObj = new Categories;
                     </div>
                     </p>
                 </div>
+                <div class="tab-pane" id="featured" role="tabpanel" aria-expanded="false">
+                    <p class="m-0">
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <form action="javascript:void(0);" id="featured_position" style="width:100%">
+                                <input type="hidden" name="act" value="service_featured_position">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Featured </th>
+                                            <th>Action</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="draggableFeatured" class="draggable">
+                                        <?php   $statusArr = array('A' => 'checked', 'I' => ''); 
+                                                    $categoryObj->id = $_POST['id'];                                 
+                                                    $rsFeatured = $categoryObj->get_service_category_featured();
+                                                    if (count($rsFeatured) > 0) {
+                                                        foreach ($rsFeatured as $key => $value) { ?>
+
+                                        <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
+                                            <input type="hidden" name="featured_id[]" value="<?php echo $value->id ?>">
+                                            <th><?php echo $key + 1 ?></th>
+                                            <td><?php echo $value->featured ?></a></td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service_featured(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+                                            </td>                                            
+                                            <td>
+                                                <label class="switch">
+                                                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>" onchange="status_service_featured(<?php echo $value->id; ?>,<?php echo $id ?>)" <?php echo $statusArr[$value->status]; ?>>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <?php }} else {?>
+                                        <tr>
+                                            <td colspan="5" class="text-center"> No Records Found. Click here to <a href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>,'')" style="color:#01a9ac"> Add New</a> </td>
+                                        </tr>
+                                        <?php }?>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -544,6 +596,31 @@ $categoryObj = new Categories;
             accept: '.sortable-moves',
             onUpdate: function(ui) {
                 var param = $('form#steps_position').serialize();
+                ajax({
+                    a: "category_ajax",
+                    b: param,
+                    c: function() {},
+                    d: function(data) {
+                        var records = JSON.parse(data);
+                        if (records.result == 'Success') {
+                            notify('top', 'right', 'fa fa-check', 'success',
+                                'animated fadeInLeft', 'animated fadeOutLeft', records
+                                .data);
+                        } else {
+                            notify('top', 'right', 'fa fa-times', 'danger',
+                                'animated fadeInLeft', 'animated fadeOutLeft', records
+                                .data);
+                        }
+                    }
+                });
+            },
+        });
+        Sortable.create(draggableFeatured, {
+            group: 'draggableFeatured',
+            animation: 150,
+            accept: '.sortable-moves',
+            onUpdate: function(ui) {
+                var param = $('form#featured_position').serialize();
                 ajax({
                     a: "category_ajax",
                     b: param,
