@@ -69,7 +69,9 @@ $categoryObj = new Categories; ?>
 
     $categoryObj->id = $_POST['id'];   
     $rsService = $categoryObj->get_category_details(); ?>
-    <div class="text-block-15"><?php echo $rsService->category_name; ?><?php if($rsService->category_image){ ?><img src="<?php echo CATEGORY_IMAGES ?>/<?php echo $rsService->category_image; ?>"  width="60" height="50" /><?php } ?></div>
-
+    <div class="text-block-15" style="text-transform: capitalize; display:flex;">
+        <?php echo $rsService->category_name; ?><?php if($rsService->category_image){ ?>
+        <img src="<?php echo CATEGORY_IMAGES ?>/<?php echo $rsService->category_image; ?>"  width="60" height="50" /><?php } ?>
+    </div>
 
 <?php } ?>

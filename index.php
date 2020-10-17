@@ -13,16 +13,36 @@ $categoryObj = new Categories; ?>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/user-style.css">
+    <style>
+.profile{
+      padding-right: 0px !important;
+   justify-content: space-between;
+}
 
+.button-5 {
+    border: 2px solid #3e66fc;
+    border-radius: 5px;
+    background-color: rgba(62, 102, 252, 0.15);
+    -webkit-transition: all 200ms ease;
+    transition: all 200ms ease;
+    font-family: 'Circular STD', sans-serif;
+    color: #3e66fc;
+    font-weight: 700;
+}
+.button-5:hover {
+    background-color: #3e66fc;
+    color: #fff;
+    text-decoration: none;
+}
+  </style>
   </head>
   <body>
   <div class="container">
-	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom">
-        <!-- <h5 class="my-0 mr-md-auto font-weight-normal">Mastermind Solutions</h5>		  -->
-            <img src="<?php echo ADMIN_IMAGES ?>/mmslogo.png" alt="logo" class="log-img"/>
-		<a class="button-3 col-md-2 offset-md-7" href="#">View Profile</a>
-	</div>
-</div>
+        <div class="profile d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 ">
+            <img src="<?php echo ADMIN_IMAGES ?>/mmslogo.png" alt="logo" class="log-img" />
+            <a class="button-5 w-button"  href="#">View Profile</a>
+        </div>
+    </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <div class="heading-7">Welcome to your agency delivery hub! ⚡</div>
   <p class="paragraph-2">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
@@ -45,7 +65,7 @@ $categoryObj = new Categories; ?>
 
         <div class="col-sm-12 mob_category_list_col">  
             <div id="mob_category_list_col">
-                <select class="button-3" style="margin-bottom: 20px;" onchange="get_service(this.value)">
+                <select class="button-3 col-sm-12" style="margin-bottom: 20px;" onchange="get_service(this.value)">
                     <?php if (count($rsCategory) > 0) {
                         foreach ($rsCategory as $key => $value) {  if($value->status == 'A'){  ?>
                         <option value="<?php echo $value->id?>"><?php echo $value->category_abbr?></option>
