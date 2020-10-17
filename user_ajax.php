@@ -22,16 +22,17 @@ $categoryObj = new Categories; ?>
             <h4 class="text-block-16 price"><?php echo money($value->service_price,'$'); ?>/M</h4>
             <div class="row price_details">
                 <?php   $categoryObj->id = $value->id;   
-                        $rsFeatured = $categoryObj->get_service_category_featured();
+                        $rsFeatured = $categoryObj->get_service_category_features();
                         foreach ($rsFeatured as $k => $v) {
                             if($v->status == 'A'){
+                                if($v->is_featured == 'Y'){
                         ?>
             <div class="w-col col-md-6 col-sm-12">
                 <div class="div-block-185">
-                    <p class="paragraph-3 caps"><?php echo $v->featured ?></p>
+                    <p class="paragraph-3 caps"><?php echo $v->features ?></p>
                 </div>
             </div>
-            <?php } } ?>
+            <?php } } } ?>
 
             </div>
             <div class="row">

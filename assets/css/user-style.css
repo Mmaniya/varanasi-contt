@@ -55,7 +55,7 @@
 }
 
 .log-img {
-    width: 25%;
+    width: 20%;
 }
 
 .footer-card {
@@ -259,7 +259,7 @@
     font-weight: 400;
     transition: all 200ms ease;
     font-family: 'Circular STD', sans-serif;
-    font-size: 17px;
+    font-size: 19px;
 }
 
 .tab:hover {

@@ -588,69 +588,7 @@ $categoryObj = new Categories; ?>
                                             }
                                             </script>
 
-                                        </fieldset>
-                                        <h3> Featured </h3>
-                                        <fieldset>
-                                            <div class="card-header bg-c-lite-green">
-                                                <h5>Add New <?php //echo $rsService->service_name; ?> Featured</h5>
-                                            </div>
-                                            <div class="card-block">
-                                                <div class="row" id="appeded_column_featured">
-                                                    <?php 
-                                                            $categoryObj->id = $id;
-                                                            $rsServiceFeatured = $categoryObj->get_service_category_featured();
-                                                            if(count($rsServiceFeatured)>0){  ?>
-                                                    <script>
-                                                    k = 0;
-                                                    </script>
-                                                    <?php  foreach ($rsServiceFeatured as $key => $value){  $rand = rand(); ?>
-                                                    <div class="col-sm-6 col-lg-6" id="featured_edit_column_<?php echo $key;?>">
-                                                        <label class="col-form-label">Featured</label>
-                                                        <div class="input-group input-group-inverse">
-                                                            <button type="button"  class="btn btn-default clone-btn-left delete" onclick="editRowFeatured(<?php echo $key;?>)"><i class="fa fa-minus"></i></button>
-                                                            <input type="text" class="form-control" placeholder="Enter Featured" value="<?php echo $value->featured; ?>" name="featured[]">
-                                                            <button type="button" class="btn btn-primary clone-btn-left clone" onclick="add_more_featured_fields()"><i class="fa fa-plus"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    <script>
-                                                         k++;
-                                                    </script>
-                                                    <?php } } else { ?> <script>  add_more_featured_fields(); </script><?php } ?>
-                                                </div>
-                                            </div>
-                                            <script>
-                                            c = 1;
-
-                                            function add_more_featured_fields() {
-                                                html = '<div class="col-sm-6 col-lg-6" id="column__featured' + c + '">';
-                                                html += '<label class="col-form-label">Featured</label>';
-                                                html += '<div class="input-group input-group-inverse"> ';
-                                                html += '<button type="button" class="btn btn-default clone-btn-left delete" onclick="removeRowFeatured(' + c + ')"><i class="fa fa-minus"></i></button>';
-                                                html += '<input type="text" class="form-control" placeholder="Enter Featured" name="featured[]">';
-                                                html += '<button type="button" class="btn btn-primary clone-btn-left clone" onclick="add_more_featured_fields()"><i class="fa fa-plus"></i></button>';
-                                                html += '</div>';
-                                                html += '</div>';
-                                                $('#appeded_column_featured').append(html);
-                                                c++;
-                                            }
-
-                                            function removeRowFeatured(id) {
-                                                if (c == 1) {
-                                                    return;
-                                                }
-                                                c--;
-                                                $('#column_featured_' + id).remove();
-                                            }
-
-                                            function editRowFeatured(id) {
-                                                if (k == 1) {
-                                                    return;
-                                                }
-                                                k--;
-                                                $('#featured_edit_column_' + id).remove();
-                                            }
-                                            </script>
-                                        </fieldset>
+                                        </fieldset>                                 
                                     </form>
                                 </section>
                             </div>

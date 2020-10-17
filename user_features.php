@@ -10,7 +10,8 @@ $categoryObj = new Categories; ?>
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>MMS - Dashboard</title>
+    <title>Webzone || Home</title>
+    <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/nav.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -21,7 +22,7 @@ $categoryObj = new Categories; ?>
     <div class="container">
         <div class="profile d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 ">
             <img src="<?php echo ADMIN_IMAGES ?>/mmslogo.png" alt="logo" class="log-img" />
-            <a class="btn btn-primary button-5" href="#">View Profile</a>
+            <a class="btn btn-primary button-5" href="javascrip:void(0);">View Profile</a>
         </div>
     </div>
 
@@ -64,7 +65,10 @@ $categoryObj = new Categories; ?>
                         $categoryObj->id = $_REQUEST['id'];   
                         $rsFeatures = $categoryObj->get_service_category_features();
                         if (count($rsFeatures) > 0) {
-                            foreach ($rsFeatures as $key => $value) { ?>
+                            foreach ($rsFeatures as $key => $value) { 
+                                if($value->status == 'A'){ 
+                                    
+                                    ?>
                     <div class="row">
                         <div class="col-md-12" style="display:flex;">
                             <img src="<?php echo ADMIN_IMAGES ?>/features_tick.png" height='25' width='25'
@@ -72,7 +76,7 @@ $categoryObj = new Categories; ?>
                             <li class="paragraph-2 feature"><?php echo  $value->features ?></li>
                         </div>
                     </div>
-                    <?php } } ?>
+                    <?php } } } ?>
                 </ul>
                 <br>
 
@@ -84,12 +88,12 @@ $categoryObj = new Categories; ?>
                     </div>
                 </div>
                 <div id="accordion">
-
-                    <?php 
-              $categoryObj->id = $_REQUEST['id'];   
-              $rsFaqs = $categoryObj->get_service_category_faq();
-              if (count($rsFaqs) > 0) {
+                <?php 
+                $categoryObj->id = $_REQUEST['id'];   
+                $rsFaqs = $categoryObj->get_service_category_faq();
+                if (count($rsFaqs) > 0) {
                   foreach ($rsFaqs as $key => $value) { 
+                    if($value->status == 'A'){ 
                           $keyValue = $key+1; ?>
                     <div class="card" style="border:0px;">
                         <div class="card-head" id="headingOne">
@@ -108,7 +112,7 @@ $categoryObj = new Categories; ?>
                         </div>
                     </div>
                     <hr>
-                    <?php } } ?>
+                    <?php } } } ?>
                 </div>
                 <div class="row  heading-6">
                     <div class="card div-block-194">
@@ -128,8 +132,7 @@ $categoryObj = new Categories; ?>
                             form where you'll enter all the information we need to make this project a success. From
                             there, you can book a time to get on a call with us where we will answer all your questions
                             &amp; kick off the project.</p>
-                        <a class="button-3 " href="javascript:void(0);">Buy Now
-                            <?php echo money($rsService->service_price,'$') ?>/M</a>
+                            <a class="button-3 " href="javascript:void(0);">Buy Now <?php echo money($rsService->service_price,'$') ?>/M</a>
                     </div>
                 </div>
                 <br>

@@ -420,6 +420,45 @@ function delete_category_service_features(service_id, id) {
     });
 }
 
+function set_as_featured(id){
+    var ischecked = $('.featured_status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'N'; } else { status = 'Y'; } 
+    param = { 'act': 'set_asfeatured_status', 'status': status, 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to set as featured.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
+        }
+    });
+}
+
 // Faq
 
 function statusServiceFaq(id) {
@@ -538,81 +577,6 @@ function statusServiceSteps(id) {
 
 function delete_category_service_steps(service_id, id) {
     param = { 'act': 'category_service_step_remove', 'id': id };
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You want to delete this fatures?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    }).then((result) => {
-        if (result.value) {
-            $('.preloader').show();
-            ajax({
-                a: "category_ajax",
-                b: param,
-                c: function () { },
-                d: function (data) {
-                    $('.preloader').hide();
-                    var records = JSON.parse(data);
-                    if (records.result == 'Success') {
-                        view_category_service(service_id);
-                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    } else {
-                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    }
-                }
-            });
-        }
-    });
-}
-
-// Featrurd
-
-function status_service_featured(id) {
-    var ischecked = $('.status_update_' + id).is(':checked');
-    if (!ischecked) { status = 'I'; } else { status = 'A'; }
-    param = { 'act': 'featured_status_change', 'status': status, 'id': id };
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You want to change status?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    }).then((result) => {
-        if (result.value) {
-            $('.preloader').show();
-            ajax({
-                a: "category_ajax",
-                b: param,
-                c: function () { },
-                d: function (data) {
-                    $('.preloader').hide();
-                    var records = JSON.parse(data);
-                    if (records.result == 'Success') {
-                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    } else {
-                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
-                    }
-                }
-            });
-        } else {
-            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
-                $('.status_update_' + id).prop('checked', true);
-            }
-        }
-    });
-}
-
-function delete_category_service_featured(service_id, id) {
-    param = { 'act': 'category_service_featured_remove', 'id': id };
     Swal.fire({
         title: "Are you sure?",
         text: "You want to delete this fatures?",

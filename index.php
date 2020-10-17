@@ -9,7 +9,8 @@ $categoryObj = new Categories; ?>
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>MMS - Dashboard</title>
+    <title>Webzone || Home</title>
+    <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/nav.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/user-style.css">
@@ -40,7 +41,7 @@ $categoryObj = new Categories; ?>
   <div class="container">
         <div class="profile d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 ">
             <img src="<?php echo ADMIN_IMAGES ?>/mmslogo.png" alt="logo" class="log-img" />
-            <a class="button-5 w-button"  href="#">View Profile</a>
+            <a class="btn btn-primary button-5" href="javascrip:void(0);">View Profile</a>
         </div>
     </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">

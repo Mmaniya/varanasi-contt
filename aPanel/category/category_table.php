@@ -261,7 +261,7 @@ $categoryObj = new Categories;
                             <img src="<?php echo SERVICE_IMAGES .'/'. $service_img; ?>" alt="Service Images" width="100" height="100">
                         </div>
                         <h4 class="f-w-600">PRICE</h4>
-                        <h4>$ <?php echo $service_price; ?></h4>
+                        <h4><?php echo money($service_price,'$'); ?></h4>
                     </div>
                 </div>
                 <div class="col-sm-8">
@@ -281,9 +281,11 @@ $categoryObj = new Categories;
                             </div>
                             <div class="col-sm-6">
                                 <!-- <p class="m-b-10 f-w-600">Duration</p> -->
+                                <?php if($service_payment_type == 'recurring'){ ?>
                                 <h6 class="text-muted f-w-400" style="text-transform:capitalize;">
                                     <?php  echo $if_recurring_period; ?>&nbsp;<?php  switch ($recurring_type) { case "bi_weekly": echo "Bi weekly"; break; case "weekly": echo "Weeks"; break; case "monthly": echo "Months"; break;  case "yearly": echo "Years"; break; }?>
                                 </h6>
+                                <?php } ?>
                             </div>
                         </div>
                         <h6 class="m-b-10 m-t-10 p-b-5 b-b-default f-w-600"></h6>
@@ -309,9 +311,13 @@ $categoryObj = new Categories;
     <div class="card">
         <div class="col-lg-12">
             <ul class="nav nav-tabs md-tabs" role="tablist">
+                <!-- <li class="nav-item ">
+                    <a class="nav-link " data-toggle="tab" href="#featured" role="tab" aria-expanded="false">Featured</a>
+                    <div class="slide"></div>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#features" role="tab"
-                        aria-expanded="false">Features</a>
+                        aria-expanded="false">Featured</a>
                     <div class="slide"></div>
                 </li>
                 <li class="nav-item">
@@ -322,12 +328,9 @@ $categoryObj = new Categories;
                     <a class="nav-link" data-toggle="tab" href="#steps" role="tab" aria-expanded="false">Steps</a>
                     <div class="slide"></div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#featured" role="tab" aria-expanded="false">Featured</a>
-                    <div class="slide"></div>
-                </li>
+              
             </ul>
-            <div class="tab-content card-block">
+            <div class="tab-content card-block">        
                 <div class="tab-pane active" id="features" role="tabpanel" aria-expanded="false">
                     <p class="m-0">
                     <div class="card-block table-border-style">
@@ -340,11 +343,13 @@ $categoryObj = new Categories;
                                             <th>#</th>
                                             <th>Features </th>
                                             <th>Action</th>
+                                            <th>Is Featured</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="draggableFeatures" class="draggable">
                                         <?php   $statusArr = array('A' => 'checked', 'I' => ''); 
+                                                $arrayFeatured = array('Y' => 'checked', 'N' => '');
                                                     $categoryObj->id = $_POST['id'];                                 
                                                     $rsFeatures = $categoryObj->get_service_category_features();
                                                     if (count($rsFeatures) > 0) {
@@ -357,6 +362,12 @@ $categoryObj = new Categories;
                                             <td>
                                                 <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="update_category_service(<?php echo $id; ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a> -->
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service_features(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+                                            </td>
+                                            <td>
+                                                <label class="switch">
+                                                    <input type="checkbox" class="featured_status_update_<?php echo $value->id; ?>" onchange="set_as_featured(<?php echo $value->id; ?>,<?php echo $id ?>)" <?php echo $arrayFeatured[$value->is_featured]; ?>>
+                                                    <span class="slider round"></span>
+                                                </label>
                                             </td>                                            
                                             <td>
                                                 <label class="switch">
@@ -383,6 +394,7 @@ $categoryObj = new Categories;
                         <div class="table-responsive">
                             <form action="javascript:void(0);" id="faq_position" style="width:100%">
                                 <input type="hidden" name="act" value="service_faq_position">
+                          
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -402,11 +414,11 @@ $categoryObj = new Categories;
                                         <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
                                             <input type="hidden" name="faq_id[]" value="<?php echo $value->id ?>">
                                             <th><?php echo $key + 1 ?></th>
-                                            <td>
-                                                <p>Que: <?php echo $value->question ?></p>
-                                                <p>Ans: <?php echo strip_tags($value->answer) ?></p></a>
+                                            <td  >
+                                                <p><strong>Q:</strong> <?php echo $value->question ?></p>
+                                                <p style="width:100px"><strong>A:</strong> <?php echo strip_tags($value->answer) ?></p></a>
                                             </td>
-                                            <td>
+                                            <td >
                                                 <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info" onclick="update_category_service(<?php echo $id ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a> -->
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service_faq(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                             </td>  
@@ -485,55 +497,7 @@ $categoryObj = new Categories;
                         </div>
                     </div>
                     </p>
-                </div>
-                <div class="tab-pane" id="featured" role="tabpanel" aria-expanded="false">
-                    <p class="m-0">
-                    <div class="card-block table-border-style">
-                        <div class="table-responsive">
-                            <form action="javascript:void(0);" id="featured_position" style="width:100%">
-                                <input type="hidden" name="act" value="service_featured_position">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Featured </th>
-                                            <th>Action</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="draggableFeatured" class="draggable">
-                                        <?php   $statusArr = array('A' => 'checked', 'I' => ''); 
-                                                    $categoryObj->id = $_POST['id'];                                 
-                                                    $rsFeatured = $categoryObj->get_service_category_featured();
-                                                    if (count($rsFeatured) > 0) {
-                                                        foreach ($rsFeatured as $key => $value) { ?>
-
-                                        <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
-                                            <input type="hidden" name="featured_id[]" value="<?php echo $value->id ?>">
-                                            <th><?php echo $key + 1 ?></th>
-                                            <td><?php echo $value->featured ?></a></td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="delete_category_service_featured(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
-                                            </td>                                            
-                                            <td>
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status_update_<?php echo $value->id; ?>" onchange="status_service_featured(<?php echo $value->id; ?>,<?php echo $id ?>)" <?php echo $statusArr[$value->status]; ?>>
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            </td>
-                                        </tr>
-                                        <?php }} else {?>
-                                        <tr>
-                                            <td colspan="5" class="text-center"> No Records Found. Click here to <a href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>,'')" style="color:#01a9ac"> Add New</a> </td>
-                                        </tr>
-                                        <?php }?>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    </div>
-                    </p>
-                </div>
+                </div>             
             </div>
         </div>
     </div>
