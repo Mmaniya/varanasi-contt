@@ -609,6 +609,22 @@ function delete_category_service_steps(service_id, id) {
     });
 }
 
+
+function update_category_service_features(id){
+    param = { 'act': 'update_category_service_features', 'id': id };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#update_category_form').show();
+            $('#update_category_form').html(data);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    });
+}
+
+
 /**************************
  *      End Categorys     *
  **************************/

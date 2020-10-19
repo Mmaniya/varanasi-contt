@@ -312,6 +312,16 @@ if ($action == 'category_service_features_remove') {
     exit();
 }
 
+if($action == 'update_category_service_features'){
+
+    $param['features'] = $_POST['features'];
+    $param['updated_by'] = $_POST['admin_id'];
+    $where = array('id' => $_POST['id']);
+    $result = Table::updateData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    $response = array("result" => 'Success', "data" => 'Updated Successfully');
+    echo json_encode($response);
+}
+
 
 // faq position update
 

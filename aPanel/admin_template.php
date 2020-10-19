@@ -188,14 +188,12 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         </li>                                  -->
                                     <!-- </ul> -->
                                 </li>
-                                <li class="">
+                                <!-- <li class="">
                                     <a href="<?php echo EMPLOYEE_DIR ?>/index.php">
                                     <span class="pcoded-micon"><i class="feather icon-user"></i></span>
                                         <span class="pcoded-mtext">Employees</span>
                                     </a>
-                                </li> 
-
-
+                                </li>  -->
                             </ul>                           
                         </div>
                     </nav>

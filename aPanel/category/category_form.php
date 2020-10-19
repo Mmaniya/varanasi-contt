@@ -703,3 +703,84 @@ $categoryObj = new Categories; ?>
     </div>
 
 <?php } ?>
+
+<!--============================
+        Service Form
+==============================-->
+
+<?php if ($action == 'update_category_service_features') {   
+    if (!empty($_POST['id'])) {
+        $categoryObj->id = $_POST['id'];
+        $rsFeatures = $categoryObj->get_service_category_features_by_id();   
+        $btnName = $title = 'Edit ';
+    } 
+
+    ?>
+    <!-- <script> tinymce.remove(); tinymce.init(); </script> -->
+    <div class="card-header bg-c-lite-green">
+        <h5 class="card-header-text"><?php echo $btnName ?> Featured</h5>
+        <a href="javascript:void(0);" onclick="hide_category_form()" style="font-size:16px;"
+            class="right-float label label-danger"><i class="feather icon-x">Cancel</i></a>
+    </div>
+    <div class="card-block" style="background-color: rgb(255, 255, 255);">
+        <form action="javascript:void(0);" id="update_features">
+            <input type="hidden" value="update_category_service_features" name="act">
+            <input type="hidden" name="id" id="fetures_id" value="<?php echo $_POST['id'] ?>">
+            <input type="hidden" id="service_id" value="<?php echo $rsFeatures[0]->service_id; ?>">
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label class="col-form-label">Featured Name</label>
+                    <div class="input-group input-group-inverse">
+                        <input type="text" class="form-control" placeholder="Enter Category Name" name="features" value="<?php echo $rsFeatures[0]->features; ?>">
+                    </div>
+                </div>     
+            </div>
+   
+            <!-- <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label class="col-form-label">Category Description</label>
+                    <div class="input-group input-group-inverse">
+                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description" id="category_description" name="category_description"><?php echo $category_description; ?></textarea>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <input type="submit" class="btn btn-grd-primary" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        $("form#update_features").submit(function() {
+            // tinyMCE.triggerSave();
+            var formData = $('form#update_features').serialize();
+            var service_id = $('#service_id').val();
+            // var formData = new FormData(this);        
+                $.ajax({
+                url: '<?php echo CATEGORY_DIR ?>/category_ajax.php',
+                type: 'POST',
+                data: formData,
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                success: function(data) {
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {  
+                        view_category_service(service_id); 
+                        hide_category_form();                
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft',
+                            'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft',
+                            'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="<?php echo ADMIN_JS ?>/tinymce/wysiwyg-editor.js"></script>
+
+<?php }?>
