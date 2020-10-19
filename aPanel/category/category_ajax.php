@@ -118,17 +118,6 @@ if ($action == 'category_services') {
             }    
         }
 
-        // $param = array();
-        // if (count($_POST['featured']) > 0) {
-        //         $param['service_id'] =  $serviceid ;
-        //     foreach ($_POST['featured'] as $key => $val) {
-        //         $param['featured'] = $_POST['featured'][$key];
-        //         $param['added_date'] = date('Y-m-d H:i:s', time());
-        //         $param['added_by'] = $_SESSION['admin_id'];
-        //         $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURED, 'fields' => $param, 'showSql' => 'N'));
-        //     }    
-        // }
-
         $param = array();
         if (count($_POST['question']) > 0) {
                 $param['service_id'] =  $serviceid ;
@@ -360,6 +349,17 @@ if ($action == 'category_service_faq_remove') {
     exit();
 }
 
+if ($action == 'update_category_service_faq') {
+    $param['question'] = $_POST['question'];
+    $param['answer'] = $_POST['answer'];
+    $param['updated_by'] = $_POST['admin_id'];
+    $where = array('id' => $_POST['id']);
+    $result = Table::updateData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    $response = array("result" => 'Success', "data" => 'Updated Successfully');
+    echo json_encode($response);
+}
+
+
 
 // steps position update
 
@@ -398,5 +398,16 @@ if ($action == 'category_service_step_remove') {
     exit();
 }
 
+if ($action == 'update_category_service_steps') {
+    $param['title'] = $_POST['title'];
+    $param['description'] = $_POST['description'];
+    $param['estimated_time'] = $_POST['estimated_time'];
+    $param['estimated_type'] = $_POST['estimated_type'];
+    $param['updated_by'] = $_POST['admin_id'];
+    $where = array('id' => $_POST['id']);
+    $result = Table::updateData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    $response = array("result" => 'Success', "data" => 'Updated Successfully');
+    echo json_encode($response);
+}
 
 ?>

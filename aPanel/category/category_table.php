@@ -338,7 +338,7 @@ $categoryObj = new Categories;
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Title </th>
+                                            <th>Title</th>
                                             <th>Action</th>
                                             <th>Is Featured</th>
                                             <th>Status</th>
@@ -358,7 +358,7 @@ $categoryObj = new Categories;
                                             <td><?php echo $value->features ?></a></td>
                                             <td>
                                             
-                                                <a href="javascript:void(0);" class="label label-info" onclick="update_category_service_features(<?php echo $value->id; ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
+                                                <a href="javascript:void(0);" class="label label-info" onclick="update_category_service_features(<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
                                                 <a href="javascript:void(0);" class="label label-danger" onclick="delete_category_service_features(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                             </td>
                                             <td>
@@ -417,8 +417,8 @@ $categoryObj = new Categories;
                                                 <p><strong>Q:</strong> <?php echo $value->question ?></p>
                                                <strong>A:</strong> <?php echo strip_tags($value->answer) ?>
                                             </td>
-                                            <td >
-                                                <a href="javascript:void(0);" class="label label-info" onclick="update_category_service(<?php echo $id ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
+                                            <td>
+                                                <a href="javascript:void(0);" class="label label-info" onclick="update_category_service_faq(<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
                                                 <a href="javascript:void(0);" class="label label-danger" onclick="delete_category_service_faq(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                             </td>  
                                             <td>
@@ -431,10 +431,7 @@ $categoryObj = new Categories;
                                         </tr>
                                         <?php }} else {?>
                                         <tr>
-                                            <td colspan="5" class="text-center"> No Records Found. Click here to <a
-                                                    href="javascript:void(0);"
-                                                    onclick="add_edit_category_service(<?php echo $id ?>,'')"
-                                                    style="color:#01a9ac"> Add New</a> </td>
+                                            <td colspan="5" class="text-center"> No Records Found. Click here to <a href="javascript:void(0);" onclick="add_edit_category_service(<?php echo $id ?>,'')" style="color:#01a9ac"> Add New</a> </td>
                                         </tr>
                                         <?php }?>
                                     </tbody>
@@ -471,7 +468,7 @@ $categoryObj = new Categories;
                                             <th><?php echo $key + 1 ?></th>
                                             <td> <?php echo $value->title ?></td>
                                             <td>
-                                                <!-- <a href="javascript:void(0);" class="label label-info" onclick="update_category_service(<?php echo $id ?>,<?php echo $value->service_id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a> -->
+                                                <a href="javascript:void(0);" class="label label-info" onclick="update_category_service_steps(<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
                                                 <a href="javascript:void(0);" class="label label-danger" onclick="delete_category_service_steps(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                             </td>  
                                             <td>

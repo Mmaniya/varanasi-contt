@@ -643,35 +643,12 @@ $categoryObj = new Categories; ?>
                 }
             });
         });
-        // $("form#our_service").submit(function() {
-        //     cate_id = $('#category_id').val();
-        //     var formData = new FormData(this);
-        //     $.ajax({
-        //         url: '<?php echo SERVICE_DIR ?>/service_ajax.php',
-        //         type: 'POST',
-        //         data: formData,
-        //         cache: false,
-        //         contentType: false,
-        //         processData: false,
-        //         success: function(data) {
-        //             var records = JSON.parse(data);
-        //             if (records.result == 'Success') {
-        //                 view_category(cate_id);
-        //                 hide_category_form();
-        //                 notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft',
-        //                     'animated fadeOutLeft', records.data);
-        //             } else {
-        //                 notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft',
-        //                     'animated fadeOutLeft', records.data);
-        //             }
-        //         }
-        //     });
-        // });
+       
     </script>
 <?php } ?>
 
 <!--============================
-        Service Form
+    Service Form Breadcrumb
 ==============================-->
 
 <?php if ($action == 'service_dashboard'){ 
@@ -705,7 +682,7 @@ $categoryObj = new Categories; ?>
 <?php } ?>
 
 <!--============================
-        Service Form
+      Update Features
 ==============================-->
 
 <?php if ($action == 'update_category_service_features') {   
@@ -725,7 +702,7 @@ $categoryObj = new Categories; ?>
     <div class="card-block" style="background-color: rgb(255, 255, 255);">
         <form action="javascript:void(0);" id="update_features">
             <input type="hidden" value="update_category_service_features" name="act">
-            <input type="hidden" name="id" id="fetures_id" value="<?php echo $_POST['id'] ?>">
+            <input type="hidden" name="id" value="<?php echo $_POST['id'] ?>">
             <input type="hidden" id="service_id" value="<?php echo $rsFeatures[0]->service_id; ?>">
 
             <div class="row">
@@ -736,15 +713,6 @@ $categoryObj = new Categories; ?>
                     </div>
                 </div>     
             </div>
-   
-            <!-- <div class="row">
-                <div class="col-sm-12 col-lg-12">
-                    <label class="col-form-label">Category Description</label>
-                    <div class="input-group input-group-inverse">
-                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Category Description" id="category_description" name="category_description"><?php echo $category_description; ?></textarea>
-                    </div>
-                </div>
-            </div> -->
 
             <div class="row">
                 <div class="col-sm-12 col-lg-12">
@@ -766,6 +734,180 @@ $categoryObj = new Categories; ?>
                 // cache: false,
                 // contentType: false,
                 // processData: false,
+                success: function(data) {
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {  
+                        view_category_service(service_id); 
+                        hide_category_form();                
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft',
+                            'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft',
+                            'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="<?php echo ADMIN_JS ?>/tinymce/wysiwyg-editor.js"></script>
+
+<?php }?>
+
+
+<!--============================
+      Update Faq
+==============================-->
+
+<?php if ($action == 'update_category_service_faq') {   
+    if (!empty($_POST['id'])) {
+        $categoryObj->id = $_POST['id'];
+        $rsFaq = $categoryObj->get_service_category_faq_by_id();   
+        $btnName = $title = 'Edit ';
+    } 
+
+    ?>
+    <!-- <script> tinymce.remove(); tinymce.init(); </script> -->
+    <div class="card-header bg-c-lite-green">
+        <h5 class="card-header-text"><?php echo $btnName ?> Faq</h5>
+        <a href="javascript:void(0);" onclick="hide_category_form()" style="font-size:16px;"
+            class="right-float label label-danger"><i class="feather icon-x">Cancel</i></a>
+    </div>
+    <div class="card-block" style="background-color: rgb(255, 255, 255);">
+        <form action="javascript:void(0);" id="update_faq">
+            <input type="hidden" value="update_category_service_faq" name="act">
+            <input type="hidden" name="id" value="<?php echo $_POST['id'] ?>">
+            <input type="hidden" id="service_id" value="<?php echo $rsFaq[0]->service_id; ?>">
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label class="col-form-label">Faq Question</label>
+                    <div class="input-group input-group-inverse">
+                        <input type="text" class="form-control" placeholder="Enter Question" name="question" value="<?php echo $rsFaq[0]->question; ?>">
+                    </div>
+                </div>     
+            </div>
+   
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label class="col-form-label">Faq Answer</label>
+                    <div class="input-group input-group-inverse">
+                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Faq Description" name="answer"><?php echo  $rsFaq[0]->answer; ?></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <input type="submit" class="btn btn-grd-primary" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        $("form#update_faq").submit(function() {
+            tinyMCE.triggerSave();
+            var formData = $('form#update_faq').serialize();
+            var service_id = $('#service_id').val();
+            // var formData = new FormData(this);        
+                $.ajax({
+                url: '<?php echo CATEGORY_DIR ?>/category_ajax.php',
+                type: 'POST',
+                data: formData,
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                success: function(data) {
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {  
+                        view_category_service(service_id); 
+                        hide_category_form();                
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft',
+                            'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft',
+                            'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="<?php echo ADMIN_JS ?>/tinymce/wysiwyg-editor.js"></script>
+
+<?php }?>
+
+
+<!--============================
+     Update Service Steps 
+==============================-->
+
+<?php if ($action == 'update_category_service_steps') {   
+    if (!empty($_POST['id'])) {
+        $categoryObj->id = $_POST['id'];
+        $rsSteps = $categoryObj->get_service_category_step_by_id();   
+        $btnName = $title = 'Edit ';
+    } 
+
+    ?>
+    <div class="card-header bg-c-lite-green">
+        <h5 class="card-header-text"><?php echo $btnName ?> Faq</h5>
+        <a href="javascript:void(0);" onclick="hide_category_form()" style="font-size:16px;"
+            class="right-float label label-danger"><i class="feather icon-x">Cancel</i></a>
+    </div>
+    <div class="card-block" style="background-color: rgb(255, 255, 255);">
+        <form action="javascript:void(0);" id="update_step">
+            <input type="hidden" value="update_category_service_steps" name="act">
+            <input type="hidden" name="id" value="<?php echo $_POST['id'] ?>">
+            <input type="hidden" id="service_id" value="<?php echo $rsSteps[0]->service_id; ?>">
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label class="col-form-label">Title</label>
+                    <div class="input-group input-group-inverse">
+                        <input type="text" class="form-control" placeholder="Enter Title" name="title" value="<?php echo $rsSteps[0]->title; ?>">
+                    </div>
+                </div>     
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label class="col-form-label">Discription</label>
+                    <div class="input-group input-group-inverse">
+                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Step Description" name="description"><?php echo  $rsSteps[0]->description; ?></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <label class="col-form-label">Estimated Time to Complete</label>
+                    <div class="input-group input-group-inverse">
+                        <input type="text" class="form-control"  placeholder="Enter Time"  value="<?php echo $rsSteps[0]->estimated_time; ?>" name="estimated_time">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <label class="col-form-label">Faq Answer</label>
+                    <select class="form-control" name="estimated_type">
+                        <option value="H" <?php if ($rsSteps[0]->estimated_type == 'H') {echo 'selected';}?>> Hours</option>
+                        <option value="D" <?php if ($rsSteps[0]->estimated_type == 'D') {echo 'selected';}?>> Days</option>
+                        <option value="W" <?php if ($rsSteps[0]->estimated_type == 'W') {echo 'selected';}?>> Weeks </option>
+                        <option value="M" <?php if ($rsSteps[0]->estimated_type == 'M') {echo 'selected';}?>> Months</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <input type="submit" class="btn btn-grd-primary" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        $("form#update_step").submit(function() {
+            tinyMCE.triggerSave();
+            var formData = $('form#update_step').serialize();
+            var service_id = $('#service_id').val();
+                $.ajax({
+                url: '<?php echo CATEGORY_DIR ?>/category_ajax.php',
+                type: 'POST',
+                data: formData,      
                 success: function(data) {
                     var records = JSON.parse(data);
                     if (records.result == 'Success') {  

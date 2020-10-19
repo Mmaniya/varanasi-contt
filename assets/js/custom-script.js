@@ -459,6 +459,20 @@ function set_as_featured(id){
     });
 }
 
+function update_category_service_features(id){
+    param = { 'act': 'update_category_service_features', 'id': id };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#update_category_form').show();
+            $('#update_category_form').html(data);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    });
+}
+
 // Faq
 
 function statusServiceFaq(id) {
@@ -530,6 +544,20 @@ function delete_category_service_faq(service_id, id) {
                     }
                 }
             });
+        }
+    });
+}
+
+function update_category_service_faq(id){
+    param = { 'act': 'update_category_service_faq', 'id': id };
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#update_category_form').show();
+            $('#update_category_form').html(data);
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     });
 }
@@ -609,9 +637,8 @@ function delete_category_service_steps(service_id, id) {
     });
 }
 
-
-function update_category_service_features(id){
-    param = { 'act': 'update_category_service_features', 'id': id };
+function update_category_service_steps(id){
+    param = { 'act': 'update_category_service_steps', 'id': id };
     ajax({
         a: 'category_form',
         b: $.param(param),
@@ -623,6 +650,8 @@ function update_category_service_features(id){
         }
     });
 }
+
+
 
 
 /**************************

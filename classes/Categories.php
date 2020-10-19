@@ -1,4 +1,4 @@
-<?php 
+<?php  
 class Categories {
     public function get_category_count(){               
         $qry ="select id, count(*) total,
@@ -46,13 +46,21 @@ class Categories {
     public function get_service_category_features_by_id(){
         $query = "SELECT *  from ".TBL_SERVICE_FEATURES." Where id = ". $this->id ."";   
       return dB::mExecuteSql($query);  
-  }
+    }
     public function get_service_category_faq(){
           $query = "SELECT *  from ".TBL_SERVICE_FAQ." Where service_id = ".$this->id ." ORDER BY position ASC"; 
         return dB::mExecuteSql($query);  
     }
+    public function get_service_category_faq_by_id(){
+        $query = "SELECT *  from ".TBL_SERVICE_FAQ." Where id = ". $this->id ."";   
+      return dB::mExecuteSql($query);  
+    }
     public function get_service_category_steps(){
         $query = "SELECT *  from ".TBL_SERVICE_STEPS_LINE_ITEM." Where service_id = ".$this->id ." ORDER BY position ASC"; 
+      return dB::mExecuteSql($query);  
+    }
+    public function get_service_category_step_by_id(){
+        $query = "SELECT *  from ".TBL_SERVICE_STEPS_LINE_ITEM."  Where id = ". $this->id ."";   
       return dB::mExecuteSql($query);  
     }
 
