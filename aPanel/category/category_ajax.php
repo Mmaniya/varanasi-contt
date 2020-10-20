@@ -97,7 +97,7 @@ if ($action == 'category_services') {
         $baseName = basename($filename, $ext);
         $newFileName = rand() . '.' . $ext;
         $param['service_img'] = $newFileName;
-        move_uploaded_file($file_tmp = $_FILES['service_img']["tmp_name"], "uploads/" . $newFileName) or die('image upload fail');
+        move_uploaded_file($file_tmp = $_FILES['service_img']["tmp_name"], "uploads/service_img/" . $newFileName) or die('image upload fail');
     }
 
     if (empty(trim($_POST['id']))) {
@@ -155,27 +155,24 @@ if ($action == 'category_services') {
         $param['updated_by'] = $_POST['admin_id'];
         $where = array('id' => $_POST['id']);
         $result = Table::updateData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-        $response = array("result" => 'Success', "data" => 'Updated Successfully');
-        echo json_encode($response);
-        
-        $where = array('service_id' => $_POST['id']);
-        $result = Table::deleteData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-
+            
         $param = array();
         if (count($_POST['features']) > 0) {
-                $param['service_id'] =  $_POST['id'];
+               $param['service_id'] =  $_POST['id'];
             foreach ($_POST['features'] as $key => $val) {
                 if(!empty($_POST['features'][$key])){
                 $param['features'] = $_POST['features'][$key];
                 $param['added_date'] = date('Y-m-d H:i:s', time());
                 $param['added_by'] = $_SESSION['admin_id'];
-                $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
+                    if(!empty($_POST['features_id'][$key])){
+                        $where = array('id' => $_POST['faq_id'][$key]);
+                        $result = Table::updateData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+                    }else{
+                        $result = Table::insertData(array('tableName' => TBL_SERVICE_FEATURES, 'fields' => $param, 'showSql' => 'N'));
+                    }
                 }
             }    
         }
-
-        $where = array('service_id' => $_POST['id']);
-        $result = Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
         
         $param = array();
         if (count($_POST['question']) > 0) {
@@ -183,16 +180,18 @@ if ($action == 'category_services') {
             foreach ($_POST['question'] as $key => $val) {
                 if(!empty($_POST['question'][$key]) && !empty($_POST['answer'][$key])){
                 $param['question'] = $_POST['question'][$key];
-                $param['answer'] = $_POST['answer'][$key];
+                $param['answer'] = check_input($_POST['answer'][$key]);
                 $param['added_date'] = date('Y-m-d H:i:s', time());
                 $param['added_by'] = $_SESSION['admin_id'];
-                $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
+                    if(!empty($_POST['faq_id'][$key])){
+                        $where = array('id' => $_POST['faq_id'][$key]);
+                        $result = Table::updateData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+                    }else{
+                        $result = Table::insertData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'showSql' => 'N'));
+                    }
                 }
             }
         }
-
-        $where = array('service_id' => $_POST['id']);
-        $result = Table::deleteData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));    
 
         $param = array();
         if (count($_POST['title']) > 0) {
@@ -204,9 +203,17 @@ if ($action == 'category_services') {
                 $param['estimated_type'] = $_POST['estimated_type'][$key];
                 $param['added_date'] = date('Y-m-d H:i:s', time());
                 $param['added_by'] = $_SESSION['admin_id'];
-                $result = Table::insertData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'showSql' => 'N'));
+                if(!empty($_POST['step_id'][$key])){
+                    $where = array('id' => $_POST['step_id'][$key]);
+                    $result = Table::updateData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+                }else{
+                    $result = Table::insertData(array('tableName' => TBL_SERVICE_STEPS_LINE_ITEM, 'fields' => $param, 'showSql' => 'N'));
+                }
             }
-        }        
+        }  
+        
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);      
 
     }
 
@@ -342,7 +349,6 @@ if ($action == 'category_service_faq_remove') {
 
     $where = array('id' => $_POST['id']);
     $result = Table::deleteData(array('tableName' => TBL_SERVICE_FAQ, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-
     $response = array("result" => 'Success', "data" => 'Successfully Removed');
     echo json_encode($response);
 
@@ -358,7 +364,6 @@ if ($action == 'update_category_service_faq') {
     $response = array("result" => 'Success', "data" => 'Updated Successfully');
     echo json_encode($response);
 }
-
 
 
 // steps position update

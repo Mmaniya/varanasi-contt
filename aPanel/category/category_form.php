@@ -235,13 +235,9 @@ $categoryObj = new Categories; ?>
             $$K = $V;
         }
         $btnName = $title = 'Edit ';
-    }?>
-    <script> tinymce.remove(); tinymce.init('width : "840"');</script>
-    <style>
-    .mce-panel {
-        width: 99%;
-    }
-    </style>
+    } ?>
+    <script> <?php if(empty($id)){ ?> add_more_features_fields(); add_more_faq_fields();  add_more_step_fields(); <?php } ?> tinymce.remove(); tinymce.init(); </script>
+    <style> .mce-panel {   width: 99%; } </style>
     <div class="col-12">
         <div class="page-body">
             <div class="row">
@@ -258,8 +254,7 @@ $categoryObj = new Categories; ?>
                         <div class="card-block">
                             <div id="wizard1">
                                 <section>
-                                    <form action="javascript:void(0);" class="wizard-form " id="category_service_forms"
-                                        enctype="multipart/form-data">
+                                    <form action="javascript:void(0);" class="wizard-form " id="category_service_forms" enctype="multipart/form-data">
                                         <input type="hidden" value="category_services" name="act">
                                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                                         <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
@@ -344,6 +339,7 @@ $categoryObj = new Categories; ?>
                                                                 <label class="col-form-label">Recurring Type</label>
                                                                 <div class="input-group input-group-inverse">
                                                                     <select class="form-control" name="recurring_type">
+                                                                        <option value="" selected> Select One Option </option>
                                                                         <option value="weekly" <?php if ($recurring_type == 'weekly') {echo 'selected';}?>> Weekly </option>
                                                                         <option value="bi_weekly" <?php if ($recurring_type == 'bi_weekly') {echo 'selected';}?>> Bi Weekly</option>
                                                                         <option value="monthly" <?php if ($recurring_type == 'monthly') {echo 'selected';}?>> Monthly</option>
@@ -402,123 +398,63 @@ $categoryObj = new Categories; ?>
                                         <h3> Features </h3>
                                         <fieldset>
                                             <div class="card-header bg-c-lite-green">
-                                                <h5>Add New <?php //echo $rsService->service_name; ?> Features</h5>
+                                            <h5><?php if(empty($id)){ ?>  Add New  <?php } else { ?> Edit <?php } ?>Features</h5>
                                             </div>
                                             <div class="card-block">
                                                 <div class="row" id="appeded_column">
-                                                    <?php 
+                                                    <?php if(!empty($id)){
                                                             $categoryObj->id = $id;
                                                             $rsServiceFeatures = $categoryObj->get_service_category_features();
                                                             if(count($rsServiceFeatures)>0){  ?>
-                                                    <script>
-                                                    z = 0;
-                                                    </script>
-                                                    <?php  foreach ($rsServiceFeatures as $key => $value){  $rand = rand(); ?>
-                                                    <div class="col-sm-6 col-lg-6" id="edit_column_<?php echo $key;?>">
+                                                    <?php   foreach ($rsServiceFeatures as $key => $value){ ?>
+                                                    <div class="col-sm-6 col-lg-6" id="edit_column_<?php echo $key+1 ?>">
                                                         <label class="col-form-label">Features</label>
                                                         <div class="input-group input-group-inverse">
-                                                            <button type="button"  class="btn btn-default clone-btn-left delete" onclick="removeEditRow(<?php echo $key;?>)"><i class="fa fa-minus"></i></button>
+                                                            <button type="button"  class="btn btn-default clone-btn-left delete" onclick="remove_category_service_features(<?php echo $value->id; ?>,<?php echo $key+1 ?>)"><i class="fa fa-minus"></i></button>
                                                             <input type="text" class="form-control" placeholder="Enter Features" value="<?php echo $value->features; ?>" name="features[]">
+                                                            <input type="hidden" class="form-control" placeholder="Enter Features" value="<?php echo $value->id; ?>" name="features_id[]">
                                                             <button type="button" class="btn btn-primary clone-btn-left clone" onclick="add_more_features_fields()"><i class="fa fa-plus"></i></button>
                                                         </div>
                                                     </div>
-                                                    <script>
-                                                         z++;
-                                                    </script>
-                                                    <?php } } else { ?> <script>  add_more_features_fields(); </script><?php } ?>
+                                                    <?php } } } ?>
                                                 </div>
-                                            </div>
-                                            <script>
-                                            x = 1;
-
-                                            function add_more_features_fields() {
-                                                html = '<div class="col-sm-6 col-lg-6" id="column_' + x + '">';
-                                                html += '<label class="col-form-label">Features</label>';
-                                                html += '<div class="input-group input-group-inverse"> ';
-                                                html += '<button type="button" class="btn btn-default clone-btn-left delete" onclick="removeRow(' + x + ')"><i class="fa fa-minus"></i></button>';
-                                                html += '<input type="text" class="form-control" placeholder="Enter Features" name="features[]">';
-                                                html += '<button type="button" class="btn btn-primary clone-btn-left clone" onclick="add_more_features_fields()"><i class="fa fa-plus"></i></button>';
-                                                html += '</div>';
-                                                html += '</div>';
-                                                $('#appeded_column').append(html);
-                                                x++;
-                                            }
-
-                                            function removeRow(id) {
-                                                if (x == 1) {
-                                                    return;
-                                                }
-                                                x--;
-                                                $('#column_' + id).remove();
-                                            }
-
-                                            function removeEditRow(id) {
-                                                if (z == 1) {
-                                                    return;
-                                                }
-                                                z--;
-                                                $('#edit_column_' + id).remove();
-                                            }
-                                            </script>
+                                            </div>                                            
                                         </fieldset>
                                         <h3> Faq </h3>
                                         <fieldset>
-
                                             <div class="card-header bg-c-lite-green">
-                                                <h5>Add New <?php //echo $rsService->service_name; ?> Faq</h5>
+                                            <h5><?php if(empty($id)){ ?>  Add New  <?php } else { ?> Edit <?php } ?>Faq</h5>
                                             </div>
                                             <div class="card-block">
                                                 <div id="appeded_column_faq" class="row">
+                                                    <script> x2 = 0 ; </script>
                                                     <?php   $categoryObj->id = $id;
-                                                                $rsServiceFaq = $categoryObj->get_service_category_faq();
-                                                                if(count($rsServiceFaq)>0){
-                                                                    foreach ($rsServiceFaq as $key => $value){  ?>
+                                                            $rsServiceFaq = $categoryObj->get_service_category_faq();
+                                                            if(count($rsServiceFaq)>0){
+                                                              
+                                                            foreach ($rsServiceFaq as $key => $value){  ?>
 
-                                                                    <div class="col-sm-6 col-lg-6 " id="faq_column_<?php echo $key;?>">
-                                                                        <label class="col-form-label">Question</label>
-                                                                        <div class="input-group input-group-inverse">
-                                                                            <input type="text" class="form-control"  placeholder="Enter Question"  value="<?php echo $value->question; ?>" name="question[]">
-                                                                        </div>
-                                                                        <label class="col-form-label">Answer</label>
-                                                                        <textarea name="answer[]"><?php echo $value->answer; ?></textarea>
-                                                                        <button class="clone btn btn-primary m-b-15 m-t-15  m-r-15" onclick="add_more_faq_fields()">Add</button>
-                                                                        <button class="delete btn btn-danger m-b-15 m-t-15"  onclick="removeFaq(<?php echo $key;?>)">Delete</button>
-                                                                    </div>
-                                                                    <?php } }else{ ?> <script> add_more_faq_fields(); </script><?php } ?>
+                                                            <div class="col-sm-6 col-lg-6 item" id="faq_column_<?php echo $key+1;?>">
+                                                            <input type="hidden" class="form-control" placeholder="Enter Features" value="<?php echo $value->id; ?>" name="faq_id[]">
+                                                            <label class="col-form-label">Question</label>
+                                                            <div class="input-group input-group-inverse">
+                                                                <input type="text" class="form-control"  placeholder="Enter Question"  value="<?php echo $value->question; ?>" name="question[]">
+                                                            </div>
+                                                            <label class="col-form-label">Answer</label>
+                                                            <textarea name="answer[]"><?php echo $value->answer; ?></textarea>
+                                                            <button class="clone btn btn-primary m-b-15 m-t-15  m-r-15" onclick="add_more_faq_fields()">Add</button>
+                                                            <button class="delete btn btn-danger m-b-15 m-t-15"  onclick="remove_category_service_faq(<?php echo $value->id; ?>,<?php echo $key+1 ?>)">Delete</button>
+                                                        </div>
+                                                        <script> x2++; </script> <?php }  }  ?>
                                                 </div>
                                             </div>
-                                            <script>
-                                  
-                                            i = 1;
-
-                                            function add_more_faq_fields() {
-                                                html = '<div class="col-sm-6 col-lg-6 " id="faq_column_' + i + '">';
-                                                html += '<label class="col-form-label">Question</label>';
-                                                html += '<div class="input-group input-group-inverse">';
-                                                html += '<input type="text" class="form-control" placeholder="Enter Question" value="" name="question[]">';
-                                                html += '</div>';
-                                                html += '<textarea name="answer[]" class="myeditable"></textarea>';
-                                                html += '<button class=" clone btn btn-primary m-b-15 m-t-15 m-r-15" onclick="add_more_faq_fields()">Add</button>';
-                                                html += '<button class=" delete  btn btn-danger m-b-15 m-t-15" onclick="removeFaq(' + i + ')">Delete</button>';
-                                                html += '</div>';
-                                                $('#appeded_column_faq').append(html);
-                                                i++;
-                                            }
-
-                                            function removeFaq(id) {
-                                                if (i == 1) {
-                                                    return;
-                                                }
-                                                i--;
-                                                $('#faq_column_' + id).remove();
-                                            }
-                                            </script>
+                                     
                                         </fieldset>
                                         <h3> Steps </h3>
                                         <fieldset>
 
                                             <div class="card-header bg-c-lite-green">
-                                                <h5>Add New <?php //echo $rsService->service_name; ?> Steps</h5>
+                                            <h5><?php if(empty($id)){ ?>  Add New  <?php } else { ?> Edit <?php } ?>Steps</h5>
                                             </div>
                                             <div class="card-block">
                                                 <div id="appeded_column_step" class="row">
@@ -526,9 +462,9 @@ $categoryObj = new Categories; ?>
                                                     $rsServiceFaq = $categoryObj->get_service_category_steps();
                                                     if(count($rsServiceFaq)>0){
                                                         foreach ($rsServiceFaq as $key => $value){  ?>
-
                                                         <div class="col-sm-6 col-lg-6 " id="step_column_<?php echo $key;?>">
                                                             <label class="col-form-label">Title</label>
+                                                            <input type="hidden" class="form-control" placeholder="Enter Features" value="<?php echo $value->id; ?>" name="step_id[]">
                                                             <div class="input-group input-group-inverse">
                                                                 <input type="text" class="form-control"  placeholder="Enter Steps Title"  value="<?php echo $value->title; ?>" name="title[]">
                                                             </div>
@@ -545,49 +481,11 @@ $categoryObj = new Categories; ?>
                                                                 </select>
                                                             </div>
                                                             <button class="clone btn btn-primary m-b-15 m-t-15  m-r-15" onclick="add_more_step_fields()">Add</button>
-                                                            <button class="delete btn btn-danger m-b-15 m-t-15"  onclick="removeSteps(<?php echo $key;?>)">Delete</button>
+                                                            <button class="delete btn btn-danger m-b-15 m-t-15"  onclick="remove_category_service_step(<?php echo $value->id; ?>,<?php echo $key;?>)">Delete</button>
                                                         </div>
-                                                        <?php } }else{ ?> <script> add_more_step_fields(); </script><?php  } ?>
+                                                        <?php } } ?>
                                                 </div>
-                                            </div>
-                                            <script>
-                                  
-                                            y = 1;
-
-                                            function add_more_step_fields() {
-                                                html = '<div class="col-sm-6 col-lg-6 " id="step_column_' + y + '">';
-                                                html += '<label class="col-form-label">Discription</label>';
-                                                html += '<div class="input-group input-group-inverse">';
-                                                html += '<input type="text" class="form-control" placeholder="Enter Steps Title" value="" name="title[]">';
-                                                html += '</div>';
-                                                html += '<label class="col-form-label" >Discription</label>';
-                                                html += '<textarea name="description[]" class="myeditable"></textarea>';
-                                                html += '<label class="col-form-label">Estimated Time to Complete</label>';
-                                                html += '<div class="input-group input-group-inverse">';
-                                                html += '<input type="text" class="form-control col-5"  placeholder="Enter Time"  value="<?php echo $value->estimated_time; ?>" name="estimated_time[]">';
-                                                html += '<select class="form-control col-6 offset-1" name="estimated_type[]">';
-                                                html += '<option value="H"> Hours</option>';
-                                                html += '<option value="D"> Days</option>';
-                                                html += '<option value="W" selected=""> Weeks </option>';
-                                                html += '<option value="M"> Months</option>';
-                                                html += '</select>';
-                                                html += '</div>';
-                                                html += '<button class=" clone btn btn-primary m-b-15 m-t-15 m-r-15" onclick="add_more_step_fields()">Add</button>';
-                                                html += '<button class=" delete  btn btn-danger m-b-15 m-t-15" onclick="removeSteps(' + y + ')">Delete</button>';
-                                                html += '</div>';
-                                                $('#appeded_column_step').append(html);
-                                                y++;
-                                            }
-
-                                            function removeSteps(id) {
-                                                if (y == 1) {
-                                                    return;
-                                                }
-                                                y--;
-                                                $('#step_column_' + id).remove();
-                                            }
-                                            </script>
-
+                                            </div>                                   
                                         </fieldset>                                 
                                     </form>
                                 </section>
@@ -926,3 +824,54 @@ $categoryObj = new Categories; ?>
     <script src="<?php echo ADMIN_JS ?>/tinymce/wysiwyg-editor.js"></script>
 
 <?php }?>
+
+<?php if($action == 'add_more_faq'){  $random_no =  rand(); ?>
+    <div class="col-sm-6 col-lg-6 item" id="faq_column_<?php echo $random_no; ?>">
+    <label class="col-form-label">Question</label>
+    <div class="input-group input-group-inverse">
+    <input type="text" class="form-control" placeholder="Enter Question" value="" name="question[]">
+    </div>
+    <label class="col-form-label">Answer</label>
+    <textarea name="answer[]"class="my_faq"></textarea>
+    <button class=" clone btn btn-primary m-b-15 m-t-15 m-r-15" onclick="add_more_faq_fields()">Add</button>
+    <button class=" delete  btn btn-danger m-b-15 m-t-15" onclick="removeFaq(<?php echo $random_no; ?>)">Delete</button>
+    </div>
+    <script>
+      tinymce.init({
+                selector: '.my_faq',
+                width : "840",
+                height : "200",
+            });
+    </script>
+<?php } ?>
+
+<?php if($action == 'add_more_steps'){  $random_no =  rand(); ?>
+
+    <div class="col-sm-6 col-lg-6 " id="step_column_<?php echo $random_no; ?>">
+    <label class="col-form-label">Discription</label>
+    <div class="input-group input-group-inverse">
+    <input type="text" class="form-control" placeholder="Enter Steps Title" value="" name="title[]">
+    </div>
+    <label class="col-form-label" >Discription</label>
+    <textarea name="description[]" class="my_steps"></textarea>
+    <label class="col-form-label">Estimated Time to Complete</label>
+    <div class="input-group input-group-inverse">
+    <input type="text" class="form-control col-5"  placeholder="Enter Time"  value="<?php echo $value->estimated_time; ?>" name="estimated_time[]">
+    <select class="form-control col-6 offset-1" name="estimated_type[]">
+    <option value="H"> Hours</option>
+    <option value="D"> Days</option>
+    <option value="W"> Weeks </option>
+    <option value="M"> Months</option>
+    </select>
+    </div>
+    <button class=" clone btn btn-primary m-b-15 m-t-15 m-r-15" onclick="add_more_step_fields()">Add</button>
+    <button class=" delete  btn btn-danger m-b-15 m-t-15" onclick="removeSteps(<?php echo $random_no; ?>)">Delete</button>
+    </div>
+    <script>
+      tinymce.init({
+                selector: '.my_steps',
+                width : "840",
+                height : "200",
+            });
+    </script>
+<?php } ?>

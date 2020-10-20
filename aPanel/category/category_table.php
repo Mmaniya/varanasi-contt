@@ -196,9 +196,6 @@ $categoryObj = new Categories;
                 <div class="tab-pane" id="clients" role="tabpanel" aria-expanded="false">
                     <p class="m-0"></p>
                 </div>
-                <!-- <div class="tab-pane " id="settings3" role="tabpanel" aria-expanded="true">
-                                <p class="m-0"></p>
-                            </div> -->
             </div>
         </div>
     </div>
@@ -296,7 +293,7 @@ $categoryObj = new Categories;
                             <div class="col-sm-6">
                                 <p class="m-b-10 f-w-600">Questionnaire Complete Days</p>
                                 <h6 class="text-muted f-w-400" style="text-transform:capitalize;">
-                                    <?php  echo $if_recurring_period; ?></h6>
+                                    <?php  echo $service_questionnaire_complete_days; ?></h6>
                             </div>
                         </div>
                     </div>
@@ -347,17 +344,16 @@ $categoryObj = new Categories;
                                     <tbody id="draggableFeatures" class="draggable">
                                         <?php   $statusArr = array('A' => 'checked', 'I' => ''); 
                                                 $arrayFeatured = array('Y' => 'checked', 'N' => '');
-                                                    $categoryObj->id = $_POST['id'];                                 
-                                                    $rsFeatures = $categoryObj->get_service_category_features();
-                                                    if (count($rsFeatures) > 0) {
-                                                        foreach ($rsFeatures as $key => $value) { ?>
+                                                $categoryObj->id = $_POST['id'];                                 
+                                                $rsFeatures = $categoryObj->get_service_category_features();
+                                                if (count($rsFeatures) > 0) {
+                                                    foreach ($rsFeatures as $key => $value) { ?>
 
                                         <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
                                             <input type="hidden" name="features_id[]" value="<?php echo $value->id ?>">
-                                            <th><?php echo $key + 1 ?></th>
-                                            <td><?php echo $value->features ?></a></td>
-                                            <td>
-                                            
+                                            <td><?php echo $key + 1 ?></td>
+                                            <td style="width: 200px;"><?php echo $value->features ?></a></td>
+                                            <td>                                            
                                                 <a href="javascript:void(0);" class="label label-info" onclick="update_category_service_features(<?php echo $value->id; ?>)"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
                                                 <a href="javascript:void(0);" class="label label-danger" onclick="delete_category_service_features(<?php echo $id ?>,<?php echo $value->id; ?>)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
                                             </td>
@@ -574,32 +570,7 @@ $categoryObj = new Categories;
                     }
                 });
             },
-        });
-        Sortable.create(draggableFeatured, {
-            group: 'draggableFeatured',
-            animation: 150,
-            accept: '.sortable-moves',
-            onUpdate: function(ui) {
-                var param = $('form#featured_position').serialize();
-                ajax({
-                    a: "category_ajax",
-                    b: param,
-                    c: function() {},
-                    d: function(data) {
-                        var records = JSON.parse(data);
-                        if (records.result == 'Success') {
-                            notify('top', 'right', 'fa fa-check', 'success',
-                                'animated fadeInLeft', 'animated fadeOutLeft', records
-                                .data);
-                        } else {
-                            notify('top', 'right', 'fa fa-times', 'danger',
-                                'animated fadeInLeft', 'animated fadeOutLeft', records
-                                .data);
-                        }
-                    }
-                });
-            },
-        });
+        });     
     });
     </script>
 <?php } ?>

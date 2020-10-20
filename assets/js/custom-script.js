@@ -221,6 +221,7 @@ function add_edit_category_service(category_id, id) {
         b: $.param(param),
         c: function () { },
         d: function (data) {
+            hide_category_form();
             $('#category_service').removeClass('col-7');
             $('#category_service').addClass('col-12');
             $('#category_service').html(data);
@@ -236,6 +237,7 @@ function update_category_service(category_id, id) {
         b: $.param(param),
         c: function () { },
         d: function (data) {
+            hide_category_form();
             $('#category_service').removeClass('col-7');
             $('#category_service').addClass('col-12');
             $('#category_service').html(data);
@@ -325,6 +327,7 @@ function view_category_service(id) {
         b: $.param(param),
         c: function () { },
         d: function (data) {
+            hide_category_form();
             $('#category_table').hide();
             $('#category_service').removeClass('col-12');
             $('#category_service').addClass('col-7');
@@ -346,6 +349,63 @@ function category_service_breadcrumb(id) {
 }
 
 // Features
+x = 1;
+function add_more_features_fields(){   
+    html = '<div class="col-sm-6 col-lg-6" id="column_' + x + '">';
+    html += '<label class="col-form-label">Features</label>';
+    html += '<div class="input-group input-group-inverse"> ';
+    html += '<button type="button" class="btn btn-default clone-btn-left delete" onclick="removeRow(' + x + ')"><i class="fa fa-minus"></i></button>';
+    html += '<input type="text" class="form-control" placeholder="Enter Features" name="features[]">';
+    html += '<button type="button" class="btn btn-primary clone-btn-left clone" onclick="add_more_features_fields()"><i class="fa fa-plus"></i></button>';
+    html += '</div>';
+    html += '</div>';
+    $('#appeded_column').append(html);
+    x++;
+}
+
+function removeRow(id) {
+    if (id == 1) {
+        return;
+    }else{
+        x--;
+        $('#column_' + id).remove();
+    }
+
+}
+
+function remove_category_service_features(id,key) {
+    param = { 'act': 'category_service_features_remove', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this fatures?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        $('#edit_column_' + key).remove();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
 
 function status_service_features(id) {
     var ischecked = $('.status_update_' + id).is(':checked');
@@ -475,6 +535,68 @@ function update_category_service_features(id){
 
 // Faq
 
+function add_more_faq_fields() {  
+    param = { 'act': 'add_more_faq'};
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {  
+            $('#appeded_column_faq').append(data); 
+        }
+    });
+}
+
+function removeFaq(id) {    
+    var numItems = $('.item').length;
+    if(numItems == 1){
+        return;
+    }
+    $('#faq_column_' + id).remove();
+}
+
+function remove_category_service_faq(id,key) {
+    param = { 'act': 'category_service_faq_remove', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this FAQ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            var numItems = $('.item').length;
+            if(numItems == 1){  
+            $('.preloader').hide();
+            notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', 'unable to delete this record');
+            return;
+            }else{
+                ajax({
+                    a: "category_ajax",
+                    b: param,
+                    c: function () { },
+                    d: function (data) {
+                        $('.preloader').hide();
+                        var records = JSON.parse(data);
+                        if (records.result == 'Success') {
+                            $('#faq_column_' + key).remove();
+                            x2--;
+                            notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        } else {
+                            notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                        }
+                    }
+                }); 
+            }       
+        }
+    });
+}
+
 function statusServiceFaq(id) {
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
@@ -518,7 +640,7 @@ function delete_category_service_faq(service_id, id) {
     param = { 'act': 'category_service_faq_remove', 'id': id };
     Swal.fire({
         title: "Are you sure?",
-        text: "You want to delete this fatures?",
+        text: "You want to delete this FAQ?",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
@@ -564,6 +686,60 @@ function update_category_service_faq(id){
 
 // Steps
 
+function add_more_step_fields() {
+    param = { 'act': 'add_more_steps'};
+    ajax({
+        a: 'category_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {   
+            $('#appeded_column_step').append(data);        
+        }
+    }); 
+}
+
+function removeSteps(id) {
+    if (id == 1) {
+        return;
+    }
+    $('#step_column_' + id).remove();
+}
+
+function remove_category_service_step(id,key) {
+    param = { 'act': 'category_service_step_remove', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this step?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "category_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        $('#step_column_' + key).remove();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
+
+
 function statusServiceSteps(id) {
     var ischecked = $('.status_update_' + id).is(':checked');
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
@@ -607,7 +783,7 @@ function delete_category_service_steps(service_id, id) {
     param = { 'act': 'category_service_step_remove', 'id': id };
     Swal.fire({
         title: "Are you sure?",
-        text: "You want to delete this fatures?",
+        text: "You want to delete this step?",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",

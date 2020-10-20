@@ -4,28 +4,22 @@
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
 
-
     <!-- jquery slimscroll js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-slimscroll/jquery.slimscroll.js"></script>
+
     <!-- modernizr js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/modernizr/modernizr.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/modernizr/css-scrollbars.js"></script>
+    
     <!-- jquery sortable js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/Sortable/Sortable.js"></script>
 
     <script src="<?php echo ADMIN_JS ?>/tinymce/js/tinymce.min.js"></script>
 
-    <!-- sweet alert js -->
-    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/modal/sweetalert.min.js"></script> -->
-    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/modal/modal.js"></script> -->
-    <!-- sweet alert modal.js intialize js -->
- 
-
     <!-- ALERT BOX -->
     <script src="<?php echo ADMIN_JS ?>/alert/sweetalert2.min.js"></script>      
     <script src="<?php echo ADMIN_JS ?>/alert/sweet-alerts.init.js"></script>
-    
-    
+        
     <!-- notification js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/notification/bootstrap-growl.min.js"></script>
 
