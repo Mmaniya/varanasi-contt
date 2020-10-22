@@ -1,8 +1,8 @@
 /*==============ADMIN SCRIPT===============*/
 
 /**************************
- * User Sign in & Sign Up *
- **************************/
+* User Sign in & Sign Up  *
+**************************/
 function signin_form() {
     $('#formSignInAdmin').css("display", "block");
     $('#formRecoverPws').css("display", "none");
@@ -14,12 +14,22 @@ function forgetpws_form() {
 }
 
 /**************************
- *      Categorys         *
+ * Categorys & Service    *
  **************************/
 $(function () {
-    category_table('');
-    category_statistics();
-    add_edit_employee();   /* optinal  */
+
+    var url = $(location).attr("href");
+    var filename=url.split('http://192.168.0.109/mms/aPanel/')[1];
+
+    if(filename == 'category/index.php'){
+        category_table('');
+        category_statistics();
+    }else if(filename == 'employee/index.php'){
+        // employee_role()
+        employee_main_table();
+        employee_statistics();
+    }
+
 });
 
 /* Category Statistics  Update*/
@@ -348,7 +358,8 @@ function category_service_breadcrumb(id) {
     });
 }
 
-// Features
+/* 1.Features */
+
 x = 1;
 function add_more_features_fields(){   
     html = '<div class="col-sm-6 col-lg-6" id="column_' + x + '">';
@@ -533,7 +544,7 @@ function update_category_service_features(id){
     });
 }
 
-// Faq
+/* 2. Faq */
 
 function add_more_faq_fields() {  
     param = { 'act': 'add_more_faq'};
@@ -684,7 +695,7 @@ function update_category_service_faq(id){
     });
 }
 
-// Steps
+/* 3.Steps */
 
 function add_more_step_fields() {
     param = { 'act': 'add_more_steps'};
@@ -738,7 +749,6 @@ function remove_category_service_step(id,key) {
         }
     });
 }
-
 
 function statusServiceSteps(id) {
     var ischecked = $('.status_update_' + id).is(':checked');
@@ -827,27 +837,229 @@ function update_category_service_steps(id){
     });
 }
 
-
+/***************************
+* End Categorys & Service *
+***************************/
 
 
 /**************************
- *      End Categorys     *
- **************************/
+*     Employee           *
+**************************/
 
-function add_edit_employee() {
-    param = { 'act': 'category_table' };
+// Gentral Functions
+
+function generate_password() {
+    length = 7;
+    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
+    var pass = "";
+    for (var x = 0; x < length; x++) {
+        var i = Math.floor(Math.random() * chars.length);
+        pass += chars.charAt(i);
+    }
+    $('#password').val(pass);
+}
+
+function selectexperience(){
+    var exp = $('#exprience').val();
+    if(exp == 'E'){
+        $('#year_of_exp').show();
+    }else{
+        $('#year_of_exp').hide();
+    }
+}
+
+function reached_by_mms(){
+    var reachedby = $('#reachedby').val();
+    alert(reachedby);
+    if(reachedby == 'reference'){
+        $('.reference').show();
+    }else if(reachedby == 'consultancy'){
+
+    }else{
+        $('.reference').hide();
+    }
+}
+
+function reference(){
+    var reference = $('#referedby').val();
+    if(reference == 'Y'){
+        $('.employee').show();
+        $('.referedothers').hide();
+    }else if(reference == 'N'){
+        $('.employee').hide();
+        $('.referedothers').show();
+    }else{
+        $('.referedothers').hide();
+        $('.employee').hide();
+    }
+}
+
+function hide_employee_form () {
+    $('#employee_form').hide();
+}
+
+function hide_emp_details(){
+    $('.ajaxResponce').show();
+    $('.emp_form').hide();
+}
+
+function employee_statistics() {
+    param = { 'act': 'employee_statistics' };
+    ajax({
+        a: 'employee_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('#employee_statistics').html(data);
+        }
+    });
+}
+
+//  employee Role table
+function employee_role() {
+    hide_emp_details();
+    param = { 'act': 'employee_role_table'};
+    $('.preloader').show();
     ajax({
         a: 'employee_table',
         b: $.param(param),
         c: function () { },
         d: function (data) {
-            alert('k');
-            $('#employee_service').html(data);
+            $('.preloader').hide();
+            $('#employee_table').show();
+            $('#employee_table').html(data);
         }
     });
 }
 
+function add_edit_role(id){
+    param = { 'act': 'employee_role','id':id };
+    $('.preloader').show();
+    ajax({
+        a: 'employee_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#employee_form').show();
+            $('#employee_form').html(data);
+        }
+    });
+}
+
+function delete_employee_role(id){
+    param = { 'act': 'remove_employee_role', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this role?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "employee_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        employee_role();
+                        employee_statistics();
+                        hide_employee_form();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
+
+function statusRole(id) {
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
+    param = { 'act': 'role_status_change', 'status': status, 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to change status?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "employee_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        employee_role();
+                        employee_statistics();
+                        hide_employee_form();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
+        }
+    });
+}
+
+// Employee add
+function employee_main_table(){
+    param = { 'act': 'employee_main_table'};
+    $('.preloader').show();
+    ajax({
+        a: 'employee_table',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#employee_table').show();
+            $('#employee_table').html(data);
+        }
+    });
+}
+
+// employee form
+function add_edit_employee(id){
+    $('.preloader').show();
+    $('.emp_form').show();
+    param = { 'act': 'add_edit_employee', 'emp_id': id };
+    ajax({
+        a: 'employee_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('.ajaxResponce').hide();
+            $('#employee_details').html(data);
+        }
+    });
+}
+
+
 /**************************
- *      User page           *
- **************************/
+*   End  Employee         *
+**************************/
 

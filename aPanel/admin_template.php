@@ -177,23 +177,14 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     <a href="<?php echo CATEGORY_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="feather icon-box"></i></span>
                                         <span class="pcoded-mtext">Categories & Services</span>
-                                    </a>
-                                    <!-- <ul class="pcoded-submenu"> -->
-                                       
-                          
-                                        <!-- <li class="">
-                                            <a href="<?php echo SERVICE_DIR ?>/index.php">
-                                                <span class="pcoded-mtext">Services</span>
-                                            </a>
-                                        </li>                                  -->
-                                    <!-- </ul> -->
+                                    </a>                             
                                 </li>
-                                <!-- <li class="">
+                                <li class="">
                                     <a href="<?php echo EMPLOYEE_DIR ?>/index.php">
                                     <span class="pcoded-micon"><i class="feather icon-user"></i></span>
                                         <span class="pcoded-mtext">Employees</span>
                                     </a>
-                                </li>  -->
+                                </li> 
                             </ul>                           
                         </div>
                     </nav>

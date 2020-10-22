@@ -103,8 +103,7 @@ if ($action == 'category_services') {
     if (empty(trim($_POST['id']))) {
         $param['added_by'] = $_POST['admin_id'];
         $result = Table::insertData(array('tableName' => TBL_SERVICE, 'fields' => $param, 'showSql' => 'N'));
-        $explode = explode('::', $result);
-                
+        $explode = explode('::', $result);                
         $serviceid = trim($explode[2]);
 
         $param = array();

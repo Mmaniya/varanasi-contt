@@ -27,7 +27,6 @@ $categoryObj = new Categories;
                             <?php  $statusArr = array('A' => 'checked', 'I' => '');  
 
                             $categoryObj->status = $_POST['status'];   
-
                             $rsCategory = $categoryObj->get_category();
                             if (count($rsCategory) > 0) {
                                 foreach ($rsCategory as $key => $value) { ?>

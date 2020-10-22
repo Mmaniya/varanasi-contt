@@ -278,8 +278,11 @@ $categoryObj = new Categories; ?>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <?php if(!empty($service_name)) { ?> <div class="col-sm-3 col-lg-3">
-                                                        <?php } else { ?> <div class="col-sm-4 col-lg-4"> <?php } ?>
+                                                    <?php if(!empty($service_name)) { ?> 
+                                                        <div class="col-sm-3 col-lg-3">
+                                                        <?php } else { ?> 
+                                                            <div class="col-sm-4 col-lg-4"> 
+                                                                <?php } ?>
                                                             <label class="col-form-label">Service Name</label>
                                                             <div class="input-group input-group-inverse">
                                                                 <input type="text" class="form-control"
@@ -369,7 +372,6 @@ $categoryObj = new Categories; ?>
                                                             <div class="col-sm-2 col-lg-2 newclass">
                                                                 <label class="col-form-label">Delivery Type</label>
                                                                 <div class="input-group input-group-inverse">
-
                                                                     <select class="form-control"
                                                                         name="service_delivery_type">
                                                                         <option value="day" <?php if ($service_delivery_type == 'day') {echo 'selected';}?>>Day</option>
@@ -394,6 +396,7 @@ $categoryObj = new Categories; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
                                         </fieldset>
                                         <h3> Features </h3>
                                         <fieldset>

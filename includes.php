@@ -11,6 +11,7 @@ require_once "classes/DatabaseConnection.php";
 require_once "classes/dB.php";
 require_once "classes/Service.php";
 require_once "classes/Categories.php";
+require_once "classes/Employee.php";
 
 require_once "classes/Table.php";
 require_once "classes/Users.php";

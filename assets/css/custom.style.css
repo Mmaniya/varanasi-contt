@@ -18,6 +18,8 @@
     height: 0;
   }
   
+  .cursor{ cursor:pointer; }
+
   .slider {
     position: absolute;
     cursor: pointer;

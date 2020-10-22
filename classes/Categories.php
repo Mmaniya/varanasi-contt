@@ -23,7 +23,6 @@ class Categories {
     }
 
     public function get_wrk_in_progress_category(){
-        //   $query = "SELECT count(*) as total from ".TBL_SERVICE." Where category_id = ".$this->id; 
           $query ="select id, count(*) total,
             sum(case when status = 'A' then 1 else 0 end) total_active,
             sum(case when status = 'I' then 1 else 0 end) total_inctive
@@ -35,30 +34,37 @@ class Categories {
         $query = "SELECT *  from ".TBL_SERVICE." Where category_id = ".$this->id ." ORDER BY position ASC ";
         return dB::mExecuteSql($query);   
     }
+
     public function category_service_data(){        
          $query = "SELECT *  from ".TBL_SERVICE." Where id = ".$this->id."";
         return dB::sExecuteSql($query);   
     }
+
     public function get_service_category_features(){
           $query = "SELECT *  from ".TBL_SERVICE_FEATURES." Where service_id = ".$this->id ." ORDER BY position ASC";   
         return dB::mExecuteSql($query);  
     }
+
     public function get_service_category_features_by_id(){
         $query = "SELECT *  from ".TBL_SERVICE_FEATURES." Where id = ". $this->id ."";   
       return dB::mExecuteSql($query);  
     }
+
     public function get_service_category_faq(){
           $query = "SELECT *  from ".TBL_SERVICE_FAQ." Where service_id = ".$this->id ." ORDER BY position ASC"; 
         return dB::mExecuteSql($query);  
     }
+
     public function get_service_category_faq_by_id(){
         $query = "SELECT *  from ".TBL_SERVICE_FAQ." Where id = ". $this->id ."";   
       return dB::mExecuteSql($query);  
     }
+    
     public function get_service_category_steps(){
         $query = "SELECT *  from ".TBL_SERVICE_STEPS_LINE_ITEM." Where service_id = ".$this->id ." ORDER BY position ASC"; 
       return dB::mExecuteSql($query);  
     }
+
     public function get_service_category_step_by_id(){
         $query = "SELECT *  from ".TBL_SERVICE_STEPS_LINE_ITEM."  Where id = ". $this->id ."";   
       return dB::mExecuteSql($query);  

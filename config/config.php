@@ -52,8 +52,6 @@ define("ADMIN_JS", BASE_URL . 'assets/js');
 define("ADMIN_IMAGES", BASE_URL . 'assets/images');
 define("ADMIN_ICON", BASE_URL . 'assets/icon');
 
-// Service 
-define("SERVICE_DIR", ADMIN_URL . '/service');
 // Category
 define("CATEGORY_DIR", ADMIN_URL . '/category');
 define("UPLOAD_DIR", CATEGORY_DIR . '/uploads');
@@ -62,6 +60,8 @@ define("SERVICE_IMAGES", UPLOAD_DIR . '/service_img');
 
 //Employee
 define("EMPLOYEE_DIR",  ADMIN_URL . '/employee');
+define("EMPLOYEE_PROFILE",  EMPLOYEE_DIR . '/uploads/profile');
+define("EMPLOYEE_IDPROOF",  EMPLOYEE_DIR . '/uploads/id_proof');
 
 
 $confval = ini_get("upload_max_filesize");
