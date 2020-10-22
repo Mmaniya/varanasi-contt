@@ -17,6 +17,14 @@ class Employee {
         return  dB::sExecuteSql($qry);  
     }
 
+    public function get_employee_consultancy_count(){               
+        $qry ="select id, count(*) total,
+            sum(case when status = 'A' then 1 else 0 end) total_active,
+            sum(case when status = 'I' then 1 else 0 end) total_inctive
+            from ".TBL_CONSULTANCY."";
+        return  dB::sExecuteSql($qry);  
+    }
+
     public function get_employee_role(){  
         if(!empty($this->id)){
             $query = "SELECT *  from ".TBL_EMPLOYEE_ROLE." WHERE id =".$this->id.""; 
@@ -25,8 +33,7 @@ class Employee {
         }
         return dB::mExecuteSql($query);   
     }
-
-    
+  
     public function get_employee_details(){  
 
         if(!empty($this->id)){
@@ -47,6 +54,15 @@ class Employee {
     public function get_employee_refernce(){
         if(!empty($this->id)){
            $query = "SELECT *  from ".TBL_REFERENCE." WHERE id =".$this->id.""; 
+        }
+        return dB::mExecuteSql($query);   
+    }
+    
+    public function get_emp_consultancy(){  
+        if(!empty($this->id)){
+            $query = "SELECT *  from ".TBL_CONSULTANCY." WHERE id =".$this->id.""; 
+        } else { 
+            $query = "SELECT *  from ".TBL_CONSULTANCY." ORDER BY position ASC";         
         }
         return dB::mExecuteSql($query);   
     }

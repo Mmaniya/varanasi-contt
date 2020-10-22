@@ -4,7 +4,7 @@ require ABSPATH . "/includes.php";
 $action = $_POST['act'];
 $employeeObj = new Employee;
 
-// add and update role
+// 1. add and update role
 
 if ($action == 'add_new_role') {
     ob_clean();
@@ -31,7 +31,7 @@ if ($action == 'add_new_role') {
     exit();
 }
 
-// role position
+// 2.role position
 
 if($action =='employee_role_position'){
     ob_clean();
@@ -47,7 +47,7 @@ if($action =='employee_role_position'){
     exit();
 }
 
-// remove role
+// 3.remove role
 
 if($action == 'remove_employee_role'){
     ob_clean();
@@ -59,7 +59,7 @@ if($action == 'remove_employee_role'){
     exit();
 }
 
-// role status chnage
+// 4.role status chnage
 
 if ($action == 'role_status_change') {
     $param['status'] = $_POST['status'];
@@ -70,14 +70,16 @@ if ($action == 'role_status_change') {
     echo json_encode($response);
 }
 
-// Add nEdit Employee
+
+
+
+// 1.Add nEdit Employee
 
 if($action == 'add_edit_employee'){
 
     /* insert and update tbl_refernce */
 
     if($_POST['reached_mms_by'] == 'reference'){
-
      
         
         if (empty(trim($_POST['ref_id']))) {
@@ -129,12 +131,13 @@ if($action == 'add_edit_employee'){
     $param['state']                 = $_POST['state'];
     $param['zipcode']               = $_POST['zipcode'];
     $param['blood_group']           = $_POST['blood_group'];
+    $param['emergency_contact_no']  = $_POST['emergency_contact_no'];
 
     $param['select_degree']         = $_POST['select_degree'];
     $param['course']                = $_POST['course'];
     $param['completed_year']        = $_POST['completed_year'];
     $param['college_name']          = $_POST['college_name'];
-    $param['role_id']                = $_POST['role_id'];
+    $param['role_id']               = $_POST['role_id'];
     $param['relevant_field']        = $_POST['relevant_field'];
     $param['if_experience_years']   = $_POST['if_experience_years'];
 
@@ -228,4 +231,31 @@ if($action == 'add_edit_employee'){
         echo json_encode($response);
     }
 
+}
+
+// 2.remove role
+
+if($action == 'remove_employee'){
+    ob_clean();
+
+    $employeeObj->id = $_POST['id'];
+    $getempid = $employeeObj->get_employee_details();
+
+    $where = array('id' => $getempid[0]->if_reference_or_consultancy_id);
+
+    if($getempid[0]->reached_mms_by == 'reference'){
+
+        $result = Table::deleteData(array('tableName' => TBL_REFERENCE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+    }elseif ($getempid[0]->reached_mms_by == 'consultancy'){
+
+        $result = Table::deleteData(array('tableName' => TBL_CONSULTANCY, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    }
+    array();
+    $where = array('id' => $_POST['id']);
+    $result = Table::deleteData(array('tableName' => TBL_EMPLOYEE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    $response = array("result" => 'Success', "data" => 'Successfully Removed');
+    echo json_encode($response);
+
+    exit();
 }

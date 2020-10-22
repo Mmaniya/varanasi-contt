@@ -23,7 +23,7 @@ $employeeObj = new Employee; ?>
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-block text-center">
-                        <i class="feather icon-battery-charging text-c-lite-green d-block f-40"></i>
+                        <i class="feather icon-airplay text-c-lite-green d-block f-40"></i>
                         <h4 class="m-t-20"><span class="text-c-lite-green">
                         <?php $rolecount = $employeeObj->get_emp_role_count(); echo $rolecount->total_active ?>
                         </span> Active Role</h4>
@@ -35,12 +35,12 @@ $employeeObj = new Employee; ?>
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-block text-center">
-                        <i class="feather icon-battery-charging text-c-lite-green d-block f-40"></i>
-                        <h4 class="m-t-20"><span class="text-c-lite-green">
-                        <?php $rolecount = $employeeObj->get_emp_role_count(); echo $rolecount->total_active ?>
-                        </span> Active Role</h4>
+                        <i class="feather icon-feather text-c-green d-block f-40"></i>
+                        <h4 class="m-t-20"><span class="text-c-green">
+                        <?php $consultancycount = $employeeObj->get_employee_consultancy_count(); echo $consultancycount->total_active ?>
+                        </span> Active Consultancy</h4>
                         <p class="m-b-20"></p>
-                        <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_role()">Add New</button>
+                        <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_consultancy()">view</button>
                     </div>
                 </div>
             </div>
@@ -315,7 +315,24 @@ $employeeObj = new Employee; ?>
                                                 <div class="col-sm-3 col-lg-3">
                                                     <label class="col-form-label">Blood Group</label>
                                                     <div class="input-group input-group-inverse">
-                                                        <input type="text" class="form-control" placeholder="Enter Blood Group" name="blood_group" value="<?php echo $blood_group; ?>">
+                                                        <!-- <input type="text" class="form-control" placeholder="Enter Blood Group" name="blood_group" value="<?php // echo $blood_group; ?>"> -->
+                                                        <select class="form-control" name="blood_group">
+                                                            <option value="">Select Option</option>
+                                                            <option <?php if ($blood_group == 'A+') {echo 'selected';} ?> value="A+">A+</option>
+                                                            <option <?php if ($blood_group == 'A-') {echo 'selected';} ?> value="A-">A-</option>
+                                                            <option <?php if ($blood_group == 'B+') {echo 'selected';} ?> value="B+">B+</option>
+                                                            <option <?php if ($blood_group == 'B-') {echo 'selected';} ?> value="B-">B-</option>
+                                                            <option <?php if ($blood_group == 'O+') {echo 'selected';} ?> value="O+">O+</option>
+                                                            <option <?php if ($blood_group == 'O-') {echo 'selected';} ?> value="O-">O-</option>
+                                                            <option <?php if ($blood_group == 'AB+') {echo 'selected';} ?> value="AB+">AB+</option>
+                                                            <option <?php if ($blood_group == 'AB-') {echo 'selected';} ?> value="AB-">AB-</option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                                <div class="col-sm-3 col-lg-3">
+                                                    <label class="col-form-label">Emergency Contact No</label>
+                                                    <div class="input-group input-group-inverse">
+                                                        <input type="text" class="form-control" placeholder="Emergency Contact No" name="emergency_contact_no" value="<?php echo $emergency_contact_no; ?>">
                                                     </div>
                                                 </div>                                                                                                                             
                                             </div>

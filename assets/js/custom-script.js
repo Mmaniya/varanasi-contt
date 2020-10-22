@@ -25,7 +25,6 @@ $(function () {
         category_table('');
         category_statistics();
     }else if(filename == 'employee/index.php'){
-        // employee_role()
         employee_main_table();
         employee_statistics();
     }
@@ -870,18 +869,20 @@ function selectexperience(){
 
 function reached_by_mms(){
     var reachedby = $('#reachedby').val();
-    alert(reachedby);
     if(reachedby == 'reference'){
+        alert('sdsd')
         $('.reference').show();
-    }else if(reachedby == 'consultancy'){
+    } else if(reachedby == 'consultancy'){
 
-    }else{
+    }else{   
         $('.reference').hide();
     }
+
 }
 
 function reference(){
     var reference = $('#referedby').val();
+
     if(reference == 'Y'){
         $('.employee').show();
         $('.referedothers').hide();
@@ -889,8 +890,8 @@ function reference(){
         $('.employee').hide();
         $('.referedothers').show();
     }else{
-        $('.referedothers').hide();
         $('.employee').hide();
+        $('.referedothers').hide();
     }
 }
 
@@ -1025,8 +1026,9 @@ function statusRole(id) {
     });
 }
 
-// Employee add
+// Employee  table
 function employee_main_table(){
+    hide_emp_details();
     param = { 'act': 'employee_main_table'};
     $('.preloader').show();
     ajax({
@@ -1041,7 +1043,6 @@ function employee_main_table(){
     });
 }
 
-// employee form
 function add_edit_employee(id){
     $('.preloader').show();
     $('.emp_form').show();
@@ -1054,6 +1055,61 @@ function add_edit_employee(id){
             $('.preloader').hide();
             $('.ajaxResponce').hide();
             $('#employee_details').html(data);
+        }
+    });
+}
+
+function delete_employee(id){
+    param = { 'act': 'remove_employee', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this employee?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "employee_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        employee_main_table();
+                        employee_statistics();
+                        hide_employee_form();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
+
+
+
+//  employee consultancy table
+function employee_consultancy() {
+    hide_emp_details();
+    param = { 'act': 'employee_consultancy_table'};
+    $('.preloader').show();
+    ajax({
+        a: 'employee_table',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#employee_table').show();
+            $('#employee_table').html(data);
         }
     });
 }
