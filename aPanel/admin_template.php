@@ -185,6 +185,12 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <span class="pcoded-mtext">Employees</span>
                                     </a>
                                 </li> 
+                                <li class="">
+                                    <a href="<?php echo CLIENTS_DIR ?>/index.php">
+                                    <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-mtext">Clients</span>
+                                    </a>
+                                </li>
                             </ul>                           
                         </div>
                     </nav>

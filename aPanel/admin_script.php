@@ -14,6 +14,11 @@
     <!-- jquery sortable js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/Sortable/Sortable.js"></script>
 
+      <!-- Masking js -->
+     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/form-masking/inputmask.js"></script>
+     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/form-masking/jquery.inputmask.js"></script>
+     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/form-masking/autoNumeric.js"></script>
+
     <script src="<?php echo ADMIN_JS ?>/tinymce/js/tinymce.min.js"></script>
 
     <!-- ALERT BOX -->

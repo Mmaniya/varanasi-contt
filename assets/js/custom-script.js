@@ -867,26 +867,31 @@ function selectexperience(){
     }
 }
 
-function reached_by_mms(){
-    var reachedby = $('#reachedby').val();
+function reached_by_mms(reachedby){
     if(reachedby == 'reference'){
-        alert('sdsd')
         $('.reference').show();
+        $('.consultancy').hide();
+
     } else if(reachedby == 'consultancy'){
 
-    }else{   
+        $('.consultancy').show();
         $('.reference').hide();
+        $('.employee').hide();
+        $('.referedothers').hide();
+    }else{   
+        $('.consultancy').hide();
+        $('.reference').hide();
+        $('.employee').hide();
+        $('.referedothers').hide();
     }
-
 }
 
-function reference(){
-    var reference = $('#referedby').val();
+function reference(referedby){
 
-    if(reference == 'Y'){
+    if(referedby == 'Y'){
         $('.employee').show();
         $('.referedothers').hide();
-    }else if(reference == 'N'){
+    }else if(referedby == 'N'){
         $('.employee').hide();
         $('.referedothers').show();
     }else{
@@ -905,12 +910,14 @@ function hide_emp_details(){
 }
 
 function employee_statistics() {
+    $('.preloader').show();
     param = { 'act': 'employee_statistics' };
     ajax({
         a: 'employee_form',
         b: $.param(param),
         c: function () { },
         d: function (data) {
+            $('.preloader').hide();
             $('#employee_statistics').html(data);
         }
     });
@@ -918,9 +925,10 @@ function employee_statistics() {
 
 //  employee Role table
 function employee_role() {
-    hide_emp_details();
-    param = { 'act': 'employee_role_table'};
     $('.preloader').show();
+    hide_emp_details();
+    hide_employee_form();
+    param = { 'act': 'employee_role_table'};
     ajax({
         a: 'employee_table',
         b: $.param(param),
@@ -1028,9 +1036,10 @@ function statusRole(id) {
 
 // Employee  table
 function employee_main_table(){
-    hide_emp_details();
-    param = { 'act': 'employee_main_table'};
     $('.preloader').show();
+    hide_emp_details();
+    hide_employee_form();
+    param = { 'act': 'employee_main_table'};    
     ajax({
         a: 'employee_table',
         b: $.param(param),
@@ -1095,25 +1104,64 @@ function delete_employee(id){
     });
 }
 
-
-
-//  employee consultancy table
-function employee_consultancy() {
-    hide_emp_details();
-    param = { 'act': 'employee_consultancy_table'};
-    $('.preloader').show();
-    ajax({
-        a: 'employee_table',
-        b: $.param(param),
-        c: function () { },
-        d: function (data) {
-            $('.preloader').hide();
-            $('#employee_table').show();
-            $('#employee_table').html(data);
+function statusEmployee(id) {
+    var ischecked = $('.status_update_' + id).is(':checked');
+    if (!ischecked) { status = 'I'; } else { status = 'A'; }
+    param = { 'act': 'employee_status_change', 'status': status, 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to change status?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "employee_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        employee_main_table();
+                        employee_statistics();
+                        hide_employee_form();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        } else {
+            if (ischecked) { $('.status_update_' + id).prop('checked', false); } else {
+                $('.status_update_' + id).prop('checked', true);
+            }
         }
     });
 }
 
+function view_employee(id){
+    hide_emp_details();
+    $('.preloader').show();
+    $('.emp_form').show();
+    param = { 'act': 'view_employee', 'emp_id': id };
+    ajax({
+        a: 'employee_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#employee_form').show();
+            $('#employee_form').html(data);
+        }
+    });
+}
 
 /**************************
 *   End  Employee         *

@@ -16,7 +16,8 @@ $employeeObj = new Employee; ?>
                         <?php $empcount = $employeeObj->get_employee_count(); echo $empcount->total_active ?>
                         </span> Active Employee</h4>
                         <p class="m-b-20"></p>
-                        <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_main_table()">view</button>
+                        <label class="label label-inverse-danger cursor" onclick="employee_main_table()">view</label>
+                        <!-- <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_main_table()">view</button> -->
                     </div>
                 </div>
             </div>
@@ -28,84 +29,23 @@ $employeeObj = new Employee; ?>
                         <?php $rolecount = $employeeObj->get_emp_role_count(); echo $rolecount->total_active ?>
                         </span> Active Role</h4>
                         <p class="m-b-20"></p>
-                        <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_role()">view</button>
+                        <label class="label label-inverse-info cursor" onclick="employee_role()">view</label>
+                        <!-- <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_role()">view</button> -->
                     </div>
                 </div>
             </div>      
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-block text-center">
-                        <i class="feather icon-feather text-c-green d-block f-40"></i>
+                        <i class="feather icon-plus text-c-green d-block f-40"></i>
                         <h4 class="m-t-20"><span class="text-c-green">
-                        <?php $consultancycount = $employeeObj->get_employee_consultancy_count(); echo $consultancycount->total_active ?>
-                        </span> Active Consultancy</h4>
+                        <?php //$consultancycount = $employeeObj->get_employee_consultancy_count(); echo $consultancycount->total_active ?>
+                        </span> Add Employee</h4>
                         <p class="m-b-20"></p>
-                        <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_consultancy()">view</button>
+                        <label class="label label-inverse-success cursor" onclick="add_edit_employee('')">Add</label>
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-xl-3 col-md-6 cursor" onclick="employee_role()">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="row align-items-center m-l-0">
-                            <div class="col-auto">
-                                <i class="feather icon-battery-charging f-30 text-c-blue"></i>
-                            </div>
-                            <div class="col-auto">
-                                <h6 class="text-muted m-b-10">Add New Role</h6>
-                                <h2 class="m-b-0">
-                                <?php $rolecount = $employeeObj->get_emp_role_count(); echo $rolecount->total_active ?>
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 cursor" onclick="employee_main_table()">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="row align-items-center m-l-0">
-                            <div class="col-auto">
-                                <i class="feather icon-users f-30 text-c-pink"></i>
-                            </div>
-                            <div class="col-auto">
-                                <h6 class="text-muted m-b-10">Add Empoyee</h6>
-                                <h2 class="m-b-0">5984</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="row align-items-center m-l-0">
-                            <div class="col-auto">
-                                <i class="feather icon-book f-30 text-c-lite-green"></i>
-                            </div>
-                            <div class="col-auto">
-                                <h6 class="text-muted m-b-10">Tickets Answered</h6>
-                                <h2 class="m-b-0">379</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="row align-items-center m-l-0">
-                            <div class="col-auto">
-                                <i class="feather icon-feather f-30 text-c-green"></i>
-                            </div>
-                            <div class="col-auto">
-                                <h6 class="text-muted m-b-10">Projects Launched</h6>
-                                <h2 class="m-b-0">205</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div> 
 <?php } ?>
@@ -279,7 +219,7 @@ $employeeObj = new Employee; ?>
                                                 <div class="col-sm-3 col-lg-3">
                                                     <label class="col-form-label">Mobile</label>
                                                     <div class="input-group input-group-inverse">
-                                                        <input type="tel" class="form-control" placeholder="Enter Mobile" name="mobile" value="<?php echo $mobile; ?>">
+                                                        <input type="text" class="form-control mob_no"  data-mask="999-999-9999" placeholder="Enter Mobile" name="mobile" value="<?php echo $mobile; ?>">                                                
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 col-lg-3">
@@ -309,7 +249,7 @@ $employeeObj = new Employee; ?>
                                                 <div class="col-sm-3 col-lg-3">
                                                     <label class="col-form-label">Zip Code</label>
                                                     <div class="input-group input-group-inverse">
-                                                        <input type="text" class="form-control" placeholder="Enter Zipcode" name="zipcode" value="<?php echo $zipcode; ?>">
+                                                        <input type="text" class="form-control pincode" data-mask="999999" placeholder="Enter Zipcode" name="zipcode" value="<?php echo $zipcode; ?>">
                                                     </div>
                                                 </div>  
                                                 <div class="col-sm-3 col-lg-3">
@@ -332,7 +272,7 @@ $employeeObj = new Employee; ?>
                                                 <div class="col-sm-3 col-lg-3">
                                                     <label class="col-form-label">Emergency Contact No</label>
                                                     <div class="input-group input-group-inverse">
-                                                        <input type="text" class="form-control" placeholder="Emergency Contact No" name="emergency_contact_no" value="<?php echo $emergency_contact_no; ?>">
+                                                        <input type="text" class="form-control mob_no"  data-mask="999-999-9999" placeholder="Emergency Contact No" name="emergency_contact_no" value="<?php echo $emergency_contact_no; ?>">
                                                     </div>
                                                 </div>                                                                                                                             
                                             </div>
@@ -447,7 +387,7 @@ $employeeObj = new Employee; ?>
                                                 <div class="col-sm-3 col-lg-3">
                                                     <label class="col-form-label">Reached MMS By</label>
                                                     <div class="input-group input-group-inverse">
-                                                        <select class="form-control" name="reached_mms_by" onchange="reached_by_mms()" id="reachedby">
+                                                        <select class="form-control" name="reached_mms_by" onchange="reached_by_mms(this.value)" >
                                                             <option value="">Select Option</option>
                                                             <option <?php if ($reached_mms_by == 'call') { echo 'selected';} ?> value="call">Call</option>
                                                             <option <?php if ($reached_mms_by == 'reference') { echo 'selected';} ?> value="reference">Reference</option>
@@ -455,25 +395,25 @@ $employeeObj = new Employee; ?>
                                                             <option <?php if ($reached_mms_by == 'walkin') { echo 'selected';} ?> value="walkin">Walkin</option>
                                                             <option <?php if ($reached_mms_by == 'others') { echo 'selected';} ?> value="others">Others</option>
                                                         </select>
-                                                    </div>  
+                                                    </div> 
+                                                    <script>reached_by_mms('<?php echo $reached_mms_by ?>');</script> 
                                                 </div>
                                     
-                                                    <div class="col-sm-3 col-lg-3 reference" <?php if ($reached_mms_by == 'reference'){ ?> style="display:block" <?php }else{ ?> style="display:none" <?php } ?>>
-
+                                                    <div class="col-sm-3 col-lg-3 reference"  style="display:none" >
                                                     <?php if ($reached_mms_by == 'reference'){                                                     
-                                                         $employeeObj->id = $if_reference_or_consultancy_id;
+                                                         $employeeObj->id = $id;
                                                          $rsltemppack = $employeeObj->get_employee_refernce();  ?> 
-                                                    <input type="hidden" class="form-control"  name="ref_id" value="<?php echo $if_reference_or_consultancy_id; ?>">
                                                     <?php } ?>
 
                                                     <label class="col-form-label">Referred  By</label>
-                                                    <select class="form-control" name="working_mms" onchange="reference()" id="referedby">
+                                                    <select class="form-control" name="working_mms" onchange="reference(this.value)">
                                                         <option value="">Select Option</option>
                                                         <option <?php if ($rsltemppack[0]->working_mms == 'Y') { echo 'selected'; } ?> value="Y">Employee</option>
                                                         <option <?php if ($rsltemppack[0]->working_mms == 'N') { echo 'selected'; } ?> value="N">Others</option>                                                           
                                                     </select>
+                                                    <script>reference('<?php echo $rsltemppack[0]->working_mms ?>');</script>
                                                 </div>
-                                                    <div class="col-sm-3 col-lg-3 employee" <?php if ($rsltemppack[0]->working_mms == 'Y') { ?> style="display:block" <?php }else{ ?> style="display:none" <?php } ?>>
+                                                <div class="col-sm-3 col-lg-3 employee"  style="display:none">
                                                     <label class="col-form-label">Select Employee</label>
                                                     <select class="form-control" name="if_yes_member_id">
                                                         <option value="">Select Employee</option>
@@ -485,16 +425,40 @@ $employeeObj = new Employee; ?>
                                                                 <?php } } ?>
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-3 col-lg-3 referedothers"  <?php if ($rsltemppack[0]->working_mms == 'N') { ?> style="display:block" <?php }else{ ?> style="display:none" <?php } ?>>
+                                                <div class="col-sm-3 col-lg-3 referedothers" style="display:none" >
                                                     <label class="col-form-label"> Reference User Name</label>
                                                     <div class="input-group input-group-inverse">
                                                         <input type="text" class="form-control" placeholder="Reference User Name" name="username" value="<?php echo $rsltemppack[0]->username; ?>">
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3 col-lg-3 referedothers"  <?php if ($rsltemppack[0]->working_mms == 'N') { ?> style="display:block" <?php }else{ ?> style="display:none" <?php } ?>>
-                                                    <label class="col-form-label"> Reference User Mobile</label>
+                                                <div class="col-sm-3 col-lg-3 referedothers" style="display:none" >
+                                                    <label class="col-form-label">Reference User Mobile</label>
                                                     <div class="input-group input-group-inverse">
                                                         <input type="tel" class="form-control" placeholder="Reference User Mobile" name="usermobile" value="<?php echo $rsltemppack[0]->usermobile; ?>">
+                                                    </div>
+                                                </div>
+                                                <?php  if ($reached_mms_by == 'consultancy'){  
+                                                    $employeeObj->id = $id;
+                                                    $rsltconsultancy = $employeeObj->get_emp_consultancy(); 
+                                                ?>
+                                                <?php } ?>
+
+                                                <div class="col-sm-3 col-lg-3 consultancy" style="display:none" >
+                                                    <label class="col-form-label">Contact Person</label>
+                                                    <div class="input-group input-group-inverse">
+                                                        <input type="text" class="form-control" placeholder="Enter Contact Person Name" name="contact_person" value="<?php echo $rsltconsultancy->contact_person; ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-lg-3 consultancy" style="display:none" >
+                                                    <label class="col-form-label">Contact Number</label>
+                                                    <div class="input-group input-group-inverse">
+                                                        <input type="tel" class="form-control" placeholder="Enter Contact Number" name="contact_mobile" value="<?php echo $rsltconsultancy->contact_mobile; ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-lg-3 consultancy" style="display:none" >
+                                                    <label class="col-form-label">Charges Collected</label>
+                                                    <div class="input-group input-group-inverse">
+                                                        <input type="tel" class="form-control" placeholder="Charges Collected" name="charges_collected" value="<?php echo $rsltconsultancy->charges_collected; ?>">
                                                     </div>
                                                 </div>
                                             </div>                                     
@@ -514,7 +478,7 @@ $employeeObj = new Employee; ?>
                                                 <div class="col-sm-3 col-lg-3">
                                                     <label class="col-form-label">Monthly Package</label>
                                                     <div class="input-group input-group-inverse">
-                                                        <input type="number" class="form-control" placeholder="Enter Monthly Package" name="monthly_package" value="<?php echo $monthly_package; ?>">
+                                                        <input type="text" class="form-control autonumber" data-a-sign="Rs. " placeholder="Enter Monthly Package" name="monthly_package" value="<?php echo $monthly_package; ?>">
                                                         <span class="input-group-addon">₹</span>
                                                     </div>
                                                 </div>
@@ -529,7 +493,7 @@ $employeeObj = new Employee; ?>
                                                 <div class="col-sm-3 col-lg-3">
                                                     <label class="col-form-label">Account Number</label>
                                                     <div class="input-group input-group-inverse">
-                                                        <input type="text" class="form-control" placeholder="Enter Ifsc Code" name="account_number" value="<?php echo $account_number; ?>">
+                                                        <input type="text" class="form-control" placeholder="Enter Account Number" name="account_number" value="<?php echo $account_number; ?>">
                                                     </div>
                                                 </div>
 
@@ -565,6 +529,8 @@ $employeeObj = new Employee; ?>
         </div>
     </div>
     <script src="<?php echo ADMIN_JS ?>/tinymce/wysiwyg-editor.js"></script>
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/form-masking/form-mask.js"></script>
+
     <script>
         $("#employee_forms").steps({
             headerTag: "h3",
@@ -611,3 +577,107 @@ $employeeObj = new Employee; ?>
     </script>
 
 <?php } ?>
+
+<?php if($action == 'view_employee'){ 
+    $employeeObj->id = $_POST['emp_id'];
+    $rsEmployee = $employeeObj->get_employee_details();  
+    foreach ($rsEmployee[0] as $K => $V) {
+        $$K = $V;
+    } ?>
+    <div class="card rounded-card user-card">
+        <div class="card-header bg-c-lite-green">
+            <h5 class="card-header-text">View Employee Profile</h5>
+            <a href="javascript:void(0);" onclick="hide_employee_form()" style="font-size:16px;" class="right-float label label-danger"><i class="feather icon-x">Cancel</i></a>
+        </div>
+        <div class="card-block">
+            <div class="img-hover">
+                <img class="img-radius img-100" src="<?php echo EMPLOYEE_PROFILE ?>/<?php echo $employee_img ?>" alt="round-img">                                                    
+            </div>
+            <div class="user-content">
+                <h4 class=""><?php echo $first_name .'&nbsp;'. $last_name ?></h4>
+                <h5 class="m-b-0 text-muted">
+                <?php 
+                    $employeeObj->id = $id;
+                    $rsEmployeerole = $employeeObj->get_employee_role(); 
+                    echo $rsEmployeerole[0]->role_name;                    
+                ?></h5>
+
+                <div class="card-block">
+                    <div class="view-info">
+                        <div class="general-info">             
+                            <div class="table-responsive">
+                                <table class="table m-0">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Employee Id</th>
+                                            <td><?php echo $emp_code ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Joining Date</th>
+                                            <td><?php echo $joining_date ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Experience</th>
+                                            <td><?php  if($relevant_field == 'E'){ ?> <?php echo $if_experience_years ?> Experience <?php }else if ($relevant_field == 'F'){ ?> Fresher <?php } ?> </td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2"><h4>Presonal Information</h4></th>
+                                        </tr>  
+                                        <tr>
+                                            <th scope="row">Gender</th>
+                                            <td><?php  if($gender == 'M'){ ?> Male <?php }else if ($gender == 'F'){ ?> Female <?php } ?> </td>
+                                        </tr>                               
+                                        <tr>
+                                            <th scope="row">Mobile No</th>
+                                            <td><?php echo $mobile; ?></td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">Personal Email	</th>
+                                            <td><?php echo $personal_email; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Address</th>
+                                            <td><?php echo $address; ?>,<?php echo $city; ?></td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">Emergency Contact No</th>
+                                            <td><?php echo $emergency_contact_no; ?></td>
+                                        </tr>        
+                                        <tr>
+                                            <th colspan="2"><h4>Account Information</h4></th>
+                                        </tr>   
+                                        <?php 
+                                            $employeeObj->id = $id;
+                                            $rsEmpackage = $employeeObj->get_employee_package();
+                                        ?>                         
+                                        <tr>
+                                            <th scope="row">Package</th>
+                                            <td><?php echo $rsEmpackage[0]->monthly_package; ?></td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">Account Number</th>
+                                            <td><?php echo $rsEmpackage[0]->account_number; ?></td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">Account Name</th>
+                                            <td><?php echo $rsEmpackage[0]->account_name; ?></td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">IFSC Code</th>
+                                            <td><?php echo $rsEmpackage[0]->ifsc_code; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">UPI Id</th>
+                                            <td><?php echo $rsEmpackage[0]->upi_id; ?></td>
+                                        </tr>  
+                                    </tbody>
+                                </table>
+                            </div>                   
+                        </div>      
+                    </div>    
+                </div>
+
+            </div>
+        </div>
+    </div>
+<?php }?>

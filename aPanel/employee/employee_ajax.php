@@ -73,51 +73,10 @@ if ($action == 'role_status_change') {
 
 
 
-// 1.Add nEdit Employee
+// 1.Add and Edit Employee
 
 if($action == 'add_edit_employee'){
 
-    /* insert and update tbl_refernce */
-
-    if($_POST['reached_mms_by'] == 'reference'){
-     
-        
-        if (empty(trim($_POST['ref_id']))) {
-
-            $param['username']          = $_POST['username'];
-            $param['usermobile']        = $_POST['usermobile'];
-            $param['working_mms']       = $_POST['working_mms'];
-            $param['if_yes_member_id']  = $_POST['if_yes_member_id'];
-         
-            $param['added_by'] = $_POST['admin_id'];
-            $result = Table::insertData(array('tableName' => TBL_REFERENCE, 'fields' => $param, 'showSql' => 'N'));
-            $explode = explode('::', $result);                
-            $referenceid = trim($explode[2]);  
-
-            $param = array();
-            $param['if_reference_or_consultancy_id'] = $referenceid;
-
-        }else{
-
-            if($_POST['working_mms'] == 'Y'){
-                $param['if_yes_member_id']  = $_POST['if_yes_member_id'];
-                $param['username']          = '';
-                $param['usermobile']        = '';
-            }else{
-                $param['if_yes_member_id']  = '';
-                $param['username']          = $_POST['username'];
-                $param['usermobile']        = $_POST['usermobile'];
-            }
-            
-            $param['working_mms']       = $_POST['working_mms'];
-            $param['updated_by'] = $_POST['admin_id'];
-            $where = array('id' => $_POST['ref_id']);
-            $result = Table::updateData(array('tableName' => TBL_REFERENCE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
-
-            $param = array();
-            $param['if_reference_or_consultancy_id'] = $_POST['ref_id'];
-        }
-    }
 
     /* employee table param */
 
@@ -199,9 +158,28 @@ if($action == 'add_edit_employee'){
         $param['ifsc_code']             = $_POST['ifsc_code'];
         $param['upi_id']                = $_POST['upi_id'];
         $param['added_by']              = $_POST['admin_id'];
+        $result = Table::insertData(array('tableName' => TBL_EMPLOYEE_PACKAGE, 'fields' => $param, 'showSql' => 'N'));        
 
-        $result = Table::insertData(array('tableName' => TBL_EMPLOYEE_PACKAGE, 'fields' => $param, 'showSql' => 'N'));
-        $explode = explode('::', $result);
+        /* insert tbl_refernce */
+
+        $param = array();
+        $param['employee_id']       = $employeeid;
+        $param['username']          = $_POST['username'];
+        $param['usermobile']        = $_POST['usermobile'];
+        $param['working_mms']       = $_POST['working_mms'];
+        $param['if_yes_member_id']  = $_POST['if_yes_member_id'];        
+        $param['added_by'] = $_POST['admin_id'];
+        $result = Table::insertData(array('tableName' => TBL_REFERENCE, 'fields' => $param, 'showSql' => 'N'));
+
+        /* insert consultancy */
+
+        $param = array();
+        $param['employee_id']         = $employeeid;
+        $param['contact_person']      = $_POST['contact_person'];
+        $param['contact_mobile']      = $_POST['contact_mobile'];
+        $param['charges_collected']   = $_POST['charges_collected'];    
+        $param['added_by'] = $_POST['admin_id'];
+        $result = Table::insertData(array('tableName' => TBL_CONSULTANCY, 'fields' => $param, 'showSql' => 'N'));
 
         $response = array("result" => 'Success', "data" => 'Added Successfully');
         echo json_encode($response);
@@ -227,13 +205,72 @@ if($action == 'add_edit_employee'){
         $param['updated_by'] = $_POST['admin_id'];
         $where = array('employee_id' => $_POST['id']);
         $result = Table::updateData(array('tableName' => TBL_EMPLOYEE_PACKAGE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));        
+
+        $employeeObj->id = $_POST['id'];
+        $rsltempref = $employeeObj->get_employee_refernce();  
+
+        if(count($rsltempref)>0){
+            $param = array();
+            if($_POST['working_mms'] == 'Y'){
+                $param['if_yes_member_id']  = $_POST['if_yes_member_id'];
+                $param['username']          = '';
+                $param['usermobile']        = '';
+            }else{
+                $param['if_yes_member_id']  = '';
+                $param['username']          = $_POST['username'];
+                $param['usermobile']        = $_POST['usermobile'];
+            }
+
+            $param['working_mms']= $_POST['working_mms'];
+            $param['updated_by'] = $_POST['admin_id'];
+            $where = array('id' => $_POST['id']);
+            $result = Table::updateData(array('tableName' => TBL_REFERENCE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+        }else{
+
+            $param = array();
+            $param['employee_id']       = $_POST['id'];
+            $param['username']          = $_POST['username'];
+            $param['usermobile']        = $_POST['usermobile'];
+            $param['working_mms']       = $_POST['working_mms'];
+            $param['if_yes_member_id']  = $_POST['if_yes_member_id'];        
+            $param['added_by']          = $_POST['admin_id'];
+            $result = Table::insertData(array('tableName' => TBL_REFERENCE, 'fields' => $param, 'showSql' => 'N'));
+    
+        }
+
+        $employeeObj->id = $_POST['id'];
+        $rsltempcon = $employeeObj->get_emp_consultancy();  
+
+        if(count($rsltempcon)>0){
+
+        $param = array();
+        $param['contact_person']       = $_POST['contact_person'];
+        $param['contact_mobile']       = $_POST['contact_mobile'];
+        $param['charges_collected']    = $_POST['charges_collected'];
+        $param['updated_by'] = $_POST['admin_id'];
+        $where = array('id' => $_POST['id']);
+        $result = Table::updateData(array('tableName' => TBL_CONSULTANCY, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
+        }else{
+
+        $param = array();
+        $param['employee_id']       = $employeeid;
+        $param['contact_person']      = $_POST['contact_person'];
+        $param['contact_mobile']      = $_POST['contact_mobile'];
+        $param['charges_collected']   = $_POST['charges_collected'];    
+        $param['added_by'] = $_POST['admin_id'];
+        $result = Table::insertData(array('tableName' => TBL_CONSULTANCY, 'fields' => $param, 'showSql' => 'N'));
+
+        }
+
         $response = array("result" => 'Success', "data" => 'Updated Successfully');
         echo json_encode($response);
     }
 
 }
 
-// 2.remove role
+// 2.Employee role
 
 if($action == 'remove_employee'){
     ob_clean();
@@ -251,6 +288,10 @@ if($action == 'remove_employee'){
 
         $result = Table::deleteData(array('tableName' => TBL_CONSULTANCY, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
     }
+
+    $where = array('employee_id' => $getempid[0]->if_reference_or_consultancy_id);
+    $result = Table::deleteData(array('tableName' => TBL_EMPLOYEE_PACKAGE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+
     array();
     $where = array('id' => $_POST['id']);
     $result = Table::deleteData(array('tableName' => TBL_EMPLOYEE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
@@ -258,4 +299,31 @@ if($action == 'remove_employee'){
     echo json_encode($response);
 
     exit();
+}
+
+// 3.Employee position
+
+if($action =='employee_position'){
+    ob_clean();
+    if (count($_POST['emp_id']) > 0) {
+        foreach ($_POST['emp_id'] as $key => $val) {
+            $param['position'] = $key + 1;
+            $where = array('id' => $val);
+            $result = Table::updateData(array('tableName' => TBL_EMPLOYEE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        }
+        $response = array("result" => 'Success', "data" => 'Updated Successfully');
+        echo json_encode($response);
+    }
+    exit();
+}
+
+// 4.role status chnage
+
+if ($action == 'employee_status_change') {
+    $param['status'] = $_POST['status'];
+    $param['updated_by'] = $_POST['admin_id'];
+    $where = array('id' => $_POST['id']);
+    $result = Table::updateData(array('tableName' => TBL_EMPLOYEE, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+    $response = array("result" => 'Success', "data" => 'Updated Successfully');
+    echo json_encode($response);
 }
