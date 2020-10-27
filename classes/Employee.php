@@ -57,6 +57,4 @@ class Employee {
         return dB::sExecuteSql($query);   
     }
 
-    
-
 } ?>

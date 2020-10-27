@@ -27,6 +27,9 @@ $(function () {
     }else if(filename == 'employee/index.php'){
         employee_main_table();
         employee_statistics();
+    }else if(filename == 'clients/index.php'){
+        clients_main_table();
+        clients_statistics();
     }
 
 });
@@ -1157,6 +1160,7 @@ function view_employee(id){
         c: function () { },
         d: function (data) {
             $('.preloader').hide();
+            $('#employee_details').hide();
             $('#employee_form').show();
             $('#employee_form').html(data);
         }
@@ -1165,5 +1169,106 @@ function view_employee(id){
 
 /**************************
 *   End  Employee         *
+**************************/
+
+
+/**************************
+*     Cleints             *
+**************************/
+
+function hide_clients_form() {
+    $('#clients_form').hide();
+}
+
+function hide_clients_details(){
+    $('.ajaxResponce').show();
+    $('.clients_form').hide();
+}
+
+function clients_statistics() {
+    $('.preloader').show();
+    param = { 'act': 'clients_statistics' };
+    ajax({
+        a: 'clients_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#clients_statistics').html(data);
+        }
+    });
+}
+
+function clients_main_table(){
+    $('.preloader').show();
+    hide_clients_details();
+    hide_clients_form();
+    param = { 'act': 'clients_main_table'};    
+    ajax({
+        a: 'clients_table',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('#clients_table').show();
+            $('#clients_table').html(data);
+        }
+    });
+}
+
+function add_edit_clients(id){
+    $('.preloader').show();
+    $('.clients_form').show();
+    param = { 'act': 'add_edit_clients', 'clients_id': id };
+    ajax({
+        a: 'clients_form',
+        b: $.param(param),
+        c: function () { },
+        d: function (data) {
+            $('.preloader').hide();
+            $('.ajaxResponce').hide();
+            $('#clients_details').html(data);
+        }
+    });
+}
+
+function delete_clients(id){
+    param = { 'act': 'remove_clients', 'id': id };
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this clients?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then((result) => {
+        if (result.value) {
+            $('.preloader').show();
+            ajax({
+                a: "clients_ajax",
+                b: param,
+                c: function () { },
+                d: function (data) {
+                    $('.preloader').hide();
+                    var records = JSON.parse(data);
+                    if (records.result == 'Success') {
+                        hide_clients_details();
+                        clients_main_table();
+                        clients_statistics();
+                        notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    } else {
+                        notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
+                    }
+                }
+            });
+        }
+    });
+}
+
+/**************************
+*   End  Cleints          *
 **************************/
 

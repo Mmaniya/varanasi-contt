@@ -146,10 +146,8 @@ $categoryObj = new Categories; ?>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-sm-12 col-lg-12">
-                    <input type="submit" class="btn btn-grd-primary" value="Submit">
-                </div>
+            <div class="row grid-layout">
+                    <input type="submit" class="btn btn-grd-primary ml-md-auto" value="Submit">
             </div>
         </form>
     </div>
@@ -268,7 +266,7 @@ $categoryObj = new Categories; ?>
                                                             <select class="form-control" name="category_id"
                                                                 id="category_id">
                                                                 <option value="">Select Category</option>
-                                                                <?php $rsCategory = Service::get_service_category();
+                                                                <?php $rsCategory = Categories::get_service_category();
                                                                         if (count($rsCategory) > 0) {
                                                                             foreach ($rsCategory as $key => $value) { ?>
                                                                 <option value="<?php echo $value->id ?>"

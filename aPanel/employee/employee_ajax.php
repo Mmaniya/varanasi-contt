@@ -81,7 +81,7 @@ if($action == 'add_edit_employee'){
     /* employee table param */
 
     $param['first_name']            = $_POST['first_name'];
-    $param['last_name']             = check_input($_POST['last_name']);
+    $param['last_name']             = $_POST['last_name'];
     $param['gender']                = $_POST['gender'];
     $param['mobile']                = $_POST['mobile'];
     $param['personal_email']        = $_POST['personal_email'];
@@ -270,7 +270,7 @@ if($action == 'add_edit_employee'){
 
 }
 
-// 2.Employee role
+// 2.Employee role remove
 
 if($action == 'remove_employee'){
     ob_clean();

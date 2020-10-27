@@ -24,48 +24,49 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="#">
-    <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="keywords"
+        content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="#">
     <?php include 'admin_style.php';?>
 </head>
 
 <body>
-<div class="theme-loader">
-    <div class="ball-scale">
-        <div class='contain'>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
-            </div>
-            <div class="ring">
-                <div class="frame"></div>
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class='contain'>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
@@ -78,7 +79,8 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                             <i class="feather icon-menu"></i>
                         </a>
                         <a href="<?php ADMIN_URL ?>/dashboard.php">
-                            <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190" alt="Theme-Logo">
+                            <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190"
+                                alt="Theme-Logo">
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>
@@ -87,17 +89,8 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
 
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
-                            <!-- <li class="header-search">
-                                <div class="main-search morphsearch-search">
-                                    <div class="input-group">
-                                        <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
-                                        <input type="text" class="form-control">
-                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
-                                    </div>
-                                </div>
-                            </li> -->
                             <li>
-                                <a href="#!" onclick="javascript:toggleFullScreen()">
+                                <a href="javascript:void(0);" onclick="javascript:toggleFullScreen()">
                                     <i class="feather icon-maximize full-screen"></i>
                                 </a>
                             </li>
@@ -108,7 +101,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
                                         <span class="badge bg-c-pink">5</span>
-                                    </div>                          
+                                    </div>
                                 </div>
                             </li>
                             <li class="header-notification">
@@ -125,27 +118,8 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <span><?php echo $_SESSION['username'] ?></span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
-                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <!-- <li>
-                                            <a href="#!">
-                                                <i class="feather icon-settings"></i> Settings
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="user-profile.htm">
-                                                <i class="feather icon-user"></i> Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="email-inbox.htm">
-                                                <i class="feather icon-mail"></i> My Messages
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="auth-lock-screen.htm">
-                                                <i class="feather icon-lock"></i> Lock Screen
-                                            </a>
-                                        </li> -->
+                                    <ul class="show-notification profile-notification dropdown-menu"
+                                        data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
                                             <a href="<?php echo ADMIN_URL ?>/logout.php">
                                                 <i class="feather icon-log-out"></i> Logout
@@ -167,7 +141,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="pcoded-navigatio-lavel">Navigation</div>
                             <ul class="pcoded-item pcoded-left-item">
-                            <li class="">
+                                <li class="">
                                     <a href="<?php echo ADMIN_URL ?>/dashboard.php">
                                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Dashboard</span>
@@ -177,21 +151,21 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     <a href="<?php echo CATEGORY_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="feather icon-box"></i></span>
                                         <span class="pcoded-mtext">Categories & Services</span>
-                                    </a>                             
+                                    </a>
                                 </li>
                                 <li class="">
                                     <a href="<?php echo EMPLOYEE_DIR ?>/index.php">
-                                    <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                                        <span class="pcoded-micon"><i class="feather icon-user"></i></span>
                                         <span class="pcoded-mtext">Employees</span>
                                     </a>
-                                </li> 
+                                </li>
                                 <li class="">
                                     <a href="<?php echo CLIENTS_DIR ?>/index.php">
-                                    <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                                         <span class="pcoded-mtext">Clients</span>
                                     </a>
                                 </li>
-                            </ul>                           
+                            </ul>
                         </div>
                     </nav>
                     <div class="pcoded-content">
@@ -213,7 +187,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
         </div>
     </div>
     <?php include 'admin_script.php';?>
-     <div class="preloader" style="display:none;">
+    <div class="preloader" style="display:none;">
         <div id="loader"></div>
     </div>
 </body>
