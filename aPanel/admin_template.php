@@ -159,10 +159,16 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <span class="pcoded-mtext">Employees</span>
                                     </a>
                                 </li>
-                                <li class="">
+                                <!-- <li class="">
                                     <a href="<?php echo CLIENTS_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                                         <span class="pcoded-mtext">Clients</span>
+                                    </a>
+                                </li> -->
+                                <li class="">
+                                    <a href="<?php echo LEADS_DIR ?>/index.php">
+                                        <span class="pcoded-micon"><i class="feather icon-airplay"></i></span>
+                                        <span class="pcoded-mtext">Leads</span>
                                     </a>
                                 </li>
                             </ul>
@@ -172,7 +178,6 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                         <div class="pcoded-inner-content">
                             <div class="main-body">
                                 <div class="page-wrapper">
-
                                     <div class="page-body">
                                         <?php main();?>
                                     </div>

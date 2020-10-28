@@ -2,9 +2,9 @@
 define('ABSPATH', dirname(__DIR__, 2));
 require ABSPATH . "/includes.php";
 $action = $_POST['act'];
-$clientsObj = new Clients; ?>
+$leadsObj = new Leads; ?>
 
-<?php if($action =='clients_statistics'){ ?>
+<?php if($action =='leads_statistics'){ ?>
     <div class ="row">
         <div class="col-md-6 col-xl-6 cursor">
             <div class="card widget-statstic-card">
@@ -18,7 +18,7 @@ $clientsObj = new Clients; ?>
                     <i class="feather icon-users st-icon bg-c-yellow"></i>
                     <div class="text-left">
                         <h3 class="d-inline-block">
-                            <?php $clientscount = $clientsObj->get_clients_count(); echo $clientscount->total_active ?>
+                            <?php //$leadscount = $leadsObj->get_leads_count(); echo $leadscount->total_active ?>
                         </h3>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ $clientsObj = new Clients; ?>
                     <i class="feather icon-users st-icon bg-c-pink txt-lite-color"></i>
                     <div class="text-left">
                         <h3 class="d-inline-block">
-                            <?php $clientscount = $clientsObj->get_clients_count(); echo $clientscount->wl_member ?>
+                            <?php //$leadscount = $leadsObj->get_leads_count(); echo $leadscount->wl_member ?>
                         </h3>
                     </div>
                 </div>
@@ -61,14 +61,14 @@ $clientsObj = new Clients; ?>
     </div>
 <?php } ?>
 
-<?php if($action == 'add_edit_clients'){  
+<?php if($action == 'add_edit_leads'){  
   
-  $clients_id = $_POST['clients_id'];
+  $leads_id = $_POST['leads_id'];
   $btnName = $title = 'Add New';
-  if ($clients_id > 0) {
-      $clientsObj->id = $clients_id;
-      $rsClients = $clientsObj->get_clients_details();  
-      foreach ($rsClients[0] as $K => $V) {
+  if ($leads_id > 0) {
+      $leadsObj->id = $leads_id;
+      $rsLeads = $leadsObj->get_leads_details();  
+      foreach ($rsLeads[0] as $K => $V) {
           $$K = $V;
       }   
       $btnName = $title = 'Edit ';
@@ -77,12 +77,12 @@ $clientsObj = new Clients; ?>
   <style> .mce-panel {   width: 99%; }</style>
   <div class="col-12 card">
         <div class="card-header">
-            <h5><?php echo $btnName ?> Clients</h5>            
-            <a href="javascript:void(0);" onclick="hide_clients_details()" style="font-size:16px;" class="right-float label label-danger"> <i class="feather icon-x">Cancel</i></a>
+            <h5><?php echo $btnName ?> Leads</h5>            
+            <a href="javascript:void(0);" onclick="hide_leads_details()" style="font-size:16px;" class="right-float label label-danger"> <i class="feather icon-x">Cancel</i></a>
         </div>
         <div class="card-block">                   
-            <form action="javascript:void(0);" id="clients_forms">
-                <input type="hidden" value="add_edit_clients" name="act">
+            <form action="javascript:void(0);" id="leads_forms">
+                <input type="hidden" value="add_edit_leads" name="act">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
         
@@ -126,13 +126,6 @@ $clientsObj = new Clients; ?>
                             </div>
                         </div>
                         <div class="col-sm-3 col-lg-3">
-                            <label class="col-form-label">Password </label>
-                            <div class="input-group input-group-inverse">
-                                <input type="text" class="form-control" placeholder="Generate Password" id="password" name="password" value="<?php echo $password; ?>">
-                                <a herf="javascript:void(0);" onclick="generate_password()" class="btn btn-info">Generate</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-lg-3">
                             <label class="col-form-label">Address</label>
                             <div class="input-group input-group-inverse">
                                 <input type="text" class="form-control" placeholder="Enter Address" name="address" value="<?php echo $address; ?>">
@@ -162,7 +155,49 @@ $clientsObj = new Clients; ?>
                             <div class="input-group input-group-inverse">
                                 <input type="text" class="form-control pincode" data-mask="999999" placeholder="Enter Zipcode" name="zipcode" value="<?php echo $zipcode; ?>">
                             </div>
-                        </div>                                                                                                                                                                                                                  
+                        </div> 
+                        <div class ="col-sm-3 col-lg-3">
+                            <label class="col-form-label">Enquiry Type</label>
+                            <select class="form-control" name="enquiry_type">
+                            <option value="">Select Option</option>
+                            <option <?php if ($enquiry_type == 'call') {echo 'selected';} ?> value="call">Call</option>
+                            <option <?php if ($enquiry_type == 'email') {echo 'selected';} ?> value="email">E-Mail</option>
+                            <option <?php if ($enquiry_type == 'reference') {echo 'selected';} ?> value="reference">Reference</option>
+                            <option <?php if ($enquiry_type == 'others') {echo 'selected';} ?> value="others">Others</option>
+                            <option <?php if ($enquiry_type == 'web') {echo 'selected';} ?> value="web">Web</option>
+                            </select>                                                            
+                        </div>  
+
+                        <?php                         
+                        $categoryObj = new Categories;
+                        $categoryObj->id = '';
+                        $rsCategory = $categoryObj->get_category();   
+                        foreach ($rsCategory as $K => $V) {
+                        ?>
+                        <div class="col-sm-3 col-lg-3">
+                            <!-- <div class="checkbox-zoom zoom-primary"> -->
+                                <label>
+                                    <input type="checkbox" value="<?php echo $V->id; ?>" name="enquiry_categories_id[]">
+                                    <span class="cr">
+                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                    </span>
+                                    <span><?php echo $V->category_name; ?></span>
+                                </label>
+                            <!-- </div> -->  
+                       
+                                    <ul class="category_services" style="display:none"> 
+                                    <?php   $categoryObj->id = $V->id;
+                                            $rsService = $categoryObj->get_category_service(); 
+                                            foreach ($rsService as $key => $value) {
+                                    ?>
+                                            <li><input type="checkbox" name="enquiry_services_id[]" value="<?php echo $value->id; ?>">&nbsp;&nbsp;<?php echo $value->service_name; ?></li>                                                
+                                            <?php } ?>
+                                    </ul>
+                       
+                        </div>  
+                        
+                        <?php } ?>
+
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
@@ -181,21 +216,31 @@ $clientsObj = new Clients; ?>
   <script src="<?php echo ADMIN_JS ?>/tinymce/wysiwyg-editor.js"></script>
   <script type="text/javascript" src="<?php echo ADMIN_JS ?>/form-masking/form-mask.js"></script>
   <script>
+
+        // $("#chkPassport").click(function () {
+        //     if ($(this).is(":checked")) {
+        //         $("#dvPassport").show();
+        //     } else {
+        //         $("#dvPassport").hide();
+        //     }
+        // });
+
+
       $("form#clients_forms").submit(function() {
           tinyMCE.triggerSave();
-          var param = $('form#clients_forms').serialize();
+          var param = $('form#leads_forms').serialize();
           $('.preloader').show();
           $.ajax({
-                url: '<?php echo CLIENTS_DIR ?>/clients_ajax.php',
+                url: '<?php echo LEADS_DIR ?>/leads_ajax.php',
                 type: 'POST',
                 data: param,     
                 success: function(data) {
                     var records = JSON.parse(data);
                     $('.preloader').hide();                    
                     if (records.result == 'Success') {                 
-                        hide_clients_details();
-                        clients_main_table();
-                        clients_statistics();
+                        hide_leads_details();
+                        leads_main_table();
+                        leads_statistics();
                         notify('top', 'right', 'fa fa-check', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
                     } else {
                         notify('top', 'right', 'fa fa-times', 'danger', 'animated fadeInLeft', 'animated fadeOutLeft', records.data);
@@ -207,4 +252,3 @@ $clientsObj = new Clients; ?>
   </script>
 
 <?php } ?>
-

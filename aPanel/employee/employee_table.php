@@ -67,12 +67,14 @@ $employeeObj = new Employee; ?>
                 accept: '.sortable-moves',
                 onUpdate: function(ui) {
                     var param = $('form#employee_position').serialize();
+                    $('.preloader').show();
                     ajax({
                         a: "employee_ajax",
                         b: param,
                         c: function() {},
                         d: function(data) {
                             var records = JSON.parse(data);
+                            $('.preloader').hide();
                             employee_main_table();
                             employee_statistics();
                             if (records.result == 'Success') {
@@ -151,12 +153,14 @@ $employeeObj = new Employee; ?>
                 accept: '.sortable-moves',
                 onUpdate: function(ui) {
                     var param = $('form#employee_role_position').serialize();
+                    $('.preloader').show();
                     ajax({
                         a: "employee_ajax",
                         b: param,
                         c: function() {},
                         d: function(data) {
                             var records = JSON.parse(data);
+                            $('.preloader').hide();
                             employee_role();
                             employee_statistics();
                             if (records.result == 'Success') {

@@ -27,7 +27,7 @@ $employeeObj = new Employee; ?>
                         <i class="feather icon-airplay text-c-lite-green d-block f-40"></i>
                         <h4 class="m-t-20"><span class="text-c-lite-green">
                         <?php $rolecount = $employeeObj->get_emp_role_count(); echo $rolecount->total_active ?>
-                        </span> Active Role</h4>
+                        </span>Active Role</h4>
                         <p class="m-b-20"></p>
                         <label class="label label-inverse-info cursor" onclick="employee_role()">view</label>
                         <!-- <button class="btn btn-primary btn-sm btn-round cursor" onclick="employee_role()">view</button> -->

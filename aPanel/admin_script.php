@@ -52,5 +52,7 @@
 
      <!-- Custom js -->
      <script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script.js"></script>
+     <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/script.js"></script> -->
+
 
 

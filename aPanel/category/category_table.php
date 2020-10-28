@@ -69,12 +69,14 @@ $categoryObj = new Categories;
                 accept: '.sortable-moves',
                 onUpdate: function(ui) {
                     var param = $('form#category_position').serialize();
+                    $('.preloader').show();
                     ajax({
                         a: "category_ajax",
                         b: param,
                         c: function() {},
                         d: function(data) {
                             var records = JSON.parse(data);
+                            $('.preloader').hide();
                             category_table();
                             category_statistics();
                             if (records.result == 'Success') {
@@ -200,33 +202,35 @@ $categoryObj = new Categories;
     </div>
 
     <script>
-    $(function() {
-        Sortable.create(draggableService, {
-            group: 'draggableService',
-            animation: 150,
-            accept: '.sortable-moves',
-            onUpdate: function(ui) {
-                var param = $('form#service_position').serialize();
-                ajax({
-                    a: "category_ajax",
-                    b: param,
-                    c: function() {},
-                    d: function(data) {
-                        var records = JSON.parse(data);
-                        if (records.result == 'Success') {
-                            notify('top', 'right', 'fa fa-check', 'success',
-                                'animated fadeInLeft', 'animated fadeOutLeft', records
-                                .data);
-                        } else {
-                            notify('top', 'right', 'fa fa-times', 'danger',
-                                'animated fadeInLeft', 'animated fadeOutLeft', records
-                                .data);
+        $(function() {
+            Sortable.create(draggableService, {
+                group: 'draggableService',
+                animation: 150,
+                accept: '.sortable-moves',
+                onUpdate: function(ui) {
+                    var param = $('form#service_position').serialize();
+                    $('.preloader').show();
+                    ajax({
+                        a: "category_ajax",
+                        b: param,
+                        c: function() {},
+                        d: function(data) {
+                            var records = JSON.parse(data);
+                            $('.preloader').hide();
+                            if (records.result == 'Success') {
+                                notify('top', 'right', 'fa fa-check', 'success',
+                                    'animated fadeInLeft', 'animated fadeOutLeft', records
+                                    .data);
+                            } else {
+                                notify('top', 'right', 'fa fa-times', 'danger',
+                                    'animated fadeInLeft', 'animated fadeOutLeft', records
+                                    .data);
+                            }
                         }
-                    }
-                });
-            },
+                    });
+                },
+            });
         });
-    });
     </script>
 <?php } ?>
 
@@ -501,12 +505,14 @@ $categoryObj = new Categories;
             accept: '.sortable-moves',
             onUpdate: function(ui) {
                 var param = $('form#features_position').serialize();
+                $('.preloader').show();
                 ajax({
                     a: "category_ajax",
                     b: param,
                     c: function() {},
                     d: function(data) {
                         var records = JSON.parse(data);
+                        $('.preloader').hide();
                         if (records.result == 'Success') {
                             notify('top', 'right', 'fa fa-check', 'success',
                                 'animated fadeInLeft', 'animated fadeOutLeft', records
@@ -526,12 +532,14 @@ $categoryObj = new Categories;
             accept: '.sortable-moves',
             onUpdate: function(ui) {
                 var param = $('form#faq_position').serialize();
+                $('.preloader').show();
                 ajax({
                     a: "category_ajax",
                     b: param,
                     c: function() {},
                     d: function(data) {
                         var records = JSON.parse(data);
+                        $('.preloader').hide();
                         if (records.result == 'Success') {
                             notify('top', 'right', 'fa fa-check', 'success',
                                 'animated fadeInLeft', 'animated fadeOutLeft', records
@@ -551,12 +559,14 @@ $categoryObj = new Categories;
             accept: '.sortable-moves',
             onUpdate: function(ui) {
                 var param = $('form#steps_position').serialize();
+                $('.preloader').show();
                 ajax({
                     a: "category_ajax",
                     b: param,
                     c: function() {},
                     d: function(data) {
                         var records = JSON.parse(data);
+                        $('.preloader').hide();
                         if (records.result == 'Success') {
                             notify('top', 'right', 'fa fa-check', 'success',
                                 'animated fadeInLeft', 'animated fadeOutLeft', records

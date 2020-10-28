@@ -12,6 +12,7 @@ require_once "classes/dB.php";
 require_once "classes/Categories.php";
 require_once "classes/Employee.php";
 require_once "classes/Clients.php";
+require_once "classes/Leads.php";
 
 require_once "classes/Table.php";
 require_once "classes/Users.php";

@@ -66,6 +66,10 @@ define("EMPLOYEE_IDPROOF",  EMPLOYEE_DIR . '/uploads/id_proof');
 // clients
 define("CLIENTS_DIR",  ADMIN_URL . '/clients');
 
+// Leads
+define("LEADS_DIR",  ADMIN_URL . '/leads');
+
+
 $confval = ini_get("upload_max_filesize");
 $confval = substr($confval, 0, strlen($confval) - 1);
 $max_file_size = $confval * 1024 * 1024;
