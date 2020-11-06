@@ -14,7 +14,7 @@ if ($action == 'add_edit_leads') {
     $param['phone_number']     = $_POST['phone_number'];
     $param['email_address']    = $_POST['email_address'];
     $param['password']         = $_POST['password'];
-    $param['address']          = $_POST['address'];
+    // $param['address']          = $_POST['address'];
     $param['country']          = $_POST['country'];
     $param['city']             = $_POST['city'];
     $param['state']            = $_POST['state'];
