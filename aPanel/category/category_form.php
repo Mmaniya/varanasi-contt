@@ -33,8 +33,8 @@ $categoryObj = new Categories; ?>
                                 <h4 class="m-b-0">Total Categories</h4>
                                 <h4 class="m-b-0">
                                     <?php
-                                            $countCategory = $categoryObj->get_category_count();
-                                            echo $countCategory->total;  ?></h4>
+                                    $countCategory = $categoryObj->get_category_count();
+                                    echo $countCategory->total;  ?></h4>
                             </div>
                         </div>
                     </div>

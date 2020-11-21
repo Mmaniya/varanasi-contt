@@ -10,7 +10,7 @@ $leadsObj = new Leads; ?>
         <div class="card widget-statstic-card">
             <div class="card-header">
                 <div class="card-header-left">
-                    <h5>Total Clients</h5>
+                    <h5>Total Leads</h5>
                     <!-- <p class="p-t-10 m-b-0 text-c-yellow">Active Clients</p> -->
                 </div>
             </div>
@@ -18,7 +18,7 @@ $leadsObj = new Leads; ?>
                 <i class="feather icon-users st-icon bg-c-yellow"></i>
                 <div class="text-left">
                     <h3 class="d-inline-block">
-                        <?php //$leadscount = $leadsObj->get_leads_count(); echo $leadscount->total_active ?>
+                        <?php $leadscount = $leadsObj->get_leads_count(); echo $leadscount->total_active ?>
                     </h3>
                 </div>
             </div>
@@ -42,22 +42,7 @@ $leadsObj = new Leads; ?>
             </div>
         </div>
     </div>
-    <!-- <div class="col-md-6 col-xl-4 cursor">
-            <div class="card widget-statstic-card">
-                <div class="card-header">
-                    <div class="card-header-left">
-                        <h5>Add New Clients</h5>
-                    </div>
-                </div>
-                <div class="card-block">
-                    <i class="feather icon-plus st-icon bg-c-blue"></i>
-                    <div class="text-left">
-                        <h3 class="d-inline-block">
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+    
 </div>
 <?php } ?>
 
@@ -82,7 +67,7 @@ $leadsObj = new Leads; ?>
         width: 99%;
     }
 </style>
-<div class="col-12 card">
+<div class="col-12">
     <div class="card-header">
         <h5><?php echo $btnName ?> Leads</h5>
         <a href="javascript:void(0);" onclick="hide_leads_details()" style="font-size:16px;"
@@ -102,41 +87,35 @@ $leadsObj = new Leads; ?>
                             value="<?php echo $first_name; ?>">
                     </div>
                 </div>
-
                 <div class="col-sm-3 col-lg-3">
                     <label class="col-form-label">Last Name</label>
                     <div class="input-group input-group-inverse">
-                        <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name"
-                            value="<?php echo $last_name; ?>">
+                        <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" value="<?php echo $last_name; ?>">
                     </div>
                 </div>
                 <div class="col-sm-3 col-lg-6">
                     <label class="col-form-label">Company Name</label>
                     <div class="input-group input-group-inverse">
-                        <input type="text" class="form-control" placeholder="Enter Company Name" name="company_name"
-                            value="<?php echo $company_name; ?>">
+                        <input type="text" class="form-control" placeholder="Enter Company Name" name="company_name" value="<?php echo $company_name; ?>">
                     </div>
                 </div>
                 <div class="col-sm-3 col-lg-3">
                     <label class="col-form-label">Website</label>
                     <div class="input-group input-group-inverse">
-                        <input type="text" class="form-control" placeholder="Enter Company Website"
-                            name="company_website" value="<?php echo $company_website; ?>">
+                        <input type="text" class="form-control" placeholder="Enter Company Website" name="company_website" value="<?php echo $company_website; ?>">
                     </div>
                 </div>
 
                 <div class="col-sm-3 col-lg-3">
                     <label class="col-form-label">Phone Number</label>
                     <div class="input-group input-group-inverse">
-                        <input type="text" class="form-control mob_no" placeholder="Enter Phone Number"
-                            data-mask="999-999-9999" name="phone_number" value="<?php echo $phone_number; ?>">
+                        <input type="text" class="form-control mob_no" placeholder="Enter Phone Number" data-mask="999-999-9999" name="phone_number" value="<?php echo $phone_number; ?>">
                     </div>
                 </div>
                 <div class="col-sm-3 col-lg-3">
                     <label class="col-form-label">Email Address</label>
                     <div class="input-group input-group-inverse">
-                        <input type="email" class="form-control" placeholder="Enter Email Address" name="email_address"
-                            value="<?php echo $email_address; ?>">
+                        <input type="email" class="form-control" placeholder="Enter Email Address" name="email_address" value="<?php echo $email_address; ?>">
                     </div>
                 </div>
                 <!-- <div class="col-sm-3 col-lg-3">
@@ -146,7 +125,6 @@ $leadsObj = new Leads; ?>
                             value="<?php// echo $address; ?>">
                     </div>
                 </div> -->
-
                 <div class="col-sm-3 col-lg-3">
                     <label class="col-form-label">Country</label>
                     <div class="input-group input-group-inverse">
@@ -181,10 +159,8 @@ $leadsObj = new Leads; ?>
                         <option value="">Select Option</option>
                         <option <?php if ($enquiry_type == 'call') {echo 'selected';} ?> value="call">Call</option>
                         <option <?php if ($enquiry_type == 'email') {echo 'selected';} ?> value="email">E-Mail</option>
-                        <option <?php if ($enquiry_type == 'reference') {echo 'selected';} ?> value="reference">
-                            Reference</option>
-                        <option <?php if ($enquiry_type == 'others') {echo 'selected';} ?> value="others">Others
-                        </option>
+                        <option <?php if ($enquiry_type == 'reference') {echo 'selected';} ?> value="reference">Reference</option>
+                        <option <?php if ($enquiry_type == 'others') {echo 'selected';} ?> value="others">Others</option>
                         <option <?php if ($enquiry_type == 'web') {echo 'selected';} ?> value="web">Web</option>
                     </select>
                 </div>
@@ -200,35 +176,33 @@ $leadsObj = new Leads; ?>
                 <div class="col-sm-3 col-lg-3">
                     <!-- <div class="checkbox-zoom zoom-primary"> -->
                     <label>
-                        <input type="checkbox" value="<?php echo $V->id; ?>" id="<?php echo $rand ?>" onclick="get_allservices(this.id)" name="enquiry_categories_id[]">
+                        <?php  $ecategories = explode(',',$enquiry_categories_id);  ?>
+                        <input type="checkbox" <?php  if (in_array($V->id, $ecategories)){ echo 'checked';  } ?> value="<?php echo $V->id; ?>" id="<?php echo $rand ?>" onclick="get_allservices(this.id)" name="enquiry_categories_id[]">
                         <span class="cr">
                             <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
                         </span>
-                        <span><?php echo $V->category_name; ?></span>
+                        <strong><span class="text-primary"><?php echo $V->category_name; ?></span></strong>
                     </label>
                     <!-- </div> -->
-
+                    <?php  $eservices = explode(',',$enquiry_services_id); ?>
                     <ul id="category_services_<?php echo $rand ?>" style="display:none">
-                        <?php   $categoryObj->id = $V->id;
-                                            $rsService = $categoryObj->get_category_service(); 
-                                            foreach ($rsService as $key => $value) {
-                                    ?>
-                        <li><input type="checkbox" name="enquiry_services_id[]"
-                                value="<?php echo $value->id; ?>">&nbsp;&nbsp;<?php echo $value->service_name; ?></li>
+                        <?php  $categoryObj->id = $V->id;
+                               $rsService = $categoryObj->get_category_service(); 
+                               foreach ($rsService as $key => $value) {
+                        ?>
+                        <script> get_allservices(<?php echo $rand ?>); </script>
+                            <li class="text-muted"><input type="checkbox" name="enquiry_services_id[]"  <?php  if (in_array($value->id, $eservices)){ echo 'checked';  } ?> value="<?php echo $value->id; ?>">&nbsp;&nbsp;<?php echo $value->service_name; ?></li>
+                            <br> 
                         <?php } ?>
-                    </ul>
-
+                    </ul>                                                                 
                 </div>
-
                 <?php } ?>
-
             </div>
             <div class="row">
                 <div class="col-sm-12 col-lg-12">
                     <label class="col-form-label">Description</label>
                     <div class="input-group input-group-inverse">
-                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Description"
-                            id="description" name="description"><?php echo $description; ?></textarea>
+                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter Description" id="description" name="description"><?php echo $description; ?></textarea>
                     </div>
                 </div>
             </div>

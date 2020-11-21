@@ -1276,7 +1276,7 @@ function statusLeads(id) {
     if (!ischecked) { status = 'I'; } else { status = 'A'; }
     param = { 'act': 'leads_status_change', 'status': status, 'id': id };
     Swal.fire({
-        title: "Are you sure?",
+        title: "Are you sure",
         text: "You want to change status?",
         type: "warning",
         showCancelButton: true,

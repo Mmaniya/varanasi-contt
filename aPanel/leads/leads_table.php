@@ -33,7 +33,7 @@ $leadsObj = new Leads; ?>
                                         foreach ($reLeads as $key => $value) { ?>
 
                             <tr class="row_id_<?php echo $value->id; ?>" id="<?php echo $value->id; ?>">
-                                <input type="hidden" name="clients_id[]" value="<?php echo $value->id ?>">
+                                <input type="hidden" name="leads_id[]" value="<?php echo $value->id ?>">
                                 <th><?php echo $key + 1 ?></th>
                                 <td><a href="javascript:void(0);" onclick="view_clients(<?php echo $value->id; ?>)"
                                         class="text-primary"><?php echo $value->first_name.'&nbsp;'.$value->last_name ?></a>
@@ -48,8 +48,7 @@ $leadsObj = new Leads; ?>
                                 </td>
                                 <td>
                                     <label class="switch">
-                                        <input type="checkbox" class="status_update_<?php echo $value->id; ?>"
-                                            onchange="statusLeads(<?php echo $value->id; ?>)"
+                                        <input type="checkbox" class="status_update_<?php echo $value->id; ?>" onchange="statusLeads(<?php echo $value->id; ?>)"
                                             <?php echo $statusArr[$value->status]; ?>>
                                         <span class="slider round"></span>
                                     </label>

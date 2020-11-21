@@ -13,12 +13,15 @@ if ($action == 'add_edit_leads') {
     $param['company_website']  = $_POST['company_website'];
     $param['phone_number']     = $_POST['phone_number'];
     $param['email_address']    = $_POST['email_address'];
-    $param['password']         = $_POST['password'];
+    // $param['password']         = $_POST['password'];
     // $param['address']          = $_POST['address'];
     $param['country']          = $_POST['country'];
     $param['city']             = $_POST['city'];
     $param['state']            = $_POST['state'];
     $param['zipcode']          = $_POST['zipcode'];
+    $param['enquiry_type']     = $_POST['enquiry_type'];
+    $param['enquiry_categories_id'] = implode(',', $_POST['enquiry_categories_id']);
+    $param['enquiry_services_id']   = implode(',', $_POST['enquiry_services_id']);
     $param['description']      = check_input($_POST['description']);
 
     if (empty(trim($_POST['id']))) {
@@ -54,10 +57,10 @@ if($action == 'remove_clients'){
 
 // 3.Clients position
 
-if($action =='clients_position'){
+if($action =='leads_position'){
     ob_clean();
-    if (count($_POST['clients_id']) > 0) {
-        foreach ($_POST['clients_id'] as $key => $val) {
+    if (count($_POST['leads_id']) > 0) {
+        foreach ($_POST['leads_id'] as $key => $val) {
             $param['position'] = $key + 1;
             $where = array('id' => $val);
             $result = Table::updateData(array('tableName' => TBL_LEADS, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
@@ -70,7 +73,7 @@ if($action =='clients_position'){
 
 // 4.role status chnage
 
-if ($action == 'clients_status_change') {
+if ($action == 'leads_status_change') {
     $param['status'] = $_POST['status'];
     $param['updated_by'] = $_POST['admin_id'];
     $where = array('id' => $_POST['id']);

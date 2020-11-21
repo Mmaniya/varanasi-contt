@@ -11,7 +11,7 @@ $categoryObj = new Categories;
     </div>
     <div class="card-block">
         <div class="card-block table-border-style">
-            <div class="table-responsive">
+                <div class="table-responsive">
                 <form action="javascript:void(0);" id="category_position" style="width:100%">
                     <input type="hidden" name="act" value="category_position">
                     <table class="table table-bordered">
