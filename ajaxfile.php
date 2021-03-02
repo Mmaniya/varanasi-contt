@@ -30,6 +30,8 @@ if ($action == 'signInAdmin') {
     $voterObj->filterBy= $_POST['filterBy'];
 
     $getAllvoters = $voterObj->getallvoters();
+    // print_r($getAllvoters);
+
     if(count($getAllvoters) > 0 ){
     foreach($getAllvoters as $key => $value){ 
     $getMmeber = Votersdetails::getmemberDetails($value->epic_no);  ?>
@@ -379,7 +381,7 @@ if ($action == 'signInAdmin') {
 
 <?php if($action == 'voterRefresh'){
     ob_clean(); 
-    $getvoter = Votersdetails::getsinglevoters($_POST['voter_id']);  
+    $getvoter = Votersdetails::getsinglevoters($_POST['voter_id']); 
     $getMmeber = Votersdetails::getmemberDetails($getvoter->epic_no);
     ?>
 
@@ -729,12 +731,11 @@ if ($action == 'signInAdmin') {
     $getState = $rawDataObj->get_state_dts();
 
     foreach($getState as $key => $value){  if($value->st_code != '') {
-    if($_POST['user'] == 'SA' && $value->id == '6'){ ?>        
+    // if($_POST['user'] == 'SA' && $value->id == '6'){ ?>        
         <option value="<?php echo $value->id ?>"  ><?php echo $value->state_name ?></option>
-    <?php  }  
-     if($_POST['user'] == 'A') { ?>        
-        <option value="<?php echo $value->id ?>"  ><?php echo $value->state_name ?></option>
-    <?php  }  ?>
+    <?php //  }  if($_POST['user'] == 'A') { ?>        
+        <!-- <option value="<?php echo $value->id ?>"  ><?php echo $value->state_name ?></option> -->
+    <?php //  }  ?>
     <?php } } 
 }
 

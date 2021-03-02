@@ -7,17 +7,17 @@ session_start();
 if ($dev_server) {
 
     // Dev Database credentials
-    // define("BA_DBHOST", "localhost");
-    // define("BA_DBUSER", "root");
-    // define("BA_DBPASSWORD", "");
-    // define("BA_DBNAME", "voterslist");
-    // define('BASE_URL', 'http://192.168.0.111/varanasi-contt/');
-
     define("BA_DBHOST", "localhost");
-    define("BA_DBUSER", "masterm6_voterslist");
-    define("BA_DBPASSWORD", "C=LWj(SsCIl4");
-    define("BA_DBNAME", "masterm6_voterslist");
-    define('BASE_URL', 'http://mastermindsolutionsonline.com/varanasi/');
+    define("BA_DBUSER", "root");
+    define("BA_DBPASSWORD", "");
+    define("BA_DBNAME", "voterslist");
+    define('BASE_URL', 'http://192.168.0.111/varanasi-contt/');
+
+    // define("BA_DBHOST", "localhost");
+    // define("BA_DBUSER", "masterm6_voterslist");
+    // define("BA_DBPASSWORD", "C=LWj(SsCIl4");
+    // define("BA_DBNAME", "masterm6_voterslist");
+    // define('BASE_URL', 'http://mastermindsolutionsonline.com/varanasi/');
 
     // DB connection
     $con = mysqli_connect(BA_DBHOST, BA_DBUSER, BA_DBPASSWORD, BA_DBNAME);

@@ -102,19 +102,19 @@ function delete_user(id) {
 
 
 // Booth 
-add_booth();
+// add_booth();
 
-function add_booth() {
-    param = { 'act': 'addBooth' }
-    ajax({
-        a: "upload_booth",
-        b: param,
-        c: function() {},
-        d: function(data) {
-            $('#ajaxResponce').html(data);
-        }
-    });
-}
+// function add_booth() {
+//     param = { 'act': 'addBooth' }
+//     ajax({
+//         a: "upload_booth",
+//         b: param,
+//         c: function() {},
+//         d: function(data) {
+//             $('#ajaxResponce').html(data);
+//         }
+//     });
+// }
 
 
 // Voters Details
