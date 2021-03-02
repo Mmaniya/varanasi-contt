@@ -1,5 +1,4 @@
 <?php 
-
 define('ABSPATH',  dirname(__DIR__, 1));
 require ABSPATH . "/includes.php";
 
@@ -14,7 +13,7 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
 <html lang="en">
 
 <head>
-    <title>MMS - Admin</title>
+    <title>Varanasi - Admin</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,18 +41,18 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
                 <div class="col-sm-12">
                     <form class="md-float-material form-material" id="formSignInAdmin" action="javascript:void(0);">
                         <input type="hidden" value="signInAdmin" name="act">
-                        <div class="text-center">
+                        <!-- <div class="text-center">
                             <img src="<?php echo ADMIN_IMAGES ?>/logo.png" alt="logo.png" width="400">
-                        </div>
+                        </div> -->
                         <div class="auth-box card">
                             <div class="card-block">
                                 <div class="row m-b-20">
                                     <div class="col-md-12">
-                                        <h3 class="text-center">Sign In</h3>
+                                        <h3 class="text-center">BJP Admin Login</h3>
                                     </div>
                                 </div>
                                 <div class="form-group form-primary">
-                                    <input type="email" name="username" class="form-control" required="" placeholder="Enter Your Email Address">
+                                    <input type="text" name="email" class="form-control" required="" placeholder="Enter Your Username">
                                     <!-- <span class="form-bar"></span> -->
                                     <span class="messages"></span>
                                 </div>
@@ -63,55 +62,18 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
                                 </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Sign in</button>
+                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Log in</button>
                                     </div>
                                 </div>
-                                <div class="row ">
-                                    <div class="col-12">
-                                        <div class="forgot-phone text-right f-right">
-                                            <a href="javascript:void(0);" onclick="forgetpws_form()" class="text-right f-w-600"> Forgot Password?</a>
-                                        </div>
+                                <div class="row m-t-30">
+                                    <div class="col-md-12" id="response" style="color:red;text-align:center">
                                     </div>
                                 </div>
+                               
                             </div>
                         </div>
                     </form>
-                    <form class="md-float-material form-material" id="formRecoverPws" style="display:none" action="javascript:void(0);">
-                        <div class="text-center">
-                            <img src="<?php echo ADMIN_IMAGES ?>/logo.png" alt="logo.png" width="400">
-                        </div>
-                        <div class="auth-box card">
-                            <div class="card-block">
-                                <div class="row m-b-20">
-                                    <div class="col-md-12">
-                                        <h3 class="text-left">Recover your password</h3>
-                                    </div>
-                                </div>
-                                <div class="form-group form-primary">
-                                    <input type="text" name="emai" class="form-control" required="" placeholder="Enter Your Email Address">
-                                    <span class="form-bar"></span>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Reset Password</button>
-                                    </div>
-                                </div>
-                                <div class="row ">
-                                    <div class="col-12">
-                                        <div class="checkbox-fade fade-in-primary d-">
-
-                                        </div>
-                                        <div class="forgot-phone text-right f-right">
-                                            <!-- <a href="auth-reset-password.htm" class="text-right f-w-600"> Forgot Password?</a> -->
-                                            <label>
-                                                <span class="text-inverse">Back to<a href="javascript:void(0);" onclick="signin_form()"> <b class="f-w-600">Sign in</b></a></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                  
                 </div>
             </div>
         </div>
@@ -127,24 +89,31 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
      <!-- Custom js -->
      <script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script.js"></script>
 
-    <script>
-      $("form#formSignInAdmin").submit(function(){
-        $('.preloader').show();
-            var param = $('form#formSignInAdmin').serialize();
-               ajax({
-                  a:"admin_ajax",
-                  b:param,
-                  c:function(){},
-                  d:function(data){
-                    var records = JSON.parse(data);
-                    if(records.result == 'Success'){
+        <script>
+        $("form#formSignInAdmin").submit(function(){
+            $('.preloader').show();
+                var param = $('form#formSignInAdmin').serialize();
+                ajax({
+                    a:"admin_ajax",
+                    b:param,
+                    c:function(){},
+                    d:function(data){
                         $('.preloader').hide();
-                        window.location.href = 'dashboard.php';
+                        $('#response').html('');
+                        if(data.trim() == 'Success'){
+                            window.location.href = 'dashboard.php';
+                        }else{
+                            $('#response').html(data);
+                        }
+                        // var records = JSON.parse(data);
+                        // if(records.result == 'Success'){
+                        //     $('.preloader').hide();
+                        //     window.location.href = 'dashboard.php';
+                        // }
                     }
-                }
-               });
+                });
             });
-   </script>
+    </script>
     <div class="preloader" style="display:none;">
         <div id="loader"></div>
     </div>

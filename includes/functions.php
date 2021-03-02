@@ -20,6 +20,18 @@ function removeItemString($str, $item) {
 		return implode($pass);
 	}
 
+	function input_string($value) {
+
+		$dbconn = new DatabaseConnection(); //db connection
+   
+		$conn = $dbconn->dbconn;
+   
+		$value = mysqli_real_escape_string($conn,$value);
+   
+		return $value;
+   
+	}
+   
 
 	function getSeoName($seoname){	
 	$seoname = strtolower(stripslashes($seoname));
@@ -79,6 +91,19 @@ function getTimeDifference($fromTime, $toTime) {
 	 $timeArr = explode(":", $time);
 	 return $timeArr[0]." hours, ".$timeArr[1]." mins.";
 }
+
+function getroll($sno) {
+    if($sno <= 9 ){
+        return '00'.$sno;
+    }
+    if(10 <= $sno && $sno <= 99 ){
+        return '0'.$sno;
+    }  
+    if($sno >= 100 ){
+        return $sno;
+    }   
+}
+
 
 function getTimeDifferenceInHours($fromTime, $toTime) {
 	 //echo $fromTime."-".$toTime;

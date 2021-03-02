@@ -10,14 +10,13 @@ $action = $_POST['act'];
 if ($action == 'signInAdmin') {
     ob_clean();
 
-    $resultData = Admin::checkCredentials($_POST['username'], $_POST['password']);
-    SessionWrite('useremail', $resultData[1]->username);
-    SessionWrite('username', $resultData[1]->fullname);
-    SessionWrite('last_activity', time());
-    SessionWrite('admin_id', $resultData[1]->id);
-    SessionWrite('expire_time', 30 * 60);
-    $response = array("result" => "Success", "data" => 'Login successfully');
-    echo json_encode($response);
+    $resultData = Admin::checkCredentials($_POST['email'], $_POST['password']);
+    SessionWrite('useremail', $resultData[1]->email);
+    SessionWrite('username', $resultData[1]->name);    
+    SessionWrite('user_id', $resultData[1]->id);
+    SessionWrite('booth_id', $resultData[1]->booth_id);
+    SessionWrite('admin_role', $resultData[1]->user_type);
+    echo $resultData[0];
 
     exit();
 }

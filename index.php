@@ -1,124 +1,83 @@
-
 <?php  require "includes.php"; 
-$categoryObj = new Categories; ?>
-<!doctype html>
+if (!empty($_SESSION['userdetails'])) {
+    foreach ($_SESSION as $K => $V) {
+        unset($_SESSION[$K]);
+    }
+    session_destroy();
+    session_unset();
+} ?>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.5">
-    <title>Webzone || Home</title>
-    <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/nav.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/user-style.css">
-    <style>
-.profile{
-      padding-right: 0px !important;
-   justify-content: space-between;
-}
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>User Screen</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="userassets/css/login.css">
+<link rel="stylesheet" href="userassets/css/loder.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="userassets/js/default.js"></script>
+</head>
 
-.button-5 {
-    border: 2px solid #3e66fc;
-    border-radius: 5px;
-    background-color: rgba(62, 102, 252, 0.15);
-    -webkit-transition: all 200ms ease;
-    transition: all 200ms ease;
-    font-family: 'Circular STD', sans-serif;
-    color: #3e66fc;
-    font-weight: 700;
-}
-.button-5:hover {
-    background-color: #3e66fc;
-    color: #fff;
-    text-decoration: none;
-}
-  </style>
-  </head>
-  <body>
-  <div class="container">
-        <div class="profile d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 ">
-            <img src="<?php echo ADMIN_IMAGES ?>/mmslogo.png" alt="logo" class="log-img" />
-            <a class="btn btn-primary button-5" href="javascrip:void(0);">View Profile</a>
-        </div>
-    </div>
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <div class="heading-7">Welcome to your agency delivery hub! ⚡</div>
-  <p class="paragraph-2">This is where you can get your client work fulfilled, and explore new services you can sell.</p>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-3 col-sm-12  category_list_col">
-            <ul class="tabs-menu">
-                <?php  $statusArr = array('A' => 'checked', 'I' => '');  
-                        $categoryObj->status = $_POST['status'];   
-                        $rsCategory = $categoryObj->get_category();
-                        if (count($rsCategory) > 0) {
-                        foreach ($rsCategory as $key => $value) { 
-                            if($value->status == 'A'){ ?>                         
-                        <a data-w-tab="Tab 1" class="tab w-inline-block w-tab-link w--current" href="javascript:void(0);" onclick="get_service(<?php echo $value->id?>)" ><div><?php echo $value->category_abbr?></div></a>
-                <?php } } } ?>
-            </ul>
-        </div> 
-
-        <div class="col-sm-12 mob_category_list_col">  
-            <div id="mob_category_list_col">
-                <select class="button-3 col-sm-12" style="margin-bottom: 20px;" onchange="get_service(this.value)">
-                    <?php if (count($rsCategory) > 0) {
-                        foreach ($rsCategory as $key => $value) {  if($value->status == 'A'){  ?>
-                        <option value="<?php echo $value->id?>"><?php echo $value->category_abbr?></option>
-                    <?php } } }?>
-                </select>
-            </div>
-        </div>
-
-        <div class="col-12  col-lg-9 col-sm-12"> 
-            <div class="col-12" id="userservicesname"></div>   
-            <div class="row" id="userservices"></div>
-        </div>
-    </div>
-
-        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <div class="heading-7">Agency University 🏫 Learn More, Earn More</div>
-            <p class="paragraph-2">Every week, we host a webinar where the community's questions get answered, and we teach you how to grow a successful agency.</p>
-        </div>
-
+<body>
+    <div class="container">
         <div class="row">
-            <div class="card col-12 col-sm-12 col-md-5 footer-card" >
-                <div class="card-body">
-                    <div class="text-block-20">Have a question that needs answering?</div>
-                    <p class="paragraph-2 bottom hero left">Fill out the form below &amp; we'll cover your questions on next week's webinar!<br><br><strong>Our next webinar will be on Friday, August 7 at 17:00 CEST!</strong><br><br>You'll recieve an email with a link to the private webinar 24 hours before it starts!&nbsp;Looking forward to seeing you there!<br></p>
-                    <div class="w-form">
-                        <form id="email-form" name="email-form" data-name="Email Form">
-                            <textarea placeholder="What's your question?" maxlength="5000" id="Question" name="Question" required="" data-name="Question" class="textarea w-input"></textarea>
-                            <input type="submit" value="Submit Question" data-wait="Please wait..." class="submit-button w-button">
-                        </form>
-                        <div class="success-message w-form-done"><div>Thank you! Watch next week's webinar to hear our answer! 🎯</div></div>
-                        <div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div>
+            <div class="col-md-5 mx-auto">
+            <div id="first">
+                <div class="myform form ">
+                        <div class="logo mb-3">
+                            <div class="col-md-12 text-center">
+                            <h1>Login</h1>
+                            </div>
                     </div>
+                    <?php echo $_SESSION['userdetails']->username;    ?>
+                    <form action="javascript:void(0);" id="formSignInAdmin" method="post" name="login">
+                        <input type="hidden" value="signInAdmin" name="act">
+                        <div class="form-group">
+                            <label>UserName</label>
+                            <input type="text" name="phone" class="form-control" placeholder="Enter Username">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" id="password"  class="form-control" placeholder="Enter Password">
+                        </div>                        
+                        <div class="col-md-12 text-center ">
+                            <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                        </div>  
+                        <div class="mt-2 badge badge-danger" id="display_err"></div>
+                    </form>                 
                 </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-7">
-                <img src="<?php echo  ADMIN_IMAGES ?>/hompageimg.png" style="max-width: 677px" class="image-15">
-            </div>
+            </div>		
         </div>
-        <br>
+    </div>  
+    <div class="preloader" style="display:none;">
+        <div id="loader"></div>
     </div>
-</div>
+</body>
 
-<script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
-<script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="<?php echo ADMIN_JS ?>/common-pages.js"></script> 
-<script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script-user.js"></script>
-<script>
-  $(function () {
-    get_service(<?php echo $rsCategory[0]->id; ?>);
-  })
-  </script>
+<script type="text/javascript">
+$("form#formSignInAdmin").submit(function(){
+    $('.preloader').show();
+    var param = $('form#formSignInAdmin').serialize();
+    ajax({
+        a:"ajaxfile",
+        b:param,
+        c:function(){},
+        d:function(data){        
+            var records = JSON.parse(data);
+            $('.preloader').hide();
+            if(records[0] == 'Success'){
+                window.location.href = 'home.php';
+            }else{
+                $('#display_err').html(records)
+            }
+        }
+    });
+});
+
+</script>
 </body>
 </html>

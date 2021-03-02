@@ -1,37 +1,27 @@
-<?
-
+<?php
 class Users {
-	
-	static function checkUserId($username) {
-	  		$admin_qry ="select * from `".TBL_ADMIN_USER."` where username = '".$username."'";
-			$rsUser = dB::sExecuteSql($admin_qry); 
-			if($rsUser->id>0){ 
-				return 1;
-			}else{
-				return 0; 
-			}
-		}
-	   
-	static function checkCredentials($username,$password) {
-			$usernameExists = Users::checkUserId($username);			
-	       if($usernameExists==1) {
-				$admin_qry ="select * from `".TBL_ADMIN_USER."` where username = '".$username."' and password='".$password."'";
-				$rsUser = dB::sExecuteSql($admin_qry);				
-				if($rsUser->id>0) {
-					if($rsUser->status == 'A') { 
-						$returnArr = array("Success",$rsUser); 				 						
-					} else { 
-						$returnArr = "User is not active.Please contact webmaster"; 
-					}
-				} else {				
-					$returnArr = "Invalid Password"; }
-				} else {
-					$returnArr = "Invalid UserName"; 
-			}
-		  	return $returnArr;
-	   }
+
+    public function getUserList() {
+        $user_qry ="select * from `".TBL_ADMIN_USER."` ";   
+        $rsUser = dB::mExecuteSql($user_qry); 	
+        return $rsUser;
+    }
+
+    function addNewUsers($param){
+        $query = Table::insertData(array('tableName' => TBL_ADMIN_USER, 'fields' => $param, 'showSql' => 'Y')); 
+        $rsData = explode('::',$query);
+        return  $rsData[0];
+    }
+
+    function updateUser($param){
+
+        $where= array('id'=>trim($param['id']));	
+		$result = Table::updateData(array('tableName' => TBL_ADMIN_USER, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
+        $rsData = explode('::',$result);
+        return  $rsData[0];
+    }
+
+
 
 }
-
-
 ?>

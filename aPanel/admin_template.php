@@ -1,24 +1,17 @@
 <?php 
 define('ABSPATH',  dirname(__DIR__, 1));
+
 require ABSPATH . "/includes.php";
 if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
     header('location: index.php');
     exit();
 
-} else {
-
-    if ($_SESSION['last_activity'] + $_SESSION['expire_time'] < time()) {
-        header('location: index.php');
-        exit();
-    } else {
-        SessionWrite('last_activity', time());
-    }
 }?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>MMS - Admin | Home</title>
+    <title>Admin | Home</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -27,10 +20,12 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
     <meta name="keywords"
         content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="#">
+    <?php include 'admin_script.php';?>
     <?php include 'admin_style.php';?>
 </head>
 
 <body>
+
     <div class="theme-loader">
         <div class="ball-scale">
             <div class='contain'>
@@ -79,8 +74,9 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                             <i class="feather icon-menu"></i>
                         </a>
                         <a href="<?php ADMIN_URL ?>/dashboard.php">
-                            <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190"
-                                alt="Theme-Logo">
+                            <!-- <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190"
+                                alt="Theme-Logo"> -->
+                                <h3>VARANASI</h3>
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>
@@ -96,22 +92,22 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="header-notification">
+                            <!-- <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
                                         <span class="badge bg-c-pink">5</span>
                                     </div>
                                 </div>
-                            </li>
-                            <li class="header-notification">
+                            </li> -->
+                            <!-- <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-message-square"></i>
                                         <span class="badge bg-c-green">3</span>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
@@ -147,30 +143,53 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                         <span class="pcoded-mtext">Dashboard</span>
                                     </a>
                                 </li>
+                                <?php if($_SESSION['admin_role'] == 'A' || $_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
-                                    <a href="<?php echo CATEGORY_DIR ?>/index.php">
-                                        <span class="pcoded-micon"><i class="feather icon-box"></i></span>
-                                        <span class="pcoded-mtext">Categories & Services</span>
+                                    <a href="<?php echo USERS_DIR ?>/index.php">
+                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-mtext">Users</span>
                                     </a>
                                 </li>
+                                <?php } ?>
+
+                                <?php if($_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
+                                    <a href="<?php echo BOOTH_DIR ?>/index.php">
+                                        <span class="pcoded-micon"><i class="feather icon-airplay"></i></span>
+                                        <span class="pcoded-mtext">Add Booth </span>
+                                    </a>
+                                </li>
+                                <?php } ?>
+
+                                <?php if($_SESSION['admin_role'] == 'DE' || $_SESSION['admin_role'] == 'SA'){ ?>
+                                <li class="">
+                                    <a href="<?php echo BOOTH_DIR ?>/update_raw_voters.php">
+                                        <span class="pcoded-micon"><i class="feather icon-airplay"></i></span>
+                                        <span class="pcoded-mtext"> Entry Details </span>
+                                    </a>
+                                </li>
+                                <?php } ?>
+
+
+
+                                <!-- <li class="">
                                     <a href="<?php echo EMPLOYEE_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="feather icon-user"></i></span>
                                         <span class="pcoded-mtext">Employees</span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <!-- <li class="">
                                     <a href="<?php echo CLIENTS_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                                         <span class="pcoded-mtext">Clients</span>
                                     </a>
                                 </li> -->
-                                <li class="">
+                                <!-- <li class="">
                                     <a href="<?php echo LEADS_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="feather icon-airplay"></i></span>
                                         <span class="pcoded-mtext">Leads</span>
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </nav>
@@ -191,7 +210,6 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
             </div>
         </div>
     </div>
-    <?php include 'admin_script.php';?>
     <div class="preloader" style="display:none;">
         <div id="loader"></div>
     </div>
