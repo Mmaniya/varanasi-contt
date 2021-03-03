@@ -105,5 +105,14 @@
 <input type="hidden" value="<?php echo $_SESSION['booth_id'] ?>" id="booth_id">
 <input type="hidden" value="<?php echo $_SESSION['user_id'] ?>" id="usersDetails">
 
+<script>
 
+$( document ).ready(function() {
+    var boothid = $('#booth_id').val();
+    getvoterbooth(boothid);
+});
+
+
+
+</script>
 <?php }include '../admin_template.php';?>

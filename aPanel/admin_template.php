@@ -144,14 +144,14 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
                                     <a href="<?php echo ADMIN_URL ?>/dashboard.php">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                        <span class="pcoded-micon"><i class="fa fa-tachometer"></i></span>
                                         <span class="pcoded-mtext">Dashboard</span>
                                     </a>
                                 </li>
                                 <?php if($_SESSION['admin_role'] == 'A' || $_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
                                     <a href="<?php echo USERS_DIR ?>/index.php">
-                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-micon"><i class="fa fa-users"></i></span>
                                         <span class="pcoded-mtext">Users</span>
                                     </a>
                                 </li>
@@ -160,7 +160,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 <?php if($_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
                                     <a href="<?php echo BOOTH_DIR ?>/index.php">
-                                        <span class="pcoded-micon"><i class="feather icon-airplay"></i></span>
+                                        <span class="pcoded-micon"><i class="fa fa-id-card-o"></i></span>
                                         <span class="pcoded-mtext">Add Booth </span>
                                     </a>
                                 </li>
@@ -169,7 +169,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 <?php if($_SESSION['admin_role'] == 'DE' || $_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
                                     <a href="<?php echo BOOTH_DIR ?>/update_raw_voters.php">
-                                        <span class="pcoded-micon"><i class="feather icon-airplay"></i></span>
+                                        <span class="pcoded-micon"><i class="fa fa-hand-o-right"></i></span>
                                         <span class="pcoded-mtext"> Entry Details </span>
                                     </a>
                                 </li>

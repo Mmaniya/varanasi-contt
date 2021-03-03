@@ -6,8 +6,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/bootstrap.min.css">
 
     <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/feather/css/feather.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Notification.css -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_JS ?>/notification/notification.css">
@@ -26,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/data-table/css/responsive.bootstrap4.min.css"> -->
 
     <link href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet" />
-	<link href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css" rel="stylesheet" />
+	  <link href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css" rel="stylesheet" />
 
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/style.css">

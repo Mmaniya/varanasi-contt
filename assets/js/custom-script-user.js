@@ -119,9 +119,6 @@ function delete_user(id) {
 
 // Voters Details
 
-var boothid = $('#booth_id').val();
-getvoterbooth(boothid);
-
 function getvoterbooth(boothid) {
     $('.preloader').show();
     param = { 'act': 'getvotersbyusers', 'booth_id': boothid }
