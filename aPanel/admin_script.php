@@ -1,9 +1,3 @@
-    <!-- Required Jquery -->
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-ui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
-
     <!-- jquery slimscroll js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-slimscroll/jquery.slimscroll.js"></script>
 

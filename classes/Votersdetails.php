@@ -56,6 +56,16 @@ class Votersdetails {
             if(!empty($this->filterBy)){ { $subQry[]= " gender ='$gender'"; } }
         }
 
+        if($this->getType == 'karyakarta'){
+            if($this->filterBy == 'bla'){
+                $subQry[]= " is_bla = 'Y'";
+            }
+            if($this->filterBy == 'bc'){
+                $subQry[]= " is_bc = 'Y'";
+            }
+       }
+
+       
         if($this->getType == 'ageGroup'){
             if($this->filterBy == 'first_age_group'){
                 $subQry[]= " age BETWEEN '18' AND '22'";

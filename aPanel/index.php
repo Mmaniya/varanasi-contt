@@ -21,16 +21,22 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
     <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="#">
     <!-- Favicon icon -->
-    <link rel="icon" href="<?php echo ADMIN_IMAGES ?>/favicon.ico" type="image/x-icon">
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/bootstrap.min.css">
-    <!-- themify-icons line icon -->
+    <?php include 'admin_style.php';?>
+        <!-- Required Jquery -->
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
+
+
+    <!-- <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/bootstrap.min.css">
+    
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/themify-icons/themify-icons.css">
-    <!-- ico font -->
+    
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_ICON ?>/icofont/css/icofont.css">
-    <!-- Style.css -->
+    
     <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/style.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/custom.style.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo ADMIN_CSS ?>/custom.style.css"> -->
 
 </head>
 
@@ -80,14 +86,14 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
     </section>
 
     <!-- Required Jquery -->
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
+    <?php include 'admin_script.php';?>
+
+    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
-    <!-- jquery slimscroll js -->
     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/common-pages.js"></script>
-     <!-- Custom js -->
-     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script.js"></script>
+     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script.js"></script> -->
 
         <script>
         $("form#formSignInAdmin").submit(function(){

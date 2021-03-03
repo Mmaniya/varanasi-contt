@@ -119,21 +119,22 @@ function delete_user(id) {
 
 // Voters Details
 
+var boothid = $('#booth_id').val();
+getvoterbooth(boothid);
 
-// function getvoterbooth(userid){
-// $('.preloader').show();
-// param = {'act':'getvotersbyusers','userid': userid }
-// ajax({
-//     a:"update_raw_voters_ajax",
-//     b:param,
-//     c:function(){},
-//     d:function(data){
-//         $('.preloader').hide();
-//         $('#select_booth').html(data);
-//     }
-// });
-
-// }
+function getvoterbooth(boothid) {
+    $('.preloader').show();
+    param = { 'act': 'getvotersbyusers', 'booth_id': boothid }
+    ajax({
+        a: "update_raw_voters_ajax",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('.preloader').hide();
+            $('#select_booth').html(data);
+        }
+    });
+}
 
 // $('#select_booth').change(function(){
 // var booth = $(this).val();
@@ -251,7 +252,6 @@ function getVoterDetails(id) {
     var captch = $('#captch').val();
     var voterid = $('#voters_' + id).val();
     GoURL('https://electoralsearch.in/Home/searchVoter?epic_no=' + voterid + '&page_no=1&results_per_page=10&reureureired=ca3ac2c8-4676-48eb-9129-4cdce3adf6ea&search_type=epic&state=S22&txtCaptcha=' + captch);
-
     $('#voters_raw_data_' + id).focus();
 }
 

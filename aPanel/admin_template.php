@@ -20,8 +20,13 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
     <meta name="keywords"
         content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="#">
-    <?php include 'admin_script.php';?>
     <?php include 'admin_style.php';?>
+        <!-- Required Jquery -->
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
+    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -214,5 +219,6 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
         <div id="loader"></div>
     </div>
 </body>
+<?php include 'admin_script.php';?>
 
 </html>
