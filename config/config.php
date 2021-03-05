@@ -11,7 +11,7 @@ if ($dev_server) {
     define("BA_DBUSER", "root");
     define("BA_DBPASSWORD", "");
     define("BA_DBNAME", "voterslist");
-    define('BASE_URL', 'http://192.168.0.111/varanasi-contt/');
+    define('BASE_URL', 'http://localhost/varanasi-contt/');
 
     // define("BA_DBHOST", "localhost");
     // define("BA_DBUSER", "masterm6_voterslist");
@@ -59,4 +59,6 @@ define("ADMIN_IMAGES", BASE_URL . 'assets/images');
 define("ADMIN_ICON", BASE_URL . 'assets/icon');
 
 define("USERS_DIR", ADMIN_URL . '/users');
-define("BOOTH_DIR", ADMIN_URL . '/booth');
+define("BOOTH_DIR", ADMIN_URL . '/newbooth');
+define("ADDRESS_DIR", ADMIN_URL . '/addaddress');
+

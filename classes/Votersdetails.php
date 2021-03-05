@@ -7,6 +7,12 @@ class Votersdetails {
         $result = dB::mExecuteSql($booth);
         return $result;	        
     }
+    function getBooth($id){
+        $booth ="SELECT * FROM `".TBL_BOOTH."` WHERE id ='$id'"; 
+        $result = dB::sExecuteSql($booth);
+        return $result;	
+    }
+
     function getBoothBranch($id){
         $branch ="SELECT * FROM `".TBL_BOOTH_BRANCH."` WHERE booth_id ='$id'"; 
         $result = dB::mExecuteSql($branch);

@@ -14,6 +14,7 @@ define("TBL_MEMBER", "tbl_member");
 define("TBL_SCHEMES", "tbl_schemes"); 
 
 define("TBL_VOTERS_RAW_DATA", "tbl_voters_rawdata"); 
+define("TBL_VOTERS_NEW_RAW_DATA", "tbl_voters_new_rawdata"); 
 define("TBL_VOTERS_LIST", "tbl_voters_split_json"); 
 define("TBL_VOTERS_DETAILS", "tbl_voters_details"); 
 ?>

@@ -10,23 +10,30 @@ function main() {   ?>
       <div class="card">
          <div class="card-header">
             <br>
-            <h4 style="text-align:center"> Upload Voter List </h4>
+            <h4 style="text-align:center"> Upload Booth Voters </h4>
          </div>
          <div class="card-body">
 
 
             <form action="javascript:void(0)" id="formData" method="post" enctype="multipart/form-data">
-                  <!-- <select style="width:50%;margin:auto;diplay:table;" name="added_by" class="form-control" required> -->
-                  <!-- <option>Select</option> -->
-                  <?php 
-                  // $voter ="SELECT * FROM `".TBL_USERS."`"; 
-                  // $result = dB::mExecuteSql($voter);
-                  // if(count($result)>0) {
-                  // 	foreach($result as $key=>$val) {
-                  // 		echo '<option value="'.$val->id.'">'.$val->name.'</option>';
-                  // }} 
-               ?>
-                  <!-- </select> -->
+                <div class="form-group row">
+                     <div class="col-sm-4">
+                        <select id='searchByState' name="state_id" class="form-control" required>
+                           <option value='' disabled selected>--Select State--</option>
+                        </select>
+                     </div>
+                     <div class="col-sm-4">
+                        <select id='searchByDistrict' name="district_id" class="form-control" required>
+                           <option value='' disabled selected>--Select District--</option>
+                        </select>
+                        <span id="total_dist"></span>          
+                     </div>
+                     <div class="col-sm-4">
+                        <select id='searchByConstituency' name="lg_const_id" class="form-control" required>
+                           <option value='' disabled selected>--Select Constituency--</option>
+                        </select>
+                     </div>
+                  </div>
                   
                   <input type="number" name="ac_no" class="form-control boothNo" placeholder="Enter AC Number"/>    
                   <input type="number" name="booth_number" class="form-control boothNo" placeholder="Enter Booth Number" required/>										   

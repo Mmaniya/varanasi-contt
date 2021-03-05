@@ -325,6 +325,18 @@ function getallConstituency(id) {
         }
     });
 }
+$('#newBooth').hide();
+
+function newBooth() {
+    $('#oldBooth').hide();
+    $('#newBooth').show();
+}
+
+function oldBooth() {
+    $('#oldBooth').show();
+    $('#newBooth').hide();
+}
+
 
 function getallBooth() {
     getVotersData();
@@ -368,4 +380,17 @@ function selectUser(type) {
         $('#selectBooth').hide();
 
     }
+}
+
+
+function selectState() {
+    param = { 'act': 'getallState' }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#searchByState').html(data);
+        }
+    });
 }

@@ -78,7 +78,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                         <a class="mobile-menu" id="mobile-collapse" href="#">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a href="<?php ADMIN_URL ?>/dashboard.php">
+                        <a href="<?php echo ADMIN_URL ?>/dashboard.php">
                             <!-- <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190"
                                 alt="Theme-Logo"> -->
                                 <h3>VARANASI</h3>
@@ -162,6 +162,12 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     <a href="<?php echo BOOTH_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="fa fa-id-card-o"></i></span>
                                         <span class="pcoded-mtext">Add Booth </span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="<?php echo ADDRESS_DIR ?>/index.php">
+                                        <span class="pcoded-micon"><i class="fa fa-id-card-o"></i></span>
+                                        <span class="pcoded-mtext">Add Address </span>
                                     </a>
                                 </li>
                                 <?php } ?>
