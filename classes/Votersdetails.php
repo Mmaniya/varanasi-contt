@@ -119,5 +119,32 @@ class Votersdetails {
         return $result;
     }
 
+    function getBoothCount($lg_id){
+
+       $qry = 'SELECT * FROM '.TBL_VOTERS_DETAILS.' WHERE lg_const_id= '.$lg_id.' GROUP BY booth_id';
+        $result = dB::mExecuteSql($qry);
+        return $result;
+
+    }
+
+    function getEvoterCount($lg_id){
+
+        $qry = 'SELECT * FROM '.TBL_VOTERS_DETAILS.' WHERE lg_const_id= '.$lg_id;
+        $result = dB::mExecuteSql($qry);
+        return $result;
+
+    }
+
+    // function getTvoterCount($lg_id){
+        
+        // echo $qry = 'SELECT * FROM '.TBL_LG_CONSTITUENCY.' WHERE id = '.$lg_id;
+        // $result = dB::sExecuteSql($qry);
+        
+        // echo $qry1 = 'SELECT * FROM '.TBL_VOTERS_RAW_DATA.' WHERE ac_no = '.$result->lg_const_number;
+        // $result1 = dB::mExecuteSql($qry1);
+        // return $result1;
+
+    // }
+
 
 }

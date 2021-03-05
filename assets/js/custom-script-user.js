@@ -273,3 +273,99 @@ function GoURL(url) {
     }
 
 }
+
+
+// SELECT SUPER ADMIN
+
+function getselectState(id) {
+    $('.preloader').show();
+    param = { 'act': 'getallDistrict', 'state_id': id }
+    ajax({
+        a: "users/user-ajax",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('.preloader').hide();
+            $('#searchByDistrict').html(data);
+            $('#searchByConstituency').html('');
+            $('#searchByBooth').html('');
+            getVotersData();
+        }
+    });
+}
+
+function getallDistrict(id) {
+    var state_id = $('#searchByDistrict').val();
+    $('.preloader').show();
+    param = { 'act': 'getallConstituency', 'state_id': state_id, 'district_id': id }
+    ajax({
+        a: "users/user-ajax",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('.preloader').hide();
+            $('#searchByConstituency').html(data);
+            $('#searchByBooth').html('');
+            getVotersData();
+        }
+    });
+}
+
+function getallConstituency(id) {
+    $('.preloader').show();
+    param = { 'act': 'getbyallBooth', 'const_id': id }
+    ajax({
+        a: "users/user-ajax",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('.preloader').hide();
+            $('#searchByBooth').html(data);
+            getVotersData();
+        }
+    });
+}
+
+function getallBooth() {
+    getVotersData();
+}
+
+function getVotersData() {
+    $("#voterTable").DataTable().destroy()
+    $('#voterTable').DataTable({
+        'processing': true,
+        'serverSide': true,
+        'responsive': true,
+        'serverMethod': 'post',
+        'dom': 'Bfrtip',
+        'buttons': [{
+                'extend': 'excelHtml5',
+                'title': 'Data export'
+            },
+            {
+                'extend': 'pdfHtml5',
+                'title': 'Data export'
+            }
+        ],
+        'ajax': {
+            'url': ' getvotersdtls.php',
+            'data': function(data) {
+                data.searchByState = $('#searchByState').val();
+                data.searchByDist = $('#searchByDistrict').val();
+                data.searchByConstituency = $('#searchByConstituency').val();
+                data.searchByBooth = $('#searchByBooth').val();
+            }
+        }
+
+    });
+}
+
+function selectUser(type) {
+
+    if (type == 'DE') {
+        $('#selectBooth').show();
+    } else {
+        $('#selectBooth').hide();
+
+    }
+}

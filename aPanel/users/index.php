@@ -43,9 +43,11 @@
             $statusArr = array('A' => 'checked', 'I' => '');
             $userList = $userObj->getUserList(); 
             if(count($userList)>0) {
-                foreach($userList as $key=>$val) { ?>
+                $i = 0;
+                foreach($userList as $key=>$val) {
+                    if($val->user_type != 'SA'){ ?>
                 <tr>
-                    <td><?php echo $key+1;?></td>
+                    <td><?php echo $i;?></td>
                     <td><?php echo $val->name;?></td>
                     <td><?php echo $val->email;?></td>
                     <td><?php echo $val->phone;?></td>
@@ -99,7 +101,7 @@
                         </label>
                     </td>
                 </tr>
-            <?php } } ?>
+            <?php } $i++; }} ?>
             </tfoot>
             </table>
         </div>

@@ -117,13 +117,13 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <span><?php echo $_SESSION['username'] ?></span>
-                                        <i class="feather icon-chevron-down"></i>
+                                        <i class="fa fa-caret-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
                                         data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
                                             <a href="<?php echo ADMIN_URL ?>/logout.php">
-                                                <i class="feather icon-log-out"></i> Logout
+                                                <i class="fa fa-sign-out"></i> Logout
                                             </a>
                                         </li>
                                     </ul>

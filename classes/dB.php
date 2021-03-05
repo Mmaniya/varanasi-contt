@@ -32,7 +32,7 @@
      public static function sExecuteSql($Sql){
         //$con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
          $dbconn = new DatabaseConnection();               
-          mysqli_query($con,'SET NAMES utf8');
+          mysqli_query($dbconn->dbconn,'SET NAMES utf8');
           $Resource = mysqli_query($dbconn->dbconn,$Sql);	
          $Row = @mysqli_fetch_object($Resource) ;
          @mysqli_free_result($Resource);
@@ -40,10 +40,11 @@
      }
      
      public static function mExecuteSql($Sql){
-         $con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
+         //$con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
          $dbconn = new DatabaseConnection();
+         mysqli_set_charset($dbconn->dbconn, 'utf8');
          mysqli_query($dbconn->dbconn,'SET NAMES utf8');
-         $Resource = mysqli_query($con,$Sql);	
+         $Resource = mysqli_query($dbconn->dbconn,$Sql);	
          while($Row = @mysqli_fetch_object($Resource)) {$Rs[] = $Row;}
          @mysqli_free_result($Resource);
          return $Rs ;

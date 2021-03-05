@@ -2,13 +2,13 @@
 class Users {
 
     public function getUserList() {
-        $user_qry ="select * from `".TBL_ADMIN_USER."` ";   
+        $user_qry ="select * from `".TBL_ADMIN_USER."`";   
         $rsUser = dB::mExecuteSql($user_qry); 	
         return $rsUser;
     }
 
     function addNewUsers($param){
-        $query = Table::insertData(array('tableName' => TBL_ADMIN_USER, 'fields' => $param, 'showSql' => 'Y')); 
+        $query = Table::insertData(array('tableName' => TBL_ADMIN_USER, 'fields' => $param, 'showSql' => 'N')); 
         $rsData = explode('::',$query);
         return  $rsData[0];
     }

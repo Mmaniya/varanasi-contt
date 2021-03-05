@@ -46,6 +46,17 @@ if($action == 'getallConstituency'){
 
 }
 
+if($action == 'getbyallBooth'){
+    ob_clean();
+       $rawDataObj->const_id= $_POST['const_id'];    
+       $getBooth = $rawDataObj->get_booth_dts_by_lg(); ?>
+           <option value="" selected disabled>Select Booth</option> <?php 
+          foreach($getBooth as $K => $V) { ?>       
+            <option value="<?php echo $V->id ?>"><?php echo $V->booth_no ?> - <?php echo $V->booth_name ?></option>
+   <?php  } 	
+   exit();  
+}
+
 if($action == 'getallBooth'){
      ob_clean();
         $rawDataObj->const_id= $_POST['const_id'];    
