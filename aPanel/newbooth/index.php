@@ -38,29 +38,21 @@ function main()
                               <option value='' disabled selected>Select Constituency</option>
                            </select>
                         </div>
-                     </div>
-           
-        
-                  <span id="uploadFile">  
+                     </div>    
+              
 
-                     <div class="row justify-content-center" id="oldBooth">
-                        <div class="form-group col-sm-4">
-                           <select id='searchByBooth' name="booth_id" class="form-control">
-                              <option value='' disabled selected>Select Booth</option>
-                           </select>
-                        </div>
-                        <div class="form-group col-sm-3">
-                        <a href="javascript:void(0);" onclick="newBooth();" class="form-control btn btn-primary"><i class="fa fa-plus"></i> New Booth </a>
-                        </div>
-                     </div>
 
-                     <div class="row justify-content-center" id="newBooth">
-                           <input type="number"  name="booth_number" class="form-control col-sm-4" style="height: 40px;" placeholder="Enter Booth Number" />										   
-                           <div class="form-group col-sm-3">
-                        <a href="javascript:void(0);" onclick="oldBooth();" class="form-control btn btn-primary"><i class="fa fa-times"></i> Existing Booth </a>
+
+                  <span id="uploadFile"> 
+                     <div class="row justify-content-center">
+                        <div class="form-group">
+                           <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="existingBooth()">Existing Booth</a>                                                
+                           <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="newBooth()">New Booth</a>                           
                         </div>
-                     </div>
-            
+                     </div>           
+                     <div class="row justify-content-center" id="boothDetails"></div>
+
+
                      <input type="file"  name="fileToUpload" id="fileToUpload"  accept=".txt" required> 
                      <input type="submit" class="btn btn-primary mb-2" id="upload_button" value="Upload" name="submit">
                   </span>
@@ -118,17 +110,17 @@ function main()
    });
    
    $('#searchByConstituency').change(function(){
-       var const_id = $(this).val();
-       param = {'act':'getbyallBooth','const_id':const_id}
-       ajax({
-           a:"ajaxfile",
-           b:param,
-           c:function(){},
-           d:function(data){
-               $('#searchByBooth').html(data);
+      //  var const_id = $('#searchByConstituency').val();
+      //  param = {'act':'getbyallBooth','const_id':const_id}
+      //  ajax({
+      //      a:"ajaxfile",
+      //      b:param,
+      //      c:function(){},
+      //      d:function(data){
+      //          $('#searchByBooth').html(data);
                $('#uploadFile').show();
-           }
-       });
+      //      }
+      //  });
    });
 
   });

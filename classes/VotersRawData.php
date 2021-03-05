@@ -338,4 +338,11 @@ class VotersRawData {
         $result = dB::sExecuteSql($booth);
         return $result; 
     }
+
+    function addNewBooth($param){
+		$query = Table::insertData(array('tableName' => TBL_BOOTH, 'fields' => $param, 'showSql' => 'N'));
+        $result = explode('::', $query);
+        return $result[2]; 
+
+    }
 }

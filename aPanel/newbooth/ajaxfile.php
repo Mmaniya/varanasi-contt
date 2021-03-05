@@ -54,3 +54,27 @@ if($action == 'getbyallBooth'){
    <?php  } 	
    exit();  
 }
+
+if($action == "newBooth"){
+    ob_clean(); ?>
+    <div class="row justify-content-center" id="newBooth">
+    <!-- <div class="form-group col-sm-12 row"> -->
+        <input type="number" name="booth_no" class="form-control col-sm-4" style="height: 40px; margin:10px;" placeholder="Booth Number" />										              
+        <input type="text"  name="booth_name" class="form-control col-sm-4" style="height: 40px;margin:10px;" placeholder="Booth Name" />
+        <input type="text"  name="booth_tname" class="form-control col-sm-4 " style="height: 40px;margin:10px;" placeholder="Booth Name (Language Name)" />
+        <input type="text"  name="ps_name" class="form-control col-sm-4" style="height: 40px;margin:10px;" placeholder="Polling Station Name" />
+        <input type="text"  name="ps_tname" class="form-control col-sm-4" style="height: 40px;margin:10px;" placeholder="Polling Station Nam (Language Name)" />
+    <!-- </div> -->
+    </div>
+    <?php exit();
+}
+
+if($action == 'oldBooth'){
+    ob_clean(); ?>
+        <div class="form-group col-sm-4">
+            <select id='searchByBooth' name="booth_id" class="form-control">
+                <option value='' disabled selected>Select Booth</option>
+            </select>
+        </div>
+    <?php exit();
+}

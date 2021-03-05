@@ -18,18 +18,36 @@ ini_set("auto_detect_line_endings", true);
     }
     return $result;
 }
-    if($_POST['booth_number'] == '' && $_POST['booth_id'] !=''){
-        $getBooth = Votersdetails::getBooth($_POST['booth_id']);
-            $booth_number = $getBooth->booth_no;
-            $booth_id = $getBooth->id;
-    }else{
-        $booth_id = 0;
-        $booth_number = $_POST['booth_number'];
-    }
+
+
+    // if($_POST['booth_number'] == '' && $_POST['booth_id'] !=''){
+    //     $getBooth = Votersdetails::getBooth($_POST['booth_id']);
+    //         $booth_number = $getBooth->booth_no;
+    //        
+    // }else{
+    //     $booth_id = 0;
+    //     $booth_number = $_POST['booth_number'];
+    // }
     // $ac_no = $_POST['ac_no'];
     $state_id = $_POST['state_id'];
     $dist_id = $_POST['dist_id'];
     $conts_id = $_POST['conts_id'];
+
+    if($_POST['booth_id'] != ''){
+        $booth_id = $_POST['booth_id'];
+    }else{
+        $param['lg_id'] = $_POST['booth_no'];
+        $param['booth_no'] = $_POST['booth_no'];
+        $param['booth_name'] = $_POST['booth_name'];
+        $param['booth_tname'] = $_POST['booth_tname'];
+        $param['ps_no'] = $_POST['booth_no'];
+        $param['ps_name'] = $_POST['ps_name'];
+        $param['ps_tname'] = $_POST['ps_tname'];
+        $getBooth = VotersRawData::addNewBooth($param);        
+        $booth_id = $getBooth;
+    }
+
+
 
     if ($_FILES['fileToUpload']['name'] != '') {
         $newFileName = '';
@@ -150,7 +168,7 @@ $totalRecords =0;
 			$param['dist_id']= $dist_id;
 			$param['conts_id']= $conts_id;
             $param['booth_id']= $booth_id;
-			$param['booth_number']= $booth_number;
+			// $param['booth_number']= $booth_number;
 			$param['voter_id']= $voterId;
 			// $param['address']=input_string($address);
 			$param['added_by']= $_POST['added_by'];
@@ -165,7 +183,7 @@ $totalRecords =0;
                 $param['dist_id']= $dist_id;
                 $param['conts_id']= $conts_id;
                 $param['booth_id']= $booth_id;
-                $param['booth_number']= $booth_number;				
+                // $param['booth_number']= $booth_number;				
 				// $param['address']=input_string($address);
 				$where= array('voter_id'=>$voterId);	
 				$result = Table::updateData(array('tableName' => TBL_VOTERS_NEW_RAW_DATA, 'fields' => $param, 'where' => $where, 'showSql' => 'N')); 

@@ -325,17 +325,14 @@ function getallConstituency(id) {
         }
     });
 }
-$('#newBooth').hide();
+// $('#newBooth').hide();
 
-function newBooth() {
-    $('#oldBooth').hide();
-    $('#newBooth').show();
-}
 
-function oldBooth() {
-    $('#oldBooth').show();
-    $('#newBooth').hide();
-}
+
+// function oldBooth() {
+//     $('#oldBooth').show();
+//     $('#newBooth').hide();
+// }
 
 
 function getallBooth() {
@@ -391,6 +388,45 @@ function selectState() {
         c: function() {},
         d: function(data) {
             $('#searchByState').html(data);
+        }
+    });
+}
+
+function getBooth() {
+    var const_id = $('#searchByConstituency').val();
+    param = { 'act': 'getbyallBooth', 'const_id': const_id }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#searchByBooth').html(data);
+            $('#uploadFile').show();
+        }
+    });
+}
+
+function existingBooth() {
+    param = { 'act': 'oldBooth' }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            getBooth();
+            $('#boothDetails').html(data);
+        }
+    });
+}
+
+function newBooth() {
+    param = { 'act': 'newBooth' }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#boothDetails').html(data);
         }
     });
 }

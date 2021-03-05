@@ -161,7 +161,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 <li class="">
                                     <a href="<?php echo BOOTH_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="fa fa-id-card-o"></i></span>
-                                        <span class="pcoded-mtext">Add Booth </span>
+                                        <span class="pcoded-mtext">Add Voters </span>
                                     </a>
                                 </li>
                                 <li class="">
@@ -172,7 +172,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 </li>
                                 <?php } ?>
 
-                                <?php if($_SESSION['admin_role'] == 'DE' || $_SESSION['admin_role'] == 'SA'){ ?>
+                                <?php  if($_SESSION['admin_role'] == 'DE' || $_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
                                     <a href="<?php echo BOOTH_DIR ?>/update_raw_voters.php">
                                         <span class="pcoded-micon"><i class="fa fa-hand-o-right"></i></span>
@@ -180,7 +180,6 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                     </a>
                                 </li>
                                 <?php } ?>
-
 
 
                                 <!-- <li class="">
