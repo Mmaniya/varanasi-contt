@@ -5,6 +5,7 @@ require ABSPATH . "/includes.php";
 $voterObj = new Votersdetails;
 $rawDataObj = new VotersRawData; 
 $userObj = new Users; 
+// $getUser = Users::getUserDts($_POST['user']);
 
 $action = $_POST['act'];
 
@@ -13,10 +14,9 @@ if($action == 'getallState'){ ?>
 
     <option value="" selected disabled>Select State</option> <?php 
     $getState = $rawDataObj->get_state_dts();
-
     foreach($getState as $key => $value){  if($value->st_code != '') { ?>
         
-        <option value="<?php echo $value->id ?>"  ><?php echo $value->state_name ?></option>
+        <option value="<?php echo $value->id ?>" <?php if( $value->id == $_POST['state_id']){ echo 'selected'; } ?>  ><?php echo $value->state_name ?></option>
     
     <?php } }
 }
@@ -30,7 +30,7 @@ if($action == 'getallState'){ ?>
     <option value="" selected disabled>Select District </option> <?php       
     foreach($getDist as $key => $value){  if($value->dist_no != '') { 
         ?>
-    <option value="<?php echo $value->id ?>" ><?php echo $value->district_name ?></option>
+    <option value="<?php echo $value->id ?>" <?php if( $value->id == $_POST['dist_id']){ echo 'selected'; } ?>><?php echo $value->district_name ?></option>
     <?php } }
 
 }
@@ -41,7 +41,7 @@ if($action == 'getallConstituency'){
     $getDist = $rawDataObj->get_conts_dts(); ?>
     <option value="" selected disabled>Select Constituency</option> <?php 
     foreach($getDist as $key => $value){  ?>
-    <option value="<?php echo $value->id ?>"><?php echo $value->lg_const_number ?> - <?php echo $value->lg_const_name ?></option>
+    <option value="<?php echo $value->id ?>" <?php if( $value->id == $_POST['const_id']){ echo 'selected'; } ?>><?php echo $value->lg_const_number ?> - <?php echo $value->lg_const_name ?></option>
     <?php } 
 
 }

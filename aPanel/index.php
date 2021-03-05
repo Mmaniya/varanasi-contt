@@ -1,14 +1,17 @@
 <?php 
 define('ABSPATH',  dirname(__DIR__, 1));
 require ABSPATH . "/includes.php";
-
-if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
-    foreach ($_SESSION as $K => $V) {
-        unset($_SESSION[$K]);
-    }
-    session_destroy();
-    session_unset();
-}?>
+// if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
+//     foreach ($_SESSION as $K => $V) {
+//         unset($_SESSION[$K]);
+//     }
+//     session_destroy();
+//     session_unset();
+// }
+if ($_SESSION['useremail'] != '') {
+    echo '<script>window.location.href = "dashboard.php"</script>';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -88,12 +91,6 @@ if ($_SESSION['useremail'] != '' && $_SESSION['username']) {
     <!-- Required Jquery -->
     <?php include 'admin_script.php';?>
 
-    <!-- <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/jquery-ui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/popper.js/popper.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="<?php echo ADMIN_JS ?>/common-pages.js"></script>
-     <script type="text/javascript" src="<?php echo ADMIN_JS ?>/custom-script.js"></script> -->
 
         <script>
         $("form#formSignInAdmin").submit(function(){

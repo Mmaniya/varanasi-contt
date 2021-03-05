@@ -278,10 +278,26 @@ class VotersRawData {
 
     public function get_state(){
         
-        $state ="SELECT * FROM `".TBL_STATE."` WHERE id = ".$this->st_id; 
+         $state ="SELECT * FROM `".TBL_STATE."` WHERE id = ".$this->st_id; 
         $result = dB::sExecuteSql($state);
         return $result; 
     }
+
+    public function get_dist(){
+        
+        $dist ="SELECT * FROM `".TBL_DISTRICT."` WHERE id = ".$this->dist_id; 
+        $result = dB::sExecuteSql($dist);
+        return $result; 
+    }
+
+
+   public function get_const(){        
+        $const ="SELECT * FROM `".TBL_LG_CONSTITUENCY."` WHERE id = ".$this->const_id; 
+        $result = dB::sExecuteSql($const);
+        return $result; 
+    }
+
+
 
     public function get_dist_dts(){   
         if(!empty($this->state_id)){

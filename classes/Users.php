@@ -21,6 +21,11 @@ class Users {
         return  $rsData[0];
     }
 
+    function getUserDts($id){
+        $user_qry ="select * from `".TBL_ADMIN_USER."` WHERE id = $id ";   
+        $rsUser = dB::sExecuteSql($user_qry); 	
+        return $rsUser;
+    }
 
 
 }

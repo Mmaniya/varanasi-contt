@@ -54,27 +54,45 @@
                     <td><?php echo userType($val->user_type);?></td>
 
                     <td>
-                        <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#large-Modal<?php echo $val->id?>">View</button>
+                        <button type="button" class="btn btn-primary waves-effect btn-sm" data-toggle="modal" data-target="#large-Modal<?php echo $val->id?>">View</button>
                         <div class="modal fade" id="large-Modal<?php echo $val->id?>" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">View Booth</h4>
+                                        <h4 class="modal-title"> <?php if($val->user_type == 'DE'){ echo 'View Booth'; }else { echo 'View Constituency'; } ?></h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <i class="fa fa-times" aria-hidden="true"></i>                                        </button>
                                     </div>
                                     <div class="modal-body">
+                                    <?php
+                                        $rawDataObj = new VotersRawData; 
+                                        $rawDataObj->st_id = $val->state_id;   
+                                        $getState = $rawDataObj->get_state(); 
+
+                                        $rawDataObj->dist_id = $val->district_id;   
+                                        $getDist = $rawDataObj->get_dist(); 
+
+                                        $rawDataObj->const_id = $val->lg_const_id;   
+                                        $getConst = $rawDataObj->get_const();                                                      
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-sm-12"> State : <strong><?php echo $getState->state_name; ?></strong></div>
+                                        <div class="col-sm-12"> District Name : <strong><?php echo $getDist->district_name; ?></strong> </div>
+                                        <div class="col-sm-12">Constituency No & Name : <strong><?php echo $getConst->lg_const_number; ?> - <?php echo $getConst->lg_const_name; ?></strong> </div>
+                                    </div>
+                                    <hr>
+                                    <?php if($val->user_type == 'DE'){  ?>
                                     <ul class="scroll-list cards" style="overflow: hidden; width: auto; height: 300px;">
                                     <?php $booth_id =  explode(',',$val->booth_id);  
                                         if($booth_id[0] != 0){
                                         foreach($booth_id as $key => $value){
-                                            $rawDataObj = new VotersRawData; 
                                             $rawDataObj->booth_id= $value;    
                                             $getBooth = $rawDataObj->get_booth_name(); 
+                                                                    
                                             if($getBooth->booth_no !=''){
                                             ?>
-                                                <li>
-                                                    <h6><strong><?php echo $getBooth->booth_no; ?></strong> - <?php echo $getBooth->booth_name; ?></h6>
+                                                <li>                                                    
+                                                    <h6>Booth No & Name: <strong><?php echo $getBooth->booth_no; ?> - <?php echo $getBooth->booth_name; ?></strong></h6>
                                                 </li><hr>
                                             <?php 
                                         }}}else{ ?>
@@ -82,6 +100,7 @@
                                                     <h6>Booth Not Added</h6>
                                                 </li><hr>
                                         <?php }
+                                    }
                                     ?>                                        
                                         </ul>
                                     </div>                        

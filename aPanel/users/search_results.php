@@ -9,10 +9,7 @@ if($_GET['type'] == 'search_booth'){
 	$lg_const_id = $_GET['lg_const_id'];
 	$qry ="select * from `".TBL_BOOTH."` where lg_id =".$lg_const_id." and  booth_no like '%".$_GET['search_string']."%'"; 
 	$rsBooth = dB::mExecuteSql($qry); 	
-	
-	
-	
-    		
+	    		
 	 if(count($rsBooth)>0) {
 		 foreach($rsBooth as $key=>$val) { 
 			    $userQry ="SELECT id,name FROM ".TBL_ADMIN_USER." WHERE FIND_IN_SET(".$val->id.",booth_id) > 0"; 

@@ -23,10 +23,13 @@
             <form action="javascript:void(0);" id="add_users">
                <input type="hidden" value="add_edit_users" name="act">
                <input type="hidden" value="<?php echo $_POST['user_id']; ?>" name="id">
+               <input type="hidden" value="<?php echo $state_id; ?>" id="state">
+               <input type="hidden" value="<?php echo $district_id; ?>" id="dist">
+               <input type="hidden" value="<?php echo $lg_const_id; ?>" id="lg_const">
                <div class="row">
                   <div class="col-md-6">
                      <div class="form-group"> 			 
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php echo $name;?>">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php echo $name;?>" required>
                      </div>
                   </div>
                   <div class="col-md-6">
@@ -44,7 +47,7 @@
                   <div class="col-md-6">
                      <div class="form-group">
                         <select name="user_type" id="user_type" onchange="selectUser(this.value)" class="form-control" required>
-                           <option>Select</option>
+                           <option value="" disapled>Select</option>
                            <option value="A" <?php if($user_type=='A') { echo 'selected'; }?>>Admin</option>
                            <option value="DE" <?php if($user_type=='DE') { echo 'selected'; }?>>Data Entry</option>
                         </select>
@@ -115,7 +118,7 @@
                   }
                </style>
                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary" id="addUser">Submit</button>
+                  <button type="submit" class="btn btn-primary " id="addUser">Submit</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                </div>
             </form>
@@ -129,19 +132,48 @@
 </style>
 <script> 
 $( document ).ready(function() {
-
-        $("#addUser").prop('disabled', true);  
-});
-   var usertype = $('#getUserID').val();
-   param = {'act':'getallState', 'user': usertype }
+   //$("#addUser").addClass('btn-disabled disabled');  
+   var userType = $('#user_type').val();
+   selectUser(userType);
+   // Select State   
+   var state = $('#state').val();
+   param = {'act':'getallState', 'state_id': state }
    ajax({
+         a:"user-ajax",
+         b:param,
+         c:function(){},
+         d:function(data){
+            $('#searchByState').html(data);
+         }
+   });
+
+   var dist = $('#dist').val();
+   if(dist != ''){
+      param = {'act':'getallDistrict','state_id':state, 'dist_id':dist}
+      ajax({
+         a:"user-ajax",
+         b:param,
+         c:function(){},
+         d:function(data){
+            $('#searchByDistrict').html(data);            
+         }
+      });
+   }
+
+   var lg_const = $('#lg_const').val();
+   if(lg_const != ''){
+      param = {'act':'getallConstituency','state_id':state, 'district_id':dist, 'const_id':lg_const }
+       ajax({
            a:"user-ajax",
            b:param,
            c:function(){},
            d:function(data){
-               $('#searchByState').html(data);
+               $('#searchByConstituency').html(data);
            }
-   });
+       });
+   }
+
+});
    
    $('#search_text').autocomplete({ 
        source: function(request, response ) {
