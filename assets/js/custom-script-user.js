@@ -1,8 +1,8 @@
-gettableData();
+// gettableData();
 
-function gettableData() {
-    $("#user-table").DataTable().destroy()
-    var dataTable = $('#user-table').DataTable({
+// function gettableData() {
+    // $("#user-table").DataTable().destroy()
+    // var dataTable = $('#user-table').DataTable({
         // 'processing': true,
         // 'serverSide': true,
         // 'responsive': true,
@@ -12,8 +12,8 @@ function gettableData() {
         //         'data': function(data){  
 
         //         }
-    });
-}
+//     });
+// }
 
 function add_edit_user(user_id) {
     param = { 'act': 'add_edit_users', 'user_id': user_id }
@@ -429,4 +429,55 @@ function newBooth() {
             $('#boothDetails').html(data);
         }
     });
+}
+
+function loadStateList(user_id) {    
+    param = { 'act': 'get_role_by_state', 'user_id': user_id }
+    ajax({
+        a: "update_raw_voters",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#select_state').html(data);             
+        }
+    });
+}
+
+function getDistrictList(state_id) {
+    param = { 'act': 'get_role_by_district', 'state_id': state_id }
+    ajax({
+        a: "update_raw_voters",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#select_district').html(data);             
+        }
+    });
+    
+}
+
+function getConstByDistrict(district_id) {
+    param = { 'act': 'get_role_by_const', 'district_id': district_id }
+    ajax({
+        a: "update_raw_voters",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#select_constituency').html(data);             
+        }
+    });
+    
+}
+
+function getBoothByConst(lg_const_id) {
+    param = { 'act': 'get_role_by_booth', 'lg_const_id': lg_const_id }
+    ajax({
+        a: "update_raw_voters",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#select_booth').html(data);             
+        }
+    });
+    
 }

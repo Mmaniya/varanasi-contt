@@ -149,7 +149,7 @@ if($action == 'gettotalrecords'){
     $qry ="select  count(*) as total,
     sum(case when raw_data != '' then 1 else 0 end) total_insert,
     sum(case when raw_data = '' then 1 else 0 end) total_noninsert
-    from ".TBL_VOTERS_RAW_DATA." WHERE booth_number =".$_POST['booth_no'].""; 
+    from ".TBL_VOTERS_NEW_RAW_DATA." WHERE booth_id =".$_POST['booth_no'].""; 
 
     $result = dB::sExecuteSql($qry);
     

@@ -5,7 +5,7 @@ class VotersRawData {
     public function getVotersId(){
 
         $limit = "limit ".$this->limit.",100";
-        $voter ="SELECT * FROM `".TBL_VOTERS_RAW_DATA."` where booth_number = ".$this->group_by ." AND is_inserted = 'N' AND raw_data = ''  ORDER BY id ASC ".$limit; 
+        $voter ="SELECT * FROM `".TBL_VOTERS_NEW_RAW_DATA."` where booth_id = ".$this->group_by ." AND is_inserted = 'N' AND raw_data = ''  ORDER BY id ASC ".$limit; 
         $result = dB::mExecuteSql($voter);
         return $result;	
     }
@@ -276,8 +276,7 @@ class VotersRawData {
         return $result; 
     }
 
-    public function get_state(){
-        
+    public function get_state(){         
          $state ="SELECT * FROM `".TBL_STATE."` WHERE id = ".$this->st_id; 
         $result = dB::sExecuteSql($state);
         return $result; 
