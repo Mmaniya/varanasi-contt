@@ -5,7 +5,7 @@ class VotersRawData {
     public function getVotersId(){
 
         $limit = "limit ".$this->limit.",100";
-        $voter ="SELECT * FROM `".TBL_VOTERS_RAW_DATA."` where booth_number = ".$this->group_by ." AND is_inserted = 'N' AND raw_data = ''  ORDER BY id ASC ".$limit; 
+        $voter ="SELECT * FROM `".TBL_VOTERS_RAW_DATA."` where booth_id = ".$this->group_by ." AND is_inserted = 'N' AND raw_data = ''  ORDER BY id ASC ".$limit; 
         $result = dB::mExecuteSql($voter);
         return $result;	
     }
@@ -16,7 +16,7 @@ class VotersRawData {
         if(!empty($this->voterid)){
             $param['is_inserted'] = 'Y';
             $param['raw_data'] = input_string($this->voterRawdata);
-            $param['updated_by'] =  $this->userid;
+            $param['added_by'] =  $this->userid;
  
             $where= array('voter_id'=>$this->voterid);	
             $result = Table::updateData(array('tableName' => TBL_VOTERS_RAW_DATA, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));

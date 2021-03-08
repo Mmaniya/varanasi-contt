@@ -127,17 +127,17 @@ class Votersdetails {
 
     function getBoothCount($lg_id){
 
-       $qry = 'SELECT * FROM '.TBL_VOTERS_DETAILS.' WHERE lg_const_id= '.$lg_id.' GROUP BY booth_id';
-        $result = dB::mExecuteSql($qry);
+       $qry = 'SELECT count(*) as total_booth FROM '.TBL_VOTERS_DETAILS.' WHERE lg_const_id= '.$lg_id.' GROUP BY booth_id';
+        $result = dB::sExecuteSql($qry);
         return $result;
 
     }
 
     function getEvoterCount($lg_id){
 
-        $qry = 'SELECT * FROM '.TBL_VOTERS_DETAILS.' WHERE lg_const_id= '.$lg_id;
-        $result = dB::mExecuteSql($qry);
-        return $result;
+          $qry = 'SELECT count(*) as total_const FROM '.TBL_VOTERS_DETAILS.' WHERE lg_const_id= '.$lg_id;
+        $result = dB::sExecuteSql($qry);
+         return $result;
 
     }
 

@@ -96,23 +96,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 </a>
                             </li>
                         </ul>
-                        <ul class="nav-right">
-                            <!-- <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-bell"></i>
-                                        <span class="badge bg-c-pink">5</span>
-                                    </div>
-                                </div>
-                            </li> -->
-                            <!-- <li class="header-notification">
-                                <div class="dropdown-primary dropdown">
-                                    <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
-                                        <i class="feather icon-message-square"></i>
-                                        <span class="badge bg-c-green">3</span>
-                                    </div>
-                                </div>
-                            </li> -->
+                        <ul class="nav-right">         
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
@@ -150,9 +134,9 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 </li>
                                 <?php if($_SESSION['admin_role'] == 'A' || $_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
-                                    <a href="<?php echo USERS_DIR ?>/index.php">
-                                        <span class="pcoded-micon"><i class="fa fa-users"></i></span>
-                                        <span class="pcoded-mtext">Users</span>
+                                    <a href="<?php echo ADMIN_URL ?>/raw_details.php">
+                                        <span class="pcoded-micon"><i class="fa fa-asterisk"></i></span>
+                                        <span class="pcoded-mtext">Raw Details</span>
                                     </a>
                                 </li>
                                 <?php } ?>
@@ -161,45 +145,34 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                                 <li class="">
                                     <a href="<?php echo BOOTH_DIR ?>/index.php">
                                         <span class="pcoded-micon"><i class="fa fa-id-card-o"></i></span>
-                                        <span class="pcoded-mtext">Add Voters </span>
+                                        <span class="pcoded-mtext">Upload Voter Id</span>
                                     </a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo ADDRESS_DIR ?>/index.php">
+                                    <a href="<?php echo BOOTH_DIR ?>/update_address.php">
                                         <span class="pcoded-micon"><i class="fa fa-id-card-o"></i></span>
-                                        <span class="pcoded-mtext">Add Address </span>
+                                        <span class="pcoded-mtext">Upload Voter Address</span>
                                     </a>
                                 </li>
                                 <?php } ?>
 
-                                <?php  if($_SESSION['admin_role'] == 'DE' || $_SESSION['admin_role'] == 'SA'){ ?>
+                                <?php if($_SESSION['admin_role'] == 'A' || $_SESSION['admin_role'] == 'SA'){ ?>
                                 <li class="">
-                                    <a href="<?php echo BOOTH_DIR ?>/update_raw_voters.php">
+                                    <a href="<?php echo USERS_DIR ?>/index.php">
+                                        <span class="pcoded-micon"><i class="fa fa-users"></i></span>
+                                        <span class="pcoded-mtext">Users</span>
+                                    </a>
+                                </li>
+                                <?php } ?>
+                  
+                                <?php // if($_SESSION['admin_role'] == 'DE' || $_SESSION['admin_role'] == 'SA'){ ?>
+                                <li class="">
+                                    <a href="<?php echo ENTRY_DIR ?>/update_raw_voters.php">
                                         <span class="pcoded-micon"><i class="fa fa-hand-o-right"></i></span>
                                         <span class="pcoded-mtext"> Entry Details </span>
                                     </a>
                                 </li>
-                                <?php } ?>
-
-
-                                <!-- <li class="">
-                                    <a href="<?php echo EMPLOYEE_DIR ?>/index.php">
-                                        <span class="pcoded-micon"><i class="feather icon-user"></i></span>
-                                        <span class="pcoded-mtext">Employees</span>
-                                    </a>
-                                </li> -->
-                                <!-- <li class="">
-                                    <a href="<?php echo CLIENTS_DIR ?>/index.php">
-                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
-                                        <span class="pcoded-mtext">Clients</span>
-                                    </a>
-                                </li> -->
-                                <!-- <li class="">
-                                    <a href="<?php echo LEADS_DIR ?>/index.php">
-                                        <span class="pcoded-micon"><i class="feather icon-airplay"></i></span>
-                                        <span class="pcoded-mtext">Leads</span>
-                                    </a>
-                                </li> -->
+                                <?php // } ?>
                             </ul>
                         </div>
                     </nav>

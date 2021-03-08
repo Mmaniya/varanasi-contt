@@ -1,9 +1,8 @@
 <?php function main()
 {
-// echo $_SESSION['lg_const_id'];
+
 $rsBooth = Votersdetails::getBoothCount($_SESSION['lg_const_id']);
-$rsEvoters = Votersdetails::getEvoterCount($_SESSION['lg_const_id']);
-// $rsTVoters = Votersdetails::getTvoterCount($_SESSION['lg_const_id']);
+   $rsEvoters = Votersdetails::getEvoterCount($_SESSION['lg_const_id']);
  ?>
 
 
@@ -15,14 +14,11 @@ $rsEvoters = Votersdetails::getEvoterCount($_SESSION['lg_const_id']);
             <div class="card-block">
                 <div class="row align-items-end">
                     <div class="col-12">
-                        <h4 class="text-white"><?php echo count($rsBooth); ?> </h4>
+                        <h4 class="text-white"><?php echo $rsBooth->total_booth; ?> </h4>
                         <h6 class="text-white m-b-0">Total Booth</h6>
                     </div>   
                 </div>
-            </div>
-            <div class="card-footer">
-                <p class="text-white  m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : <?php echo  date('M d, Y', strtotime(end($rsBooth)->updated_at)); ?> </p>
-            </div>
+            </div>        
         </div>
     </div>
     <div class="col-xl-3 col-md-4">
@@ -30,14 +26,10 @@ $rsEvoters = Votersdetails::getEvoterCount($_SESSION['lg_const_id']);
             <div class="card-block">
                 <div class="row align-items-end">
                     <div class="col-12">
-                        <h4 class="text-white"><?php echo count($rsEvoters); ?> </h4>
+                        <h4 class="text-white"><?php echo $rsEvoters->total_const; ?> </h4>
                         <h6 class="text-white m-b-0">Enterd Voters</h6>
                     </div>       
                 </div>
-            </div>
-            <div class="card-footer">
-                <p class="text-white m-b-0"><i class="feather  icon-clock text-white f-14 m-r-10"></i>update : <?php echo  date('M d, Y', strtotime(end($rsEvoters)->updated_at)); ?> 
-                </p>
             </div>
         </div>
     </div>
@@ -78,6 +70,7 @@ $rsEvoters = Votersdetails::getEvoterCount($_SESSION['lg_const_id']);
 <?php }else{ ?>
 <div class="row">
     <div class="col-xl-12 col-md-12">
+        <h2 class="m-b-10">Voters Complete Details </h2>
         <div class="form-group row">
             <div class="col-sm-3">
                 <select id='searchByState' name="state_id" onchange="getselectState(this.value)" class="form-control">
@@ -116,7 +109,7 @@ $rsEvoters = Votersdetails::getEvoterCount($_SESSION['lg_const_id']);
                         <th>Voter Id </th>
                         <th>Age</th>
                         <th>Gender</th>
-                        <!-- <th>Action</th>              -->
+                        <!-- <th>Action</th>-->
                     </thead>
                     <tbody>
                     </tbody>

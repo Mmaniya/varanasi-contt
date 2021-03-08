@@ -36,7 +36,7 @@ ini_set("auto_detect_line_endings", true);
     if($_POST['booth_id'] != ''){
         $booth_id = $_POST['booth_id'];
     }else{
-        $param['lg_id'] = $_POST['booth_no'];
+        $param['lg_id'] = $_POST['conts_id'];
         $param['booth_no'] = $_POST['booth_no'];
         $param['booth_name'] = $_POST['booth_name'];
         $param['booth_tname'] = $_POST['booth_tname'];
@@ -53,18 +53,18 @@ ini_set("auto_detect_line_endings", true);
         $newFileName = '';
         $filename = basename($_FILES['fileToUpload']['name']);
         $file_tmp = $_FILES['fileToUpload']["tmp_name"];
-        //$ext = pathinfo($filename, PATHINFO_EXTENSION);
-       // $baseName = basename($filename, $ext);
-       // $baseName =. $ext;
-       // $newFileName = rand() . '.' . $ext;
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $baseName = basename($filename, $ext);
+        // $baseName = . $ext;
+        $newFileName = rand() . '.' . $ext;
        // $param['fileToUpload'] = $newFileName;
-        move_uploaded_file($file_tmp = $_FILES['fileToUpload']["tmp_name"], "uploads/" . $filename) or die('image upload fail');
+        move_uploaded_file($file_tmp = $_FILES['fileToUpload']["tmp_name"], "uploads/" . $newFileName) or die('image upload fail');
     }
 
 	 
 	 
 	 
- $file = 'uploads/'.$filename;
+ $file = 'uploads/'.$newFileName;
 
 $searchfor = '/[INB|DDR|DNV|JVZ]{3}\d{7}|[[UP\/52\/241\/]{10}\d{7}/';
 //$fileContents = htmlspecialchars(nl2br(file_get_contents($file)));
@@ -157,7 +157,7 @@ $totalRecords =0;
     if(count($voterDetails)>1)
       $address=$voterDetails[1];
      
-    $voter ="SELECT * FROM `".TBL_VOTERS_NEW_RAW_DATA."` WHERE voter_id ='$voterId'"; 
+    $voter ="SELECT * FROM `".TBL_VOTERS_RAW_DATA."` WHERE voter_id ='$voterId'"; 
     ob_flush();
     flush();
     $result = dB::sExecuteSql($voter);
@@ -173,7 +173,7 @@ $totalRecords =0;
 			// $param['address']=input_string($address);
 			$param['added_by']= $_POST['added_by'];
 			//echo $V1.'--'.trim($V['address'][$K1]);    exit();
-			$query = Table::insertData(array('tableName' => TBL_VOTERS_NEW_RAW_DATA, 'fields' => $param, 'showSql' => 'N')); 
+			$query = Table::insertData(array('tableName' => TBL_VOTERS_RAW_DATA, 'fields' => $param, 'showSql' => 'N')); 
 			$insertedCount++;       
         }else {
             //if($address!='') {
@@ -186,23 +186,25 @@ $totalRecords =0;
                 // $param['booth_number']= $booth_number;				
 				// $param['address']=input_string($address);
 				$where= array('voter_id'=>$voterId);	
-				$result = Table::updateData(array('tableName' => TBL_VOTERS_NEW_RAW_DATA, 'fields' => $param, 'where' => $where, 'showSql' => 'N')); 
+				$result = Table::updateData(array('tableName' => TBL_VOTERS_RAW_DATA, 'fields' => $param, 'where' => $where, 'showSql' => 'N')); 
 				$updatedCount++;
 		//	}			
         }
    	$totalRecords++;
    }
-   echo 'Total Records Found : '.count($totalRecords).' <br/> Total Records Inserted: '.$insertedCount.'<br/> Total Records Updated: '.$updatedCount;
+        $return = array('result'=>'success','total' => count($totalRecords), 'inserted' => $insertedCount, 'updated' => $updatedCount, 'state_id' => $state_id, 'dist_id' => $dist_id, 'const_id'=>$conts_id, 'booth_id'=>$booth_id);
+        echo json_encode($return);
+//    echo 'Total Records Found : '.count($totalRecords).' <br/> Total Records Inserted: '.$insertedCount.'<br/> Total Records Updated: '.$updatedCount;
 	 
 		
 /*
       foreach($voterDtls as $key => $value){ 
-          $voter ="SELECT * FROM `".TBL_VOTERS_NEW_RAW_DATA."` WHERE voter_id ='$value'"; 
+          $voter ="SELECT * FROM `".TBL_VOTERS_RAW_DATA."` WHERE voter_id ='$value'"; 
           $result = dB::mExecuteSql($voter);
           if(empty(count($result))){   	                
                 $param['voter_id']= $value;
                 $param['added_by']= $_POST['added_by'];
-                $query = Table::insertData(array('tableName' => TBL_VOTERS_NEW_RAW_DATA, 'fields' => $param, 'showSql' => 'N'));
+                $query = Table::insertData(array('tableName' => TBL_VOTERS_RAW_DATA, 'fields' => $param, 'showSql' => 'N'));
            $cnt++; }    
        }
 

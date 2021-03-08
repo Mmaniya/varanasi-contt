@@ -60,5 +60,5 @@ define("ADMIN_ICON", BASE_URL . 'assets/icon');
 
 define("USERS_DIR", ADMIN_URL . '/users');
 define("BOOTH_DIR", ADMIN_URL . '/newbooth');
-define("ADDRESS_DIR", ADMIN_URL . '/addaddress');
+define("ENTRY_DIR", ADMIN_URL . '/entry');
 

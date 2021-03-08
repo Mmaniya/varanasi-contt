@@ -276,6 +276,9 @@ function GoURL(url) {
 
 
 // SELECT SUPER ADMIN
+$('#searchByDistrict').hide();
+$('#searchByConstituency').hide();
+$('#searchByBooth').hide();
 
 function getselectState(id) {
     $('.preloader').show();
@@ -286,10 +289,12 @@ function getselectState(id) {
         c: function() {},
         d: function(data) {
             $('.preloader').hide();
+            $('#searchByDistrict').show();
             $('#searchByDistrict').html(data);
             $('#searchByConstituency').html('');
             $('#searchByBooth').html('');
             getVotersData();
+            rawvotersdetails();
         }
     });
 }
@@ -304,9 +309,11 @@ function getallDistrict(id) {
         c: function() {},
         d: function(data) {
             $('.preloader').hide();
+            $('#searchByConstituency').show();
             $('#searchByConstituency').html(data);
             $('#searchByBooth').html('');
             getVotersData();
+            rawvotersdetails();
         }
     });
 }
@@ -320,23 +327,17 @@ function getallConstituency(id) {
         c: function() {},
         d: function(data) {
             $('.preloader').hide();
+            $('#searchByBooth').show();
             $('#searchByBooth').html(data);
             getVotersData();
+            rawvotersdetails();
         }
     });
 }
-// $('#newBooth').hide();
-
-
-
-// function oldBooth() {
-//     $('#oldBooth').show();
-//     $('#newBooth').hide();
-// }
-
 
 function getallBooth() {
     getVotersData();
+    rawvotersdetails();
 }
 
 function getVotersData() {
@@ -369,8 +370,27 @@ function getVotersData() {
     });
 }
 
-function selectUser(type) {
+function rawvotersdetails() {
+    $("#voterrawTable").DataTable().destroy()
+    $('#voterrawTable').DataTable({
+        'processing': true,
+        'serverSide': true,
+        'responsive': true,
+        'serverMethod': 'post',
+        'ajax': {
+            'url': ' getvotersrawdtls.php',
+            'data': function(data) {
+                data.searchByState = $('#searchByState').val();
+                data.searchByDist = $('#searchByDistrict').val();
+                data.searchByConstituency = $('#searchByConstituency').val();
+                data.searchByBooth = $('#searchByBooth').val();
+            }
+        }
 
+    });
+}
+
+function selectUser(type) {
     if (type == 'DE') {
         $('#selectBooth').show();
     } else {
@@ -380,8 +400,49 @@ function selectUser(type) {
 }
 
 
-function selectState() {
-    param = { 'act': 'getallState' }
+
+function votersepicupload() {
+    param = { 'act': 'voters_upload_form' }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#uplode_form').html(data);
+            selectState('');
+            existingBooth();
+        }
+    });
+}
+
+function votersaddressupload(value) {
+    var records = JSON.parse(value);
+    param = { 'act': 'voters_upload_address_form', 'response': value }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#uplode_form').html(data);
+            if (jQuery.isEmptyObject(records)) {
+                selectState(records['state_id']);
+            } else {
+                selectState(records['state_id']);
+                searchAllDist(records['state_id'], records['dist_id']);
+                searchAllConst(records['dist_id'], records['const_id']);
+                searchAllBooth(records['const_id'], records['booth_id']);
+            }
+            existingBooth();
+        }
+    });
+}
+
+
+
+// Deafult Select All State
+
+function selectState(state_id) {
+    param = { 'act': 'getallState', 'state_id': state_id }
     ajax({
         a: "ajaxfile",
         b: param,
@@ -392,41 +453,115 @@ function selectState() {
     });
 }
 
-function getBooth() {
-    var const_id = $('#searchByConstituency').val();
-    param = { 'act': 'getbyallBooth', 'const_id': const_id }
+// Search By District
+
+function searchAllDist(value, dist_id) {
+    param = { 'act': 'getallDistrict', 'state_id': value, 'dist_id': dist_id }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#searchByDistrict').html(data);
+            $('#searchByConstituency').html('<option>Select Constituency</option>');
+            $('#searchByBooth').html('<option>Select Booth</option>');
+        }
+    });
+}
+
+// Search By Const
+
+function searchAllConst(value, const_id) {
+    param = { 'act': 'getallConstituency', 'district_id': value, 'const_id': const_id }
+    ajax({
+        a: "ajaxfile",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#searchByConstituency').html(data);
+            $('#searchByBooth').html('<option>Select Booth</option>');
+        }
+    });
+}
+
+// Search By Booth
+
+function searchAllBooth(value, booth_id) {
+    param = { 'act': 'getbyallBooth', 'const_id': value, 'booth_id': booth_id }
     ajax({
         a: "ajaxfile",
         b: param,
         c: function() {},
         d: function(data) {
             $('#searchByBooth').html(data);
-            $('#uploadFile').show();
         }
     });
 }
 
+
 function existingBooth() {
-    param = { 'act': 'oldBooth' }
-    ajax({
-        a: "ajaxfile",
-        b: param,
-        c: function() {},
-        d: function(data) {
-            getBooth();
-            $('#boothDetails').html(data);
-        }
-    });
+    $(':input[type="number"]').val('');
+    $(':input[type="text"]').val('');
+    $('.newBooth').hide();
+    $('.oldBooth').show();
 }
 
 function newBooth() {
-    param = { 'act': 'newBooth' }
+    $('#searchByBooth').val('');
+    $('.newBooth').show();
+    $('.oldBooth').hide();
+}
+
+
+// List
+
+function loadStateList(user_id) {
+    param = { 'act': 'get_role_by_state', 'user_id': user_id }
     ajax({
-        a: "ajaxfile",
+        a: "update_raw_voters",
         b: param,
         c: function() {},
         d: function(data) {
-            $('#boothDetails').html(data);
+            $('#select_state').html(data);
         }
     });
+}
+
+function getDistrictList(state_id) {
+    param = { 'act': 'get_role_by_district', 'state_id': state_id }
+    ajax({
+        a: "update_raw_voters",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#select_district').html(data);
+        }
+    });
+
+}
+
+function getConstByDistrict(district_id) {
+    param = { 'act': 'get_role_by_const', 'district_id': district_id }
+    ajax({
+        a: "update_raw_voters",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#select_constituency').html(data);
+        }
+    });
+
+}
+
+function getBoothByConst(lg_const_id) {
+    param = { 'act': 'get_role_by_booth', 'lg_const_id': lg_const_id }
+    ajax({
+        a: "update_raw_voters",
+        b: param,
+        c: function() {},
+        d: function(data) {
+            $('#select_booth').html(data);
+        }
+    });
+
 }

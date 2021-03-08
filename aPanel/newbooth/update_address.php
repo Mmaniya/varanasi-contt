@@ -20,9 +20,10 @@ function main()
  </style>
   <script>
       $(document).ready(function(){
-         votersepicupload();
-         // var val = '{"result":"success","total":1,"inserted":0,"updated":870,"state_id":"1","dist_id":"1","const_id":"1","booth_id":"1"}';
-         // votersaddressupload('');
+        //  votersepicupload();
+        //  var val = '{"result":"success","total":1,"inserted":0,"updated":870,"state_id":"1","dist_id":"1","const_id":"1","booth_id":"1"}';
+        var val = '{}';
+         votersaddressupload(val);
       });
   </script>
 

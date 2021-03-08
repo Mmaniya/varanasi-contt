@@ -15,7 +15,7 @@ require ABSPATH . "/includes.php";
         $subQry[] = "state_id =".$_POST['searchByState'];
     }
     if($_POST['searchByDistrict'] != ''){
-        $subQry[] = "lg_const_id =".$_POST['searchByDistrict'];
+        $subQry[] = "district_id =".$_POST['searchByDistrict'];
     }
     if($_POST['searchByConstituency'] != ''){
         $subQry[] = "lg_const_id =".$_POST['searchByConstituency'];

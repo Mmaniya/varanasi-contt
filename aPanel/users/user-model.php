@@ -104,7 +104,7 @@
                         $rsBooth = dB::mExecuteSql($qry); 
                             if(count($rsBooth)>0) {
                         foreach($rsBooth as $key=>$val) { 		
-                        echo '<li calss="remove'.$val->id.'"> '.$val->booth_no.' - '.$val->booth_name.'  <input type="hidden" name="booth_id[]" value="'.$val->id.'"/> <a href="javascript:void(0)" style="color:red;" onclick="removeBooth('.$val->id.','.$user_id.')">Remove</a></li>';
+                        echo '<li id="remove'.$val->id.'" calss="remove'.$val->id.'"> '.$val->booth_no.' - '.$val->booth_name.'  <input type="hidden" name="booth_id[]" value="'.$val->id.'"/> <a href="javascript:void(0)" style="color:red;" onclick="removeBooth('.$val->id.','.$user_id.')">Remove</a></li>';
                         }
                         }		 
                                 ?>
@@ -238,7 +238,7 @@ $( document ).ready(function() {
            b:param,
            c:function(){},
            d:function(data){
-               $('.remove'+id).remove();
+               $('#remove'+id).remove();
            }  
        });
    }
