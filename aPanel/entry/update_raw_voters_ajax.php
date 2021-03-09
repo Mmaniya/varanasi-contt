@@ -21,7 +21,7 @@ $action = $_POST['act'];
             <td><?php echo $value->voter_id ?> &nbsp;&nbsp;&nbsp; <a href="javascript:void(0);" onclick="getVoterDetails(<?php echo $value->id ?>)" style="color:blue;"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                 <input type="hidden" value="<?php echo $value->voter_id ?>" class="form-control"  id="voters_<?php echo $value->id ?>">
             </td>
-            <td><?php echo $value->address ?></td>
+            <!-- <td><?php //echo $value->address ?></td> -->
             <td>
                 <input onfocus="pasteElement(<?php echo $value->id ?>)" type="text" value="<?php echo $value->raw_data ?>" <?php  if($value->is_inserted == 'Y' && $value->is_inserted != '') { ?> readonly <?php } ?> class="form-control inputfocus"  id="voters_raw_data_<?php echo $value->id ?>">
             </td>

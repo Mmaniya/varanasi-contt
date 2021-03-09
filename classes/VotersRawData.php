@@ -134,15 +134,18 @@ class VotersRawData {
         //check if the voter id already exists in TBL_VOTERS_LIST
         $param=array();
         
-        $params = array('pc_name','st_code','ps_lat_long_1_coordinate','gender','address','rln_name_v2','rln_name_v1','rln_name_v3','name_v1','epic_no','ac_name','name_v2','name_v3','ps_lat_long','pc_no','last_update','id','dist_no','ps_no','ps_name','ps_name_v1','st_name','dist_name','rln_type','pc_name_v1','part_name_v1','ac_name_v1','part_no','dist_name_v1','ps_lat_long_0_coordinate','_version_','name','section_no','ac_no','slno_inpart','rln_name','age','part_name');
+        $params = array('pc_name','st_code','ps_lat_long_1_coordinate','gender','rln_name_v2','rln_name_v1','rln_name_v3','name_v1','epic_no','ac_name','name_v2','name_v3','ps_lat_long','pc_no','last_update','id','dist_no','ps_no','ps_name','ps_name_v1','st_name','dist_name','rln_type','pc_name_v1','part_name_v1','ac_name_v1','part_no','dist_name_v1','ps_lat_long_0_coordinate','_version_','name','section_no','ac_no','slno_inpart','rln_name','age','part_name');
                             
         foreach($params as $field)  {
             $param[$field]= $rawResult->$field;
         }
                     
-        $param['booth_id'] = $boothId;	
-        $param['branch_id'] =0;	
-        $param['ward_id']=0;
+        $param['booth_id'] = $boothId;
+        $param['state_id'] = $stateid;	
+        $param['district_id'] = $districtId;	
+        $param['const_id'] = $lgId;	
+        // $param['branch_id'] =0;	
+        // $param['ward_id']=0;
 
 		// address update
 		$addressQry ="SELECT * FROM `".TBL_VOTERS_RAW_DATA."` WHERE voter_id ='".$rawResult->epic_no."'"; 
@@ -150,7 +153,7 @@ class VotersRawData {
 		if(count($addressResult) > 0){
             $address = $addressResult[0]->address;
             $booth_number = $addressResult[0]->booth_number;
-            $param['address']= $address;
+            //$param['address']= $address;
 		}
        
                         
@@ -163,8 +166,28 @@ class VotersRawData {
         $voterQry ="SELECT * FROM `".TBL_VOTERS_LIST."` WHERE epic_no ='".$rawResult->epic_no."'"; 
         $voterResult = dB::sExecuteSql($voterQry);        
         
-        if(count($voterResult) == 0){         
-            $result = Table::insertData(array('tableName' => TBL_VOTERS_LIST, 'fields' => $param, 'showSql' => 'N'));
+        if(count($voterResult) == 0){   
+
+            $qry = array('tableName' => TBL_VOTERS_LIST, 'fields' => array('*'),'condition'=>array('state_id'=>$state_id.'-INT','district_id'=>$dist_id.'-INT','const_id'=>$conts_id.'-INT','booth_id'=>$booth_id.'-INT','slno_inpart'=>$addressCnt.'-INT'), 'showSql' => 'N');
+			$rsVoterList = Table::getData($qry);	
+            if(count($rsVoterList)>0){
+
+                // CHECK VOTER EXISTING OR NOT (SL_NO)
+
+                $where= array('state_id'=>$param['state_id'],'district_id'=>$param['district_id'],'const_id'=>$param['const_id'],'booth_id'=>$param['booth_id'],'slno_inpart'=>$param['slno_inpart']);	
+                $result = Table::updateData(array('tableName' => TBL_VOTERS_LIST, 'fields' => $param, 'where' => $where, 'showSql' => 'Y'));
+
+            }else{  
+
+				$query = Table::insertData(array('tableName' => TBL_VOTERS_LIST, 'fields' => $param, 'showSql' => 'N'));
+			    $result = explode('::',$query);
+                echo $result[0];
+
+			}
+
+
+    
+            // $result = Table::insertData(array('tableName' => TBL_VOTERS_LIST, 'fields' => $param, 'showSql' => 'N'));
             // echo 'Records Added Successfully'; 
         }else {
             $where= array('id'=>$rawResult->id);	
@@ -251,7 +274,7 @@ class VotersRawData {
 			$addressResult = dB::mExecuteSql($addressQry);
 			if(count($addressResult) > 0){
 			$address = $addressResult[0]->address;
-			$param['address']= $address;
+			//$param['address']= $address;
 			}
 		
 	   
@@ -265,7 +288,7 @@ class VotersRawData {
 		echo 'Records Updated Successfully';
 		} else {		
 					
-		$query = Table::insertData(array('tableName' => TBL_VOTERS_DETAILS, 'fields' => $param, 'showSql' => 'N'));
+		$query = Table::insertData(array('tableName' => TBL_VOTERS_DETAILS, 'fields' => $param, 'showSql' => 'Y'));
 	    echo 'Records Added Successfully';}
     }
 

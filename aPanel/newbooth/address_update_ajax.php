@@ -67,14 +67,17 @@ while(!feof($f)){
 			$param['slno_inpart'] = $addressCnt;				
 			
 			$qry = array('tableName' => TBL_VOTERS_LIST, 'fields' => array('*'),'condition'=>array('state_id'=>$state_id.'-INT','district_id'=>$dist_id.'-INT','const_id'=>$conts_id.'-INT','booth_id'=>$booth_id.'-INT','slno_inpart'=>$addressCnt.'-INT'), 'showSql' => 'N');
-			$result = Table::getData($qry);
-			if(count($result)>0){
+			$rsVoterList = Table::getData($qry);			 
+			if(count($rsVoterList)>0){
 
 			$where= array('state_id'=>$state_id,'district_id'=>$dist_id,'const_id'=>$conts_id,'booth_id'=>$booth_id,'slno_inpart'=>$addressCnt);	
-			$result = Table::updateData(array('tableName' => TBL_VOTERS_LIST, 'fields' => $param, 'where' => $where, 'showSql' => 'Y'));  
+			$result = Table::updateData(array('tableName' => TBL_VOTERS_LIST, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));  
+			echo 'success';
 
-			}else{
+			}else{  
+				//print_r($param);
 				$query = Table::insertData(array('tableName' => TBL_VOTERS_LIST, 'fields' => $param, 'showSql' => 'N'));
+				echo 'success';
 			}
 			
 			// $where= array('state_id'=>$state_id,'dist_id'=>$dist_id,'conts_id'=>$conts_id,'booth_id'=>$booth_id);	

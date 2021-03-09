@@ -193,7 +193,7 @@
                              <tr>
                                  <th>No</th>
                                  <th>Voter Id</th>
-                                 <th>Address</th>
+                                 <!-- <th>Address</th> -->
                                  <th>Data</th>
                                  <th>Action</th>                              
                              </tr>

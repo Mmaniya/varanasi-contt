@@ -6,19 +6,32 @@
      }
          
      public static function insertSql($Sql){ 
-         $con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
+      $con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
+        $dbconn = new DatabaseConnection();
+        mysqli_query($dbconn->dbconn,'SET NAMES utf8');
+        mysqli_query($dbconn->dbconn,$Sql) or die(mysqli_error($dbconn->dbconn));	
+        return mysqli_insert_id($dbconn->dbconn);
+         
+         
+          /* $con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
            $dbconn = new DatabaseConnection();
          mysqli_query($dbconn->dbconn,'SET NAMES utf8');
          mysqli_query($con,$Sql) or die(mysqli_error($con));	
-         return mysqli_insert_id($con);
+         return mysqli_insert_id($con);*/
      }
      
      public static function updateSql($Sql){
-      $con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
+        $con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
+        $dbconn = new DatabaseConnection();
+        mysqli_query($dbconn->dbconn,'SET NAMES utf8');
+        mysqli_query($dbconn->dbconn,$Sql) or die(mysqli_error($dbconn->dbconn));
+        return mysqli_affected_rows($con) ;
+
+       /* $con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
          $dbconn = new DatabaseConnection();
          mysqli_query($dbconn->dbconn,'SET NAMES utf8');
          mysqli_query($con,$Sql) or die(mysqli_error($con));
-         return mysqli_affected_rows($con) ;
+         return mysqli_affected_rows($con) ; */
      }
      
      public static function deleteSql($Sql){
@@ -40,14 +53,14 @@
      }
      
      public static function mExecuteSql($Sql){
-         //$con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
-         $dbconn = new DatabaseConnection();
-         mysqli_set_charset($dbconn->dbconn, 'utf8');
-         mysqli_query($dbconn->dbconn,'SET NAMES utf8');
-         $Resource = mysqli_query($dbconn->dbconn,$Sql);	
-         while($Row = @mysqli_fetch_object($Resource)) {$Rs[] = $Row;}
-         @mysqli_free_result($Resource);
-         return $Rs ;
+        //$con=mysqli_connect(BA_DBHOST,BA_DBUSER,BA_DBPASSWORD,BA_DBNAME);
+        $dbconn = new DatabaseConnection();
+        //  mysqli_set_charset($dbconn->dbconn, 'utf8');
+        mysqli_query($dbconn->dbconn,'SET NAMES utf8');
+        $Resource = mysqli_query($dbconn->dbconn,$Sql);	
+        while($Row = @mysqli_fetch_object($Resource)) {$Rs[] = $Row;}
+        @mysqli_free_result($Resource);
+        return $Rs ;
      }
  
     public static function getNumRows($Sql) {
