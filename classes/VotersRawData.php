@@ -109,7 +109,7 @@ class VotersRawData {
 
         //check for booth
 
-           $boothQry ="SELECT * FROM `".TBL_BOOTH."` WHERE mp_id ='".$mpId."' and lg_id=".$lgId.' and booth_no='.$rawResult->part_no; 
+           $boothQry ="SELECT * FROM `".TBL_BOOTH."` WHERE mp_id =".$mpId." and lg_id=".$lgId.' and booth_no = '.$rawResult->part_no; 
            $boothResult = dB::sExecuteSql($boothQry);
 
             if(count($boothResult) > 0){
@@ -151,9 +151,10 @@ class VotersRawData {
 		$addressQry ="SELECT * FROM `".TBL_VOTERS_RAW_DATA."` WHERE voter_id ='".$rawResult->epic_no."'"; 
 		$addressResult = dB::mExecuteSql($addressQry);
 		if(count($addressResult) > 0){
-            $address = $addressResult[0]->address;
-            $booth_number = $addressResult[0]->booth_number;
+            // $address = $addressResult[0]->address;
+            //$booth_number = $addressResult[0]->booth_number;
             //$param['address']= $address;
+        $getBoothId = $addressResult[0]->booth_id;
 		}
        
                         
@@ -212,7 +213,7 @@ class VotersRawData {
                 
  		$voterNewqQry ="SELECT * FROM `".TBL_VOTERS_DETAILS."` WHERE epic_no ='".trim($param['epic_no'])."'"; 
 		$rsDtls = dB::mExecuteSql($voterNewqQry);
-        if($booth_number == $rawResult->part_no){
+        // if($getBoothId == $rawResult->booth_id){
                 if(count($rsDtls)>0) { 		   
                     $where= array('epic_no'=>trim($param['epic_no']));	
                     $result = Table::updateData(array('tableName' => TBL_VOTERS_DETAILS, 'fields' => $param, 'where' => $where, 'showSql' => 'N'));
@@ -224,7 +225,7 @@ class VotersRawData {
                 }               
                     
             }	// VotersRawData::insert_update_voter_details($lastInsertDtls[2],$stateid,$districtId,$mpId,$lgId);
-            }
+            // }
 			  
         }
     }

@@ -81,7 +81,7 @@ if ($_SESSION['useremail'] == '' || $_SESSION['username'] == '') {
                         <a href="<?php echo ADMIN_URL ?>/dashboard.php">
                             <!-- <img class="img-fluid" src="<?php echo ADMIN_IMAGES ?>/logo.png" width="190"
                                 alt="Theme-Logo"> -->
-                                <h3>VARANASI</h3>
+                                <h3>COIMBATORE</h3>
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>

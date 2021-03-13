@@ -10,8 +10,8 @@ if ($dev_server) {
     define("BA_DBHOST", "localhost");
     define("BA_DBUSER", "root");
     define("BA_DBPASSWORD", "");
-    define("BA_DBNAME", "voterslist");
-    define('BASE_URL', 'http://localhost/varanasi-contt/');
+    define("BA_DBNAME", "covai_voters");
+    define('BASE_URL', 'http://localhost/coimbatore/');
 
     // define("BA_DBHOST", "localhost");
     // define("BA_DBUSER", "masterm6_voterslist");
